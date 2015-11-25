@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':shulgina-yana-ViewModel')
+}
+sourceSets {
+    main.java.srcDir 'src/main/java'
+}

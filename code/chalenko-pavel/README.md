@@ -18,6 +18,11 @@
 
 Все необходимые математические сведения можно найти в статье
 ["Кватернион"][quaternion] на сайте Wikipedia.
+Дополнительная информация также доступна на следующих информационных ресурсах:  
+https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation  
+http://habrahabr.ru/post/183908/  
+http://www.gamedev.ru/code/articles/?id=4215  
+http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19770024290.pdf  
 
 ## Документация разработчика
 
