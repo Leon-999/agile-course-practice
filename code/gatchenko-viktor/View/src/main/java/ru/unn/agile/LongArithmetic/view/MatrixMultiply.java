@@ -4,14 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MatrixMultiply {
-    /*private JTable table1;
-    private JPanel panel1;
-    private JButton[] testButtons;
 
-    //Массив содержащий заголоки таблицы
     private Object[] headers = { "Name", "Surname", "Telephone" };
 
-    //Массив содержащий информацию для таблицы
     private Object[][] data = {
             { "John", "Smith", "1112221" },
             { "Ivan", "Black", "2221111" },
@@ -23,58 +18,8 @@ public class MatrixMultiply {
             { "Elise", "Green", "2321111" },
     };
 
-    private MatrixMultiply() {}
-
-    private static void createUIComponents() {
-        // TODO: place custom component creation code here
-
-    }
-
-    public static void main(final String[] args) {
-        JFrame frame = new JFrame("Calculator");
-
-        MatrixMultiply form = new MatrixMultiply();
-        frame.setContentPane(form.mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-
-        //createUIComponents();
-        frame.setSize(500,500);
-        form.panel1.setLayout(new GridLayout(2,2));
-        int count = 3;
-        form.testButtons = new JButton[count];
-        for(int i = 0; i < count; i++) {
-            form.testButtons[i] = new JButton("test");
-            form.testButtons[i].setVisible(true);
-            form.testButtons[i].setSize(30, 70);
-            //form.testButtons[i].setLocation(i * 30, 0);
-        }
-
-        for(int i = 0; i < count; i++) {
-            form.panel1.add(form.testButtons[i]);
-        }
-
-        form.table1 = new JTable(form.data, form.headers);
-        JScrollPane jscrlp = new JScrollPane(form.table1);
-        frame.getContentPane().add(jscrlp);
-
-        frame.setVisible(true);
-    }*/
-
-    //Массив содержащий заголоки таблицы
-    private Object[] headers = { "Name", "Surname", "Telephone" };
-
-    //Массив содержащий информацию для таблицы
-    private Object[][] data = {
-            { "John", "Smith", "1112221" },
-            { "Ivan", "Black", "2221111" },
-            { "George", "White", "3334444" },
-            { "Bolvan", "Black", "2235111" },
-            { "Serg", "Black", "2221511" },
-            { "Pussy", "Black", "2221111" },
-            { "Tonya", "Red", "2121111" },
-            { "Elise", "Green", "2321111" },
-    };
+    private static final int formWidth  = 600;
+    private static final int formHeight  = 500;
 
     private JPanel mainPanel;
     private JPanel topPanel;
@@ -97,32 +42,33 @@ public class MatrixMultiply {
 
     private MatrixMultiply() {
         JFrame frame = new JFrame("JTableExample");
-        //Устанавливаем диспетчер компоновки
-        //frame.getContentPane().setLayout(new FlowLayout());
-        frame.setSize(600, 500);
+        frame.setSize(formWidth, formHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        initializePanels();
+        initializeTopPanel();
+        initializeMiddlePanel();
+        initializeBottomPanel();
+        initializeMainPanel();
+
+        frame.add(mainPanel);
+        frame.setVisible(true);
+    }
+
+    private void initializePanels() {
         mainPanel = new JPanel(new FlowLayout());
         topPanel = new JPanel(new GridLayout(2,4));
         middlePanel = new JPanel(new FlowLayout());
         bottomPanel = new JPanel(new FlowLayout());
+    }
 
-        firstMultiplier = new JTable(data, headers);
-        secondMultiplier = new JTable(data, headers);
-        resultMatrix = new JTable(data, headers);
-        //Создаем панель прокрутки и включаем в ее состав нашу таблицу
-        //JScrollPane jscrlp = new JScrollPane(firstMultiplier);
-        //Устаналиваем размеры прокручиваемой области
-        //firstMultiplier.setPreferredScrollableViewportSize(new Dimension(250, 100));
-        //Добавляем в контейнер нашу панель прокрути и таблицу вместе с ней
-
+    private void initializeTopPanel() {
         firstMatrixLabel = new JLabel("M and N first matrix:");
-        mFirstMatrixText = new JTextField();
-        nFirstMatrixText = new JTextField();
-        //nFirstMatrixText;
+        mFirstMatrixText = new JTextField("3");
+        nFirstMatrixText = new JTextField("4");
         secondMatrixLabel = new JLabel("M and N second matrix:");
-        mSecondMatrixText = new JTextField();
-        nSecondMatrixText = new JTextField();
+        mSecondMatrixText = new JTextField("4");
+        nSecondMatrixText = new JTextField("3");
         okButton = new JButton("ok");
 
         topPanel.add(firstMatrixLabel);
@@ -132,25 +78,30 @@ public class MatrixMultiply {
         topPanel.add(secondMatrixLabel);
         topPanel.add(mSecondMatrixText);
         topPanel.add(nSecondMatrixText);
+    }
+
+    private void initializeMiddlePanel() {
+        firstMultiplier = new JTable(data, headers);
+        secondMultiplier = new JTable(data, headers);
 
         middlePanel.add(firstMultiplier);
         middlePanel.add(secondMultiplier);
+    }
+
+    private void initializeBottomPanel() {
+        resultMatrix = new JTable(data, headers);
 
         calculateButton = new JButton("Multiply");
         bottomPanel.add(calculateButton);
         bottomPanel.add(resultMatrix);
+    }
 
-        //Отображаем контейнер
+    private void initializeMainPanel() {
         mainPanel.add(topPanel);
         mainPanel.add(middlePanel);
         mainPanel.add(bottomPanel);
-
-        frame.add(mainPanel);
-        frame.setVisible(true);
-        //mainPanel.setVisible(true);
     }
 
-    //Функция main, запускающаяся при старте приложения
     public static void main(String[] args) {
         //Создаем фрейм в потоке обработки событий
         SwingUtilities.invokeLater(new Runnable() {
