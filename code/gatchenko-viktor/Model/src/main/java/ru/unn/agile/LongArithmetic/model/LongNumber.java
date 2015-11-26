@@ -1,4 +1,4 @@
-package ru.unn.agile.LongArithmetic;
+package ru.unn.agile.LongArithmetic.model;
 
 import java.math.BigInteger;
 import java.util.Arrays;

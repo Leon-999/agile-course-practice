@@ -1,4 +1,4 @@
-package ru.unn.agile.LongArithmetic;
+package ru.unn.agile.LongArithmetic.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
