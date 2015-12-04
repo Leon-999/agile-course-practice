@@ -29,4 +29,33 @@ public class ViewModelTests {
         assertEquals(Status.WAITINGMN, viewModel.getStatus());
     }
 
+    @Test
+    public void isStatusWaitingMNInTheBeginning() {
+        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+    }
+
+    @Test
+    public void isStatusReadyWhenFieldsAreFill() {
+        fillMNFields();
+
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+
+        assertEquals(Status.READYOK, viewModel.getStatus());
+    }
+
+    private void fillMNFields() {
+        viewModel.setMFirstMatrix("1");
+        viewModel.setNFirstMatrix("1");
+        viewModel.setMSecondMatrix("1");
+        viewModel.setNSecondMatrix("1");
+    }
+
+
+    @Test
+    public void isStatusWaitingWhenCalculateWithEmptyFields() {
+        viewModel.multiplyMatrices();
+
+        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+    }
+
 }
