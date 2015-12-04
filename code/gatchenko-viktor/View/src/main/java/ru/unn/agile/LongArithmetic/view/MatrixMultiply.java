@@ -69,7 +69,7 @@ public class MatrixMultiply {
         secondMatrixLabel = new JLabel("M and N second matrix:");
         mSecondMatrixText = new JTextField("4");
         nSecondMatrixText = new JTextField("3");
-        okButton = new JButton("ok");
+        okButton = new JButton("Ok");
 
         topPanel.add(firstMatrixLabel);
         topPanel.add(mFirstMatrixText);
