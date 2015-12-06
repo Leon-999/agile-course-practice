@@ -35,7 +35,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void isStatusReadyWhenFieldsAreFill() {
+    public void isStatusReadyOKWhenFieldsMNAreFill() {
         fillMNFields();
 
         viewModel.processKeyInTextField(KeyboardKeys.ANY);
@@ -52,8 +52,26 @@ public class ViewModelTests {
 
 
     @Test
-    public void isStatusWaitingWhenCalculateWithEmptyFields() {
+    public void isStatusWaitingWhenMultiplyWithEmptyFieldsMN() {
         viewModel.multiplyMatrices();
+
+        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+    }
+
+    @Test
+    public void canReportBadFormat() {
+        viewModel.setMFirstMatrix("a");
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+
+        assertEquals(Status.BAD_FORMAT, viewModel.getStatus());
+    }
+
+    @Test
+    public void canCleanStatusIfParseIsOK() {
+        viewModel.setMFirstMatrix("a");
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.setMFirstMatrix("1");
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
 
         assertEquals(Status.WAITINGMN, viewModel.getStatus());
     }

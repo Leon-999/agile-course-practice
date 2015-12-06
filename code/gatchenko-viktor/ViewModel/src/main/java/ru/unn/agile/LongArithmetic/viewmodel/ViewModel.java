@@ -1,14 +1,23 @@
 package ru.unn.agile.LongArithmetic.viewmodel;
 
+import ru.unn.agile.LongArithmetic.model.LongNumber;
 import ru.unn.agile.LongArithmetic.model.Matrix;
 
 public class ViewModel {
+
+    private static final int InitialSizeMatrix = 1;
 
     private String mFirstMatrix;
     private String nFirstMatrix;
     private String mSecondMatrix;
     private String nSecondMatrix;
+    private int m1;
+    private int n1;
+    private int m2;
+    private int n2;
 
+    private String [][] firstMatrixTable;
+    private String [][] secondMatrixTable;
     private Matrix firstMultiplier;
     private Matrix secondMultiplier;
     private Matrix resultMatrix;
@@ -24,6 +33,9 @@ public class ViewModel {
         nSecondMatrix = "";
         status = Status.WAITINGMN;
 
+        firstMatrixTable = new String[InitialSizeMatrix][InitialSizeMatrix];
+        secondMatrixTable = new String[InitialSizeMatrix][InitialSizeMatrix];
+
         isOkButtonEnabled = false;
         isMultiplyButtonEnabled = false;
 
@@ -31,6 +43,14 @@ public class ViewModel {
 
     public void processKeyInTextField(final int keyCode) {
         parseInputMN();
+
+        if (keyCode == KeyboardKeys.ENTER) {
+            enterPresed();
+        }
+        if(keyCode == KeyboardKeys.M) {
+            initializeMatrices();
+            multiplyMatrices();
+        }
     }
 
     private boolean parseInputMN() {
@@ -38,16 +58,16 @@ public class ViewModel {
 
         try {
             if (!mFirstMatrix.isEmpty()) {
-                Integer.parseInt(mFirstMatrix);
+                m1 = Integer.parseInt(mFirstMatrix);
             }
             if (!nFirstMatrix.isEmpty()) {
-                Integer.parseInt(nFirstMatrix);
+                n1 = Integer.parseInt(nFirstMatrix);
             }
             if (!mSecondMatrix.isEmpty()) {
-                Integer.parseInt(mSecondMatrix);
+                m2 = Integer.parseInt(mSecondMatrix);
             }
             if (!nSecondMatrix.isEmpty()) {
-                Integer.parseInt(nSecondMatrix);
+                n2 = Integer.parseInt(nSecondMatrix);
             }
         } catch (Exception e) {
             status = Status.BAD_FORMAT;
@@ -65,6 +85,15 @@ public class ViewModel {
         return isOkButtonEnabled;
     }
 
+    private void enterPresed() {
+        if (isOkButtonEnabled()) {
+            firstMatrixTable = new String[m1][n1];
+            secondMatrixTable = new String[m2][n2];
+        }
+    }
+
+    private boolean isOkButtonEnabled() { return isOkButtonEnabled; }
+
     private boolean isInputMNAvailable() {
         boolean isAvailable = !mFirstMatrix.isEmpty() && !nFirstMatrix.isEmpty() &&
                               !mSecondMatrix.isEmpty() && !nSecondMatrix.isEmpty();
@@ -73,11 +102,36 @@ public class ViewModel {
     }
 
     private void initializeMatrices() {
+        parseInputMatrices();
+    }
 
+    private  void parseInputMatrices() {
+        try {
+            LongNumber value;
+            for (int i = 0; i < m1; i++) {
+                for (int j = 0; j < n1; i++) {
+                    value = new LongNumber(firstMatrixTable[i][j]);
+                    firstMultiplier.setElement(i, j, value);
+                }
+            }
+
+            for (int i = 0; i < m2; i++) {
+                for (int j = 0; j < n2; i++) {
+                    value = new LongNumber(secondMatrixTable[i][j]);
+                    secondMultiplier.setElement(i, j, value);
+                }
+            }
+
+            status = Status.READYMULTIPLY;
+        } catch (Exception e) {
+            status = Status.BAD_FORMAT;
+        }
     }
 
     public void multiplyMatrices() {
-
+        if (status == Status.READYMULTIPLY) {
+            resultMatrix = firstMultiplier.multiply(secondMultiplier);
+        }
     }
 
     public String getMFirstMatrix() { return mFirstMatrix; }
@@ -128,7 +182,7 @@ public class ViewModel {
         public static final String WAITINGMN = "Please provide input data: M and N for matrices";
         public static final String WAITING = "Please provide input data: write in matrices";
         public static final String READYOK = "Press 'Ok'";
-        public static final String READY = "Press 'Multiply'";
+        public static final String READYMULTIPLY = "Press 'Multiply'";
         public static final String BAD_FORMAT = "Bad format";
         public static final String SUCCESS = "Success";
 
