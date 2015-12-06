@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class MatrixMultiply {
 
-    private Object[] headers = { "Name", "Surname", "Telephone" };
+    //private Object[] headers = { "Name", "Surname", "Telephone" };
 
-    private Object[][] data = {
+    /*private Object[][] data = {
             { "John", "Smith", "1112221" },
             { "Ivan", "Black", "2221111" },
             { "George", "White", "3334444" },
@@ -16,7 +16,7 @@ public class MatrixMultiply {
             { "Pussy", "Black", "2221111" },
             { "Tonya", "Red", "2121111" },
             { "Elise", "Green", "2321111" },
-    };
+    };*/
 
     private static final int formWidth  = 600;
     private static final int formHeight  = 500;
@@ -81,15 +81,16 @@ public class MatrixMultiply {
     }
 
     private void initializeMiddlePanel() {
-        firstMultiplier = new JTable(data, headers);
-        secondMultiplier = new JTable(data, headers);
+        firstMultiplier = new JTable(1, 1);
+        secondMultiplier = new JTable(1, 1);
 
         middlePanel.add(firstMultiplier);
         middlePanel.add(secondMultiplier);
     }
 
     private void initializeBottomPanel() {
-        resultMatrix = new JTable(data, headers);
+        resultMatrix = new JTable(1, 1);
+        resultMatrix.setEnabled(false);
 
         calculateButton = new JButton("Multiply");
         bottomPanel.add(calculateButton);
