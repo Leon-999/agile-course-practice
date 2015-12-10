@@ -126,12 +126,61 @@ public class ViewModelTests {
         viewModel.processKeyInTextField(KeyboardKeys.ENTER);
         viewModel.setValueToFirstMatrix(0, 0, "2");
         viewModel.setValueToSecondMatrix(0, 0, "2");
+
         viewModel.processKeyInTextField(KeyboardKeys.M);
-        //viewModel.multiplyMatrices();
         Matrix resultMatrix = viewModel.getResultMatrix();
         boolean success = resultMatrix.getElement(0, 0).equals(4);
 
         assertEquals(true, success);
     }
 
+    @Test
+    public void canPerformMultiplyMatrix1x2And2x1() {
+        fillMNFields1x2And2x1();
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        fillMatrix1x2And2x1();
+        viewModel.processKeyInTextField(KeyboardKeys.M);
+
+        Matrix resultMatrix = viewModel.getResultMatrix();
+        boolean success = resultMatrix.getElement(0, 0).equals(4);
+
+        assertEquals(true, success);
+    }
+
+    private void fillMNFields1x2And2x1() {
+        viewModel.setMFirstMatrix("1");
+        viewModel.setNFirstMatrix("2");
+        viewModel.setMSecondMatrix("2");
+        viewModel.setNSecondMatrix("1");
+    }
+
+    private void fillMatrix1x2And2x1() {
+        viewModel.setValueToFirstMatrix(0, 0, "1");
+        viewModel.setValueToFirstMatrix(0, 1, "1");
+        viewModel.setValueToSecondMatrix(0, 0, "2");
+        viewModel.setValueToSecondMatrix(1, 0, "2");
+    }
+
+    @Test
+    public void canSetSuccessMessage() {
+        fillMNFields1x2And2x1();
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        fillMatrix1x2And2x1();
+        viewModel.processKeyInTextField(KeyboardKeys.M);
+
+        assertEquals(Status.SUCCESS, viewModel.getStatus());
+    }
+
+    @Test
+    public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
+        fillMNFields1x2And2x1();
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        fillMatrix1x2And2x1();
+        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+
+        assertEquals(Status.READYMULTIPLY, viewModel.getStatus());
+    }
 }
