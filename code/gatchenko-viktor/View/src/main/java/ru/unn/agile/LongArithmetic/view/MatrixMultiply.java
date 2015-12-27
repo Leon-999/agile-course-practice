@@ -211,8 +211,8 @@ public class MatrixMultiply {
     private void initializeFirstMultiplier() {
         int columnCount = firstMultiplier.getColumnCount();
         int rowCount = firstMultiplier.getRowCount();
-        for(int i = 0; i < rowCount; i++) {
-            for(int j = 0; j < columnCount; j++) {
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
                 String stringValue = (String)firstMultiplier.getValueAt(i, j);
                 viewModel.setValueToFirstMatrix(i, j, stringValue);
             }
@@ -222,8 +222,8 @@ public class MatrixMultiply {
     private void  initializeSecondMultiplier() {
         int columnCount = secondMultiplier.getColumnCount();
         int rowCount = secondMultiplier.getRowCount();
-        for(int i = 0; i < rowCount; i++) {
-            for(int j = 0; j < columnCount; j++) {
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
                 String value = (String)secondMultiplier.getValueAt(i, j);
                 viewModel.setValueToSecondMatrix(i, j, value);
             }
@@ -245,7 +245,7 @@ public class MatrixMultiply {
     }
 
     private void initializeResultMatrix(Matrix result) {
-        if(result == null) {
+        if (result == null) {
             resultMatrix = new JTable(1, 1);
         } else {
             int columnCount = result.getWidth();

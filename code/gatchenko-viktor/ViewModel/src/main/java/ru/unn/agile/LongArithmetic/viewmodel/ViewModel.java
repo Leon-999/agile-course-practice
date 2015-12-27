@@ -43,44 +43,6 @@ public class ViewModel {
         isInputMatricesAvailable = false;
     }
 
-    public boolean parseInputMN() {
-        isMultiplyButtonEnabled = false;
-
-        try {
-            if (!mFirstMatrix.isEmpty()) {
-                m1 = Integer.parseInt(mFirstMatrix);
-            }
-            if (!nFirstMatrix.isEmpty()) {
-                n1 = Integer.parseInt(nFirstMatrix);
-            }
-            if (!mSecondMatrix.isEmpty()) {
-                m2 = Integer.parseInt(mSecondMatrix);
-            }
-            if (!nSecondMatrix.isEmpty()) {
-                n2 = Integer.parseInt(nSecondMatrix);
-            }
-
-        } catch (Exception e) {
-            status = Status.BAD_FORMAT;
-            isOkButtonEnabled = false;
-            return false;
-        }
-
-        isOkButtonEnabled = false;
-        if(isInputMNAvailable() && n1 == m2) {
-            isOkButtonEnabled = true;
-        }
-        if(status != Status.WAITING) {
-            if (isOkButtonEnabled) {
-                status = Status.READYOK;
-            } else {
-                status = Status.WAITINGMN;
-            }
-        }
-
-        return isOkButtonEnabled;
-    }
-
     public void processingInputMN() {
         parseInputMN();
         if (isOkButtonEnabled()) {
@@ -93,7 +55,52 @@ public class ViewModel {
         }
     }
 
+    public void parseInputMN() {
+        isMultiplyButtonEnabled = false;
+
+        try {
+            tryParseInputMN();
+
+            isOkButtonEnabled = false;
+            if (isInputMNAvailable() && n1 == m2) {
+                isOkButtonEnabled = true;
+            }
+            if (status != Status.WAITING) {
+                if (isOkButtonEnabled) {
+                    status = Status.READYOK;
+                } else {
+                    status = Status.WAITINGMN;
+                }
+            }
+        } catch (Exception e) {
+            status = Status.BADFORMAT;
+            isOkButtonEnabled = false;
+        }
+    }
+
+    private void tryParseInputMN() {
+        if (!mFirstMatrix.isEmpty()) {
+            m1 = Integer.parseInt(mFirstMatrix);
+        }
+        if (!nFirstMatrix.isEmpty()) {
+            n1 = Integer.parseInt(nFirstMatrix);
+        }
+        if (!mSecondMatrix.isEmpty()) {
+            m2 = Integer.parseInt(mSecondMatrix);
+        }
+        if (!nSecondMatrix.isEmpty()) {
+            n2 = Integer.parseInt(nSecondMatrix);
+        }
+    }
+
     public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
+
+    private boolean isInputMNAvailable() {
+        boolean isAvailable = !mFirstMatrix.isEmpty() && !nFirstMatrix.isEmpty() &&
+                !mSecondMatrix.isEmpty() && !nSecondMatrix.isEmpty();
+
+        return isAvailable;
+    }
 
     public void processingInputMatrices() {
         parseInputMatrices();
@@ -103,43 +110,43 @@ public class ViewModel {
         }
     }
 
-    private boolean isInputMatricesAvailable() { return isInputMatricesAvailable; }
-
-    public boolean isMultiplyButtonEnabled() { return isMultiplyButtonEnabled; }
-
-    private boolean isInputMNAvailable() {
-        boolean isAvailable = !mFirstMatrix.isEmpty() && !nFirstMatrix.isEmpty() &&
-                              !mSecondMatrix.isEmpty() && !nSecondMatrix.isEmpty();
-
-        return isAvailable;
-    }
-
     public  void parseInputMatrices() {
-        if(status == Status.WAITINGMN) {
+        if (status == Status.WAITINGMN) {
             return;
         }
 
         try {
-            LongNumber value;
-            for (int i = 0; i < m1; i++) {
-                for (int j = 0; j < n1; j++) {
-                    value = new LongNumber(firstMatrixTable[i][j]);
-                    firstMultiplier.setElement(i, j, value);
-                }
-            }
-
-            for (int i = 0; i < m2; i++) {
-                for (int j = 0; j < n2; j++) {
-                    value = new LongNumber(secondMatrixTable[i][j]);
-                    secondMultiplier.setElement(i, j, value);
-                }
-            }
-
+            tryParseInputMatrices();
             isInputMatricesAvailable = true;
             status = Status.READYMULTIPLY;
         } catch (Exception e) {
             isInputMatricesAvailable = false;
-            status = Status.BAD_FORMAT;
+            status = Status.BADFORMAT;
+        }
+    }
+
+    private boolean isInputMatricesAvailable() { return isInputMatricesAvailable; }
+
+    private void tryParseInputMatrices() throws Exception {
+        LongNumber value;
+        for (int i = 0; i < m1; i++) {
+            for (int j = 0; j < n1; j++) {
+                value = new LongNumber(firstMatrixTable[i][j]);
+                if(value.isUndefined()) {
+                    throw new Exception("Can't parse input matrices, bad format");
+                }
+                firstMultiplier.setElement(i, j, value);
+            }
+        }
+
+        for (int i = 0; i < m2; i++) {
+            for (int j = 0; j < n2; j++) {
+                value = new LongNumber(secondMatrixTable[i][j]);
+                if(value.isUndefined()) {
+                    throw new Exception("Can't parse input matrices, bad format");
+                }
+                secondMultiplier.setElement(i, j, value);
+            }
         }
     }
 
@@ -189,6 +196,8 @@ public class ViewModel {
         this.nSecondMatrix = nSecondMatrix;
     }
 
+    public boolean isMultiplyButtonEnabled() { return isMultiplyButtonEnabled; }
+
     public int getM1() { return m1; }
 
     public int getN1() { return n1; }
@@ -202,13 +211,13 @@ public class ViewModel {
     public String getStatus() { return status; }
 
     public void setValueToFirstMatrix(int i, int j, String newValue) {
-        if(i > -1 && i < m1 && i > -1 && j < n1) {
+        if (i > -1 && i < m1 && i > -1 && j < n1) {
             firstMatrixTable[i][j] = newValue;
         }
     }
 
     public void setValueToSecondMatrix(int i, int j, String newValue) {
-        if(i > -1 && i < m2 && i > -1 && j < n2) {
+        if (i > -1 && i < m2 && i > -1 && j < n2) {
             secondMatrixTable[i][j] = newValue;
         }
     }
@@ -218,7 +227,7 @@ public class ViewModel {
         public static final String WAITING = "Please provide input data: write in matrices";
         public static final String READYOK = "Press 'Ok'";
         public static final String READYMULTIPLY = "Press 'Multiply'";
-        public static final String BAD_FORMAT = "Bad format";
+        public static final String BADFORMAT = "Bad format";
         public static final String SUCCESS = "Success";
 
         private Status() { }

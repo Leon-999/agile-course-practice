@@ -65,7 +65,7 @@ public class ViewModelTests {
         viewModel.setMFirstMatrix("a");
         viewModel.processingInputMN();
 
-        assertEquals(Status.BAD_FORMAT, viewModel.getStatus());
+        assertEquals(Status.BADFORMAT, viewModel.getStatus());
     }
 
     @Test
