@@ -10,9 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class MatrixMultiply {
-    private static final int formWidth  = 600;
-    private static final int formHeight  = 500;
+final public class MatrixMultiply {
+    private static final int FORM_WIDTH  = 600;
+    private static final int FORM_HEIGHT  = 500;
+    private static final int WIDTH_GRID_TOP_PANEL = 2;
+    private static final int HEIGHT_GRID_TOP_PANEL = 4;
 
     private ViewModel viewModel;
 
@@ -39,7 +41,7 @@ public class MatrixMultiply {
 
     private KeyAdapter keyListenerInputNM;
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         //Создаем фрейм в потоке обработки событий
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -49,9 +51,9 @@ public class MatrixMultiply {
         });
     }
 
-    private MatrixMultiply(ViewModel viewModel) {
+    private MatrixMultiply(final ViewModel viewModel) {
         JFrame frame = new JFrame("JTableExample");
-        frame.setSize(formWidth, formHeight);
+        frame.setSize(FORM_WIDTH, FORM_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         initializePanels();
@@ -71,7 +73,7 @@ public class MatrixMultiply {
 
     private void initializePanels() {
         mainPanel = new JPanel(new FlowLayout());
-        topPanel = new JPanel(new GridLayout(2,4));
+        topPanel = new JPanel(new GridLayout(WIDTH_GRID_TOP_PANEL, HEIGHT_GRID_TOP_PANEL));
         middlePanel = new JPanel(new FlowLayout());
         bottomPanel = new JPanel(new FlowLayout());
     }
@@ -189,7 +191,7 @@ public class MatrixMultiply {
 
     private void clickMultiplyButton() {
         bindMatrixes();
-        MatrixMultiply.this.viewModel.processingInputMatrices();//multiplyMatrices();
+        MatrixMultiply.this.viewModel.processingInputMatrices();
         backBindMatrixes();
     }
 
@@ -200,7 +202,7 @@ public class MatrixMultiply {
     }
 
     private void stopEditingMatrixes() {
-        if(firstMultiplier.isEditing()) {
+        if (firstMultiplier.isEditing()) {
             firstMultiplier.getCellEditor().stopCellEditing();
         }
         if (secondMultiplier.isEditing()) {
@@ -213,7 +215,7 @@ public class MatrixMultiply {
         int rowCount = firstMultiplier.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                String stringValue = (String)firstMultiplier.getValueAt(i, j);
+                String stringValue = (String) firstMultiplier.getValueAt(i, j);
                 viewModel.setValueToFirstMatrix(i, j, stringValue);
             }
         }
@@ -224,7 +226,7 @@ public class MatrixMultiply {
         int rowCount = secondMultiplier.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                String value = (String)secondMultiplier.getValueAt(i, j);
+                String value = (String) secondMultiplier.getValueAt(i, j);
                 viewModel.setValueToSecondMatrix(i, j, value);
             }
         }
@@ -236,7 +238,7 @@ public class MatrixMultiply {
         statusUpdate();
     }
 
-    private  void reinitializeBottomPanel(Matrix result) {
+    private  void reinitializeBottomPanel(final Matrix result) {
         bottomPanel.remove(resultMatrix);
 
         initializeResultMatrix(result);
@@ -244,7 +246,7 @@ public class MatrixMultiply {
         bottomPanel.updateUI();
     }
 
-    private void initializeResultMatrix(Matrix result) {
+    private void initializeResultMatrix(final Matrix result) {
         if (result == null) {
             resultMatrix = new JTable(1, 1);
         } else {

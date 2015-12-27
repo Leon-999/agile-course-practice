@@ -33,7 +33,7 @@ public class ViewModel {
         nFirstMatrix = "";
         mSecondMatrix = "";
         nSecondMatrix = "";
-        status = Status.WAITINGMN;
+        status = Status.WAITING_MN;
 
         firstMatrixTable = new String[InitialSizeMatrix][InitialSizeMatrix];
         secondMatrixTable = new String[InitialSizeMatrix][InitialSizeMatrix];
@@ -67,13 +67,13 @@ public class ViewModel {
             }
             if (status != Status.WAITING) {
                 if (isOkButtonEnabled) {
-                    status = Status.READYOK;
+                    status = Status.READY_OK;
                 } else {
-                    status = Status.WAITINGMN;
+                    status = Status.WAITING_MN;
                 }
             }
         } catch (Exception e) {
-            status = Status.BADFORMAT;
+            status = Status.BAD_FORMAT;
             isOkButtonEnabled = false;
         }
     }
@@ -111,17 +111,17 @@ public class ViewModel {
     }
 
     public  void parseInputMatrices() {
-        if (status == Status.WAITINGMN) {
+        if (status == Status.WAITING_MN) {
             return;
         }
 
         try {
             tryParseInputMatrices();
             isInputMatricesAvailable = true;
-            status = Status.READYMULTIPLY;
+            status = Status.READY_MULTIPLY;
         } catch (Exception e) {
             isInputMatricesAvailable = false;
-            status = Status.BADFORMAT;
+            status = Status.BAD_FORMAT;
         }
     }
 
@@ -151,7 +151,7 @@ public class ViewModel {
     }
 
     private void multiplyMatrices() {
-        if (status == Status.READYMULTIPLY) {
+        if (status == Status.READY_MULTIPLY) {
             resultMatrix = firstMultiplier.multiply(secondMultiplier);
         }
     }
@@ -223,11 +223,11 @@ public class ViewModel {
     }
 
     public final class Status {
-        public static final String WAITINGMN = "Please provide input data: M and N for matrices";
+        public static final String WAITING_MN = "Please provide input data: M and N for matrices";
         public static final String WAITING = "Please provide input data: write in matrices";
-        public static final String READYOK = "Press 'Ok'";
-        public static final String READYMULTIPLY = "Press 'Multiply'";
-        public static final String BADFORMAT = "Bad format";
+        public static final String READY_OK = "Press 'Ok'";
+        public static final String READY_MULTIPLY = "Press 'Multiply'";
+        public static final String BAD_FORMAT = "Bad format";
         public static final String SUCCESS = "Success";
 
         private Status() { }

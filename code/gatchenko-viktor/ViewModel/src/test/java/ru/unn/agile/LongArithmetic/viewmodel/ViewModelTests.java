@@ -28,21 +28,21 @@ public class ViewModelTests {
         assertEquals("", viewModel.getNFirstMatrix());
         assertEquals("", viewModel.getMSecondMatrix());
         assertEquals("", viewModel.getNSecondMatrix());
-        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+        assertEquals(Status.WAITING_MN, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusWaitingMNInTheBeginning() {
-        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+    public void isStatusWAITING_MNInTheBeginning() {
+        assertEquals(Status.WAITING_MN, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusReadyOKWhenFieldsMNAreFill() {
+    public void isStatusREADY_OKWhenFieldsMNAreFill() {
         fillMNFields();
 
         viewModel.parseInputMN();
 
-        assertEquals(Status.READYOK, viewModel.getStatus());
+        assertEquals(Status.READY_OK, viewModel.getStatus());
     }
 
     private void fillMNFields() {
@@ -57,15 +57,15 @@ public class ViewModelTests {
     public void isStatusWaitingWhenMultiplyWithEmptyFieldsMN() {
         viewModel.processingInputMatrices();
 
-        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+        assertEquals(Status.WAITING_MN, viewModel.getStatus());
     }
 
     @Test
-    public void canReportBadFormat() {
+    public void canReportBAD_FORMAT() {
         viewModel.setMFirstMatrix("a");
         viewModel.processingInputMN();
 
-        assertEquals(Status.BADFORMAT, viewModel.getStatus());
+        assertEquals(Status.BAD_FORMAT, viewModel.getStatus());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class ViewModelTests {
         viewModel.setMFirstMatrix("1");
         viewModel.processingInputMN();
 
-        assertEquals(Status.WAITINGMN, viewModel.getStatus());
+        assertEquals(Status.WAITING_MN, viewModel.getStatus());
     }
 
     @Test
@@ -171,12 +171,12 @@ public class ViewModelTests {
     }
 
     @Test
-    public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
+    public void isStatusREADY_MULTIPLYWhenAllFieldsAreFill() {
         fillMNFields1x2And2x1();
         viewModel.processingInputMN();;
         fillMatrix1x2And2x1();
         viewModel.parseInputMatrices();
 
-        assertEquals(Status.READYMULTIPLY, viewModel.getStatus());
+        assertEquals(Status.READY_MULTIPLY, viewModel.getStatus());
     }
 }
