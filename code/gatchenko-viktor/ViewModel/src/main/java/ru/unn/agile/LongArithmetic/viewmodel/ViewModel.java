@@ -117,6 +117,13 @@ public class ViewModel {
         return isAvailable;
     }
 
+    public void createMatrices() {
+        if (!parseInputMN()) {
+            return;
+        }
+        this.enterPresed();
+    }
+
     private void initializeMatrices() {
         parseInputMatrices();
     }
@@ -151,6 +158,7 @@ public class ViewModel {
     }
 
     public void multiplyMatrices() {
+        parseInputMatrices();
         if (status == Status.READYMULTIPLY) {
             resultMatrix = firstMultiplier.multiply(secondMultiplier);
         }
@@ -195,6 +203,14 @@ public class ViewModel {
 
         this.nSecondMatrix = nSecondMatrix;
     }
+
+    public int getM1() { return m1; }
+
+    public int getN1() { return n1; }
+
+    public int getM2() { return m2; }
+
+    public int getN2() { return n2; }
 
     public Matrix getResultMatrix() { return resultMatrix; }
 
