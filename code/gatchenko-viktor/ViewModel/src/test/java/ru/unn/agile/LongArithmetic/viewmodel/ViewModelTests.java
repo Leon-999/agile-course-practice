@@ -3,7 +3,7 @@ package ru.unn.agile.LongArithmetic.viewmodel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.unn.agile.LongArithmetic.model.LongNumber;
+
 import ru.unn.agile.LongArithmetic.model.Matrix;
 import ru.unn.agile.LongArithmetic.viewmodel.ViewModel.Status;
 
@@ -40,7 +40,7 @@ public class ViewModelTests {
     public void isStatusReadyOKWhenFieldsMNAreFill() {
         fillMNFields();
 
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.parseInputMN();
 
         assertEquals(Status.READYOK, viewModel.getStatus());
     }
@@ -55,7 +55,7 @@ public class ViewModelTests {
 
     @Test
     public void isStatusWaitingWhenMultiplyWithEmptyFieldsMN() {
-        viewModel.multiplyMatrices();
+        viewModel.processingInputMatrices();
 
         assertEquals(Status.WAITINGMN, viewModel.getStatus());
     }
@@ -63,7 +63,7 @@ public class ViewModelTests {
     @Test
     public void canReportBadFormat() {
         viewModel.setMFirstMatrix("a");
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
 
         assertEquals(Status.BAD_FORMAT, viewModel.getStatus());
     }
@@ -71,9 +71,9 @@ public class ViewModelTests {
     @Test
     public void canCleanStatusIfParseIsOK() {
         viewModel.setMFirstMatrix("a");
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
         viewModel.setMFirstMatrix("1");
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
 
         assertEquals(Status.WAITINGMN, viewModel.getStatus());
     }
@@ -91,11 +91,11 @@ public class ViewModelTests {
     @Test
     public void isOkButtonDisabledWhenFormatIsBad() {
         fillMNFields();
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
         assertEquals(true, viewModel.isOkButtonEnabled());
 
         viewModel.setMFirstMatrix("some");
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
     }
@@ -105,7 +105,7 @@ public class ViewModelTests {
         viewModel.setMFirstMatrix("1");
         viewModel.setNFirstMatrix("1");
 
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
     }
@@ -114,7 +114,7 @@ public class ViewModelTests {
     public void isOkButtonEnabledWithCorrectInput() {
         fillMNFields();
 
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.processingInputMN();
 
         assertEquals(true, viewModel.isOkButtonEnabled());
     }
@@ -122,12 +122,11 @@ public class ViewModelTests {
     @Test
     public void canPerformMultiplyAction() {
         fillMNFields();
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
-        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        viewModel.processingInputMN();
         viewModel.setValueToFirstMatrix(0, 0, "2");
         viewModel.setValueToSecondMatrix(0, 0, "2");
 
-        viewModel.processKeyInTextField(KeyboardKeys.M);
+        viewModel.processingInputMatrices();
         Matrix resultMatrix = viewModel.getResultMatrix();
         boolean success = resultMatrix.getElement(0, 0).equals(4);
 
@@ -137,10 +136,9 @@ public class ViewModelTests {
     @Test
     public void canPerformMultiplyMatrix1x2And2x1() {
         fillMNFields1x2And2x1();
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
-        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        viewModel.processingInputMN();
         fillMatrix1x2And2x1();
-        viewModel.processKeyInTextField(KeyboardKeys.M);
+        viewModel.processingInputMatrices();
 
         Matrix resultMatrix = viewModel.getResultMatrix();
         boolean success = resultMatrix.getElement(0, 0).equals(4);
@@ -165,10 +163,9 @@ public class ViewModelTests {
     @Test
     public void canSetSuccessMessage() {
         fillMNFields1x2And2x1();
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
-        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        viewModel.processingInputMN();
         fillMatrix1x2And2x1();
-        viewModel.processKeyInTextField(KeyboardKeys.M);
+        viewModel.processingInputMatrices();
 
         assertEquals(Status.SUCCESS, viewModel.getStatus());
     }
@@ -176,10 +173,9 @@ public class ViewModelTests {
     @Test
     public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
         fillMNFields1x2And2x1();
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
-        viewModel.processKeyInTextField(KeyboardKeys.ENTER);
+        viewModel.processingInputMN();;
         fillMatrix1x2And2x1();
-        viewModel.processKeyInTextField(KeyboardKeys.ANY);
+        viewModel.parseInputMatrices();
 
         assertEquals(Status.READYMULTIPLY, viewModel.getStatus());
     }

@@ -41,19 +41,7 @@ public class ViewModel {
 
     }
 
-    public void processKeyInTextField(final int keyCode) {
-        parseInputMN();
-        parseInputMatrices();
-
-        if (keyCode == KeyboardKeys.ENTER) {
-            enterPresed();
-        }
-        if(keyCode == KeyboardKeys.M) {
-            mPresed();
-        }
-    }
-
-    private boolean parseInputMN() {
+    public boolean parseInputMN() {
         isMultiplyButtonEnabled = false;
 
         try {
@@ -88,7 +76,8 @@ public class ViewModel {
         return isOkButtonEnabled;
     }
 
-    private void enterPresed() {
+    public void processingInputMN() {
+        parseInputMN();
         if (isOkButtonEnabled()) {
             firstMatrixTable = new String[m1][n1];
             secondMatrixTable = new String[m2][n2];
@@ -100,9 +89,9 @@ public class ViewModel {
 
     public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
 
-    private  void mPresed() {
+    public void processingInputMatrices() {
+        parseInputMatrices();
         if (isMultiplyButtonEnabled()) {
-            initializeMatrices();
             multiplyMatrices();
             status = Status.SUCCESS;
         }
@@ -117,19 +106,8 @@ public class ViewModel {
         return isAvailable;
     }
 
-    public void createMatrices() {
-        if (!parseInputMN()) {
-            return;
-        }
-        this.enterPresed();
-    }
-
-    private void initializeMatrices() {
-        parseInputMatrices();
-    }
-
-    private  void parseInputMatrices() {
-        if(status != Status.WAITING) {
+    public  void parseInputMatrices() {
+        if(status == Status.WAITINGMN) {
             return;
         }
 
@@ -157,8 +135,7 @@ public class ViewModel {
         }
     }
 
-    public void multiplyMatrices() {
-        parseInputMatrices();
+    private void multiplyMatrices() {
         if (status == Status.READYMULTIPLY) {
             resultMatrix = firstMultiplier.multiply(secondMultiplier);
         }

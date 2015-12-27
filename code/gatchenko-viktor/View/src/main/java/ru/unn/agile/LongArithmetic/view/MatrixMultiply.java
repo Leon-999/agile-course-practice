@@ -1,15 +1,12 @@
 package ru.unn.agile.LongArithmetic.view;
 
 import ru.unn.agile.LongArithmetic.model.Matrix;
-import ru.unn.agile.LongArithmetic.viewmodel.KeyboardKeys;
 import ru.unn.agile.LongArithmetic.viewmodel.ViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class MatrixMultiply {
     private static final int formWidth  = 600;
@@ -37,9 +34,6 @@ public class MatrixMultiply {
     private JTable resultMatrix;
 
     private JLabel labelStatus;
-
-    private KeyAdapter keyListenerTopPanel;
-    private KeyAdapter keyListenerMiddlePanel;
 
     public static void main(String[] args) {
         //Создаем фрейм в потоке обработки событий
@@ -80,7 +74,7 @@ public class MatrixMultiply {
 
     private void initializeTopPanel() {
         firstMatrixLabel = new JLabel("M and N first matrix:");
-        mFirstMatrixText = new JTextField("");//("3");
+        mFirstMatrixText = new JTextField("");
         nFirstMatrixText = new JTextField("2");
         secondMatrixLabel = new JLabel("M and N second matrix:");
         mSecondMatrixText = new JTextField("2");
@@ -94,15 +88,6 @@ public class MatrixMultiply {
         topPanel.add(secondMatrixLabel);
         topPanel.add(mSecondMatrixText);
         topPanel.add(nSecondMatrixText);
-
-        //topPanel.setFocusable(true);
-        Action pressed = new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                mainPanel.remove(topPanel);
-                mainPanel.updateUI();
-            }
-        };
-        mFirstMatrixText.getInputMap().put(KeyStroke.getKeyStroke("F2"), pressed);
     }
 
     private void initializeMiddlePanel() {
@@ -145,32 +130,11 @@ public class MatrixMultiply {
                 clickMultiplyButton();
             }
         });
-
-        keyListenerTopPanel = new KeyAdapter() {
-            public void keyReleased(final KeyEvent e) {
-                keyProcessTopPanel(e);
-            }
-        };
-        topPanel.addKeyListener(keyListenerTopPanel);
-
-        keyListenerMiddlePanel = new KeyAdapter() {
-            public void keyReleased(final KeyEvent e) {
-                keyProcessMiddlePanel(e);
-            }
-        };
-        //middlePanel.addKeyListener(keyListenerMiddlePanel);
-        /*firstMultiplier.addKeyListener(keyListenerMiddlePanel);
-        secondMultiplier.addKeyListener(keyListenerMiddlePanel);
-
-        mFirstMatrixText.addKeyListener(keyListenerTopPanel);
-        nFirstMatrixText.addKeyListener(keyListenerTopPanel);
-        mSecondMatrixText.addKeyListener(keyListenerTopPanel);
-        nSecondMatrixText.addKeyListener(keyListenerTopPanel);*/
     }
 
     private void clickOkButton() {
         bindMN();
-        MatrixMultiply.this.viewModel.createMatrices();
+        viewModel.processingInputMN();//.createMatrices();
         backBindMN();
     }
 
@@ -205,7 +169,7 @@ public class MatrixMultiply {
 
     private void clickMultiplyButton() {
         bindMatrixes();
-        MatrixMultiply.this.viewModel.multiplyMatrices();
+        MatrixMultiply.this.viewModel.processingInputMatrices();//multiplyMatrices();
         backBindMatrixes();
     }
 
@@ -261,30 +225,19 @@ public class MatrixMultiply {
     }
 
     private void initializeResultMatrix(Matrix result) {
-        int columnCount = result.getWidth();
-        int rowCount = result.getHeight();
-        resultMatrix = new JTable(rowCount, columnCount);
+        if(result == null) {
+            resultMatrix = new JTable(1, 1);
+        } else {
+            int columnCount = result.getWidth();
+            int rowCount = result.getHeight();
+            resultMatrix = new JTable(rowCount, columnCount);
 
-        for(int i = 0; i < rowCount; i++) {
-            for(int j = 0; j < columnCount; j++) {
-                String value = result.getElement(i, j).convertToString();
-                resultMatrix.setValueAt(value, i, j);
+            for (int i = 0; i < rowCount; i++) {
+                for (int j = 0; j < columnCount; j++) {
+                    String value = result.getElement(i, j).convertToString();
+                    resultMatrix.setValueAt(value, i, j);
+                }
             }
-        }
-    }
-
-    private void keyProcessTopPanel(final KeyEvent e) {
-        if(e.getKeyCode() == KeyboardKeys.ENTER) {
-            clickOkButton();
-        }
-                /*bind();
-                Calculator.this.viewModel.processKeyInTextField(e.getKeyCode());
-                backBind();*/
-    }
-
-    private  void keyProcessMiddlePanel(final KeyEvent e) {
-        if(e.getKeyCode() == KeyboardKeys.M) {
-            clickMultiplyButton();
         }
     }
 }
