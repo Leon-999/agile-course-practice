@@ -16,18 +16,15 @@ public final class MatrixMultiply {
     private static final int WIDTH_GRID_TOP_PANEL = 2;
     private static final int HEIGHT_GRID_TOP_PANEL = 4;
 
-    private ViewModel viewModel;
+    private final ViewModel viewModel;
 
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel middlePanel;
     private JPanel bottomPanel;
 
-
-    private JLabel firstMatrixLabel;
     private JTextField mFirstMatrixText;
     private JTextField nFirstMatrixText;
-    private JLabel secondMatrixLabel;
     private JTextField mSecondMatrixText;
     private JTextField nSecondMatrixText;
     private JButton okButton;
@@ -38,8 +35,6 @@ public final class MatrixMultiply {
     private JTable resultMatrix;
 
     private JLabel labelStatus;
-
-    private KeyAdapter keyListenerInputNM;
 
     public static void main(final String[] args) {
         //Создаем фрейм в потоке обработки событий
@@ -79,10 +74,10 @@ public final class MatrixMultiply {
     }
 
     private void initializeTopPanel() {
-        firstMatrixLabel = new JLabel("M and N first matrix:");
+        JLabel firstMatrixLabel = new JLabel("M and N first matrix:");
         mFirstMatrixText = new JTextField("");
         nFirstMatrixText = new JTextField("2");
-        secondMatrixLabel = new JLabel("M and N second matrix:");
+        JLabel secondMatrixLabel = new JLabel("M and N second matrix:");
         mSecondMatrixText = new JTextField("2");
         nSecondMatrixText = new JTextField("1");
         okButton = new JButton("Ok");
@@ -139,7 +134,7 @@ public final class MatrixMultiply {
             }
         });
 
-        keyListenerInputNM = new KeyAdapter() {
+        KeyAdapter keyListenerInputNM = new KeyAdapter() {
             public void keyReleased(final KeyEvent e) {
                 keyProcessInputMN();
             }
