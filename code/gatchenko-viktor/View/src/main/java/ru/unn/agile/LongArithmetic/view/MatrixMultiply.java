@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MatrixMultiply {
     private static final int formWidth  = 600;
@@ -34,6 +36,8 @@ public class MatrixMultiply {
     private JTable resultMatrix;
 
     private JLabel labelStatus;
+
+    private KeyAdapter keyListenerInputNM;
 
     public static void main(String[] args) {
         //Создаем фрейм в потоке обработки событий
@@ -80,6 +84,7 @@ public class MatrixMultiply {
         mSecondMatrixText = new JTextField("2");
         nSecondMatrixText = new JTextField("1");
         okButton = new JButton("Ok");
+        okButton.setEnabled(false);
 
         topPanel.add(firstMatrixLabel);
         topPanel.add(mFirstMatrixText);
@@ -108,6 +113,7 @@ public class MatrixMultiply {
         mainPanel.add(middlePanel);
 
         calculateButton = new JButton("Multiply");
+        calculateButton.setEnabled(false);
         mainPanel.add(calculateButton);
 
         mainPanel.add(bottomPanel);
@@ -130,12 +136,26 @@ public class MatrixMultiply {
                 clickMultiplyButton();
             }
         });
+
+        keyListenerInputNM = new KeyAdapter() {
+            public void keyReleased(final KeyEvent e) {
+                keyProcessInputMN();
+            }
+        };
+
+        mFirstMatrixText.addKeyListener(keyListenerInputNM);
+        nFirstMatrixText.addKeyListener(keyListenerInputNM);
+        mSecondMatrixText.addKeyListener(keyListenerInputNM);
+        nSecondMatrixText.addKeyListener(keyListenerInputNM);
+
+
     }
 
     private void clickOkButton() {
         bindMN();
-        viewModel.processingInputMN();//.createMatrices();
+        viewModel.processingInputMN();
         backBindMN();
+        calculateButton.setEnabled(viewModel.isMultiplyButtonEnabled());
     }
 
     private void  bindMN() {
@@ -239,5 +259,13 @@ public class MatrixMultiply {
                 }
             }
         }
+    }
+
+    private void keyProcessInputMN() {
+        bindMN();
+        viewModel.parseInputMN();
+        statusUpdate();
+        okButton.setEnabled(viewModel.isOkButtonEnabled());
+        calculateButton.setEnabled(viewModel.isMultiplyButtonEnabled());
     }
 }

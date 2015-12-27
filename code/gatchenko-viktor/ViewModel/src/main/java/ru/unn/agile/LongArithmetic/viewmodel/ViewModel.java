@@ -23,8 +23,10 @@ public class ViewModel {
     private Matrix resultMatrix;
 
     private String status;
-    private boolean isOkButtonEnabled = false;
-    private boolean isMultiplyButtonEnabled = false;
+    private boolean isOkButtonEnabled;
+    private boolean isMultiplyButtonEnabled;
+    private boolean isInputMatricesAvailable;
+
 
     public ViewModel() {
         mFirstMatrix = "";
@@ -38,7 +40,7 @@ public class ViewModel {
 
         isOkButtonEnabled = false;
         isMultiplyButtonEnabled = false;
-
+        isInputMatricesAvailable = false;
     }
 
     public boolean parseInputMN() {
@@ -64,7 +66,10 @@ public class ViewModel {
             return false;
         }
 
-        isOkButtonEnabled = isInputMNAvailable();
+        isOkButtonEnabled = false;
+        if(isInputMNAvailable() && n1 == m2) {
+            isOkButtonEnabled = true;
+        }
         if(status != Status.WAITING) {
             if (isOkButtonEnabled) {
                 status = Status.READYOK;
@@ -84,6 +89,7 @@ public class ViewModel {
             firstMultiplier = new Matrix(m1, n1);
             secondMultiplier = new Matrix(m2, n2);
             status = Status.WAITING;
+            isMultiplyButtonEnabled = true;
         }
     }
 
@@ -91,11 +97,13 @@ public class ViewModel {
 
     public void processingInputMatrices() {
         parseInputMatrices();
-        if (isMultiplyButtonEnabled()) {
+        if (isInputMatricesAvailable()) {
             multiplyMatrices();
             status = Status.SUCCESS;
         }
     }
+
+    private boolean isInputMatricesAvailable() { return isInputMatricesAvailable; }
 
     public boolean isMultiplyButtonEnabled() { return isMultiplyButtonEnabled; }
 
@@ -127,11 +135,11 @@ public class ViewModel {
                 }
             }
 
+            isInputMatricesAvailable = true;
             status = Status.READYMULTIPLY;
-            isMultiplyButtonEnabled = true;
         } catch (Exception e) {
+            isInputMatricesAvailable = false;
             status = Status.BAD_FORMAT;
-            isMultiplyButtonEnabled = false;
         }
     }
 
