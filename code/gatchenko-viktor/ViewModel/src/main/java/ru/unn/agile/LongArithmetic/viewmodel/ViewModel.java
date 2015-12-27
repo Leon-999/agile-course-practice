@@ -5,7 +5,7 @@ import ru.unn.agile.LongArithmetic.model.Matrix;
 
 public class ViewModel {
 
-    private static final int InitialSizeMatrix = 1;
+    private static final int INITIAL_SIZE_MATRIX = 1;
 
     private String mFirstMatrix;
     private String nFirstMatrix;
@@ -35,8 +35,8 @@ public class ViewModel {
         nSecondMatrix = "";
         status = Status.WAITING_MN;
 
-        firstMatrixTable = new String[InitialSizeMatrix][InitialSizeMatrix];
-        secondMatrixTable = new String[InitialSizeMatrix][InitialSizeMatrix];
+        firstMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
+        secondMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
 
         isOkButtonEnabled = false;
         isMultiplyButtonEnabled = false;
@@ -96,8 +96,8 @@ public class ViewModel {
     public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
 
     private boolean isInputMNAvailable() {
-        boolean isAvailable = !mFirstMatrix.isEmpty() && !nFirstMatrix.isEmpty() &&
-                !mSecondMatrix.isEmpty() && !nSecondMatrix.isEmpty();
+        boolean isAvailable = !mFirstMatrix.isEmpty() && !nFirstMatrix.isEmpty()
+                            && !mSecondMatrix.isEmpty() && !nSecondMatrix.isEmpty();
 
         return isAvailable;
     }
@@ -132,7 +132,7 @@ public class ViewModel {
         for (int i = 0; i < m1; i++) {
             for (int j = 0; j < n1; j++) {
                 value = new LongNumber(firstMatrixTable[i][j]);
-                if(value.isUndefined()) {
+                if (value.isUndefined()) {
                     throw new Exception("Can't parse input matrices, bad format");
                 }
                 firstMultiplier.setElement(i, j, value);
@@ -142,7 +142,7 @@ public class ViewModel {
         for (int i = 0; i < m2; i++) {
             for (int j = 0; j < n2; j++) {
                 value = new LongNumber(secondMatrixTable[i][j]);
-                if(value.isUndefined()) {
+                if (value.isUndefined()) {
                     throw new Exception("Can't parse input matrices, bad format");
                 }
                 secondMultiplier.setElement(i, j, value);
@@ -210,13 +210,13 @@ public class ViewModel {
 
     public String getStatus() { return status; }
 
-    public void setValueToFirstMatrix(int i, int j, String newValue) {
+    public void setValueToFirstMatrix(final int i, final int j, final String newValue) {
         if (i > -1 && i < m1 && i > -1 && j < n1) {
             firstMatrixTable[i][j] = newValue;
         }
     }
 
-    public void setValueToSecondMatrix(int i, int j, String newValue) {
+    public void setValueToSecondMatrix(final int i, final int j, final String newValue) {
         if (i > -1 && i < m2 && i > -1 && j < n2) {
             secondMatrixTable[i][j] = newValue;
         }
