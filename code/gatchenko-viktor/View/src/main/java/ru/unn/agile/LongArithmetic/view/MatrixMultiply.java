@@ -12,20 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class MatrixMultiply {
-
-    //private Object[] headers = { "Name", "Surname", "Telephone" };
-
-    /*private Object[][] data = {
-            { "John", "Smith", "1112221" },
-            { "Ivan", "Black", "2221111" },
-            { "George", "White", "3334444" },
-            { "Bolvan", "Black", "2235111" },
-            { "Serg", "Black", "2221511" },
-            { "Pussy", "Black", "2221111" },
-            { "Tonya", "Red", "2121111" },
-            { "Elise", "Green", "2321111" },
-    };*/
-
     private static final int formWidth  = 600;
     private static final int formHeight  = 500;
 
@@ -52,7 +38,18 @@ public class MatrixMultiply {
 
     private JLabel labelStatus;
 
-    private KeyAdapter keyListener;
+    private KeyAdapter keyListenerTopPanel;
+    private KeyAdapter keyListenerMiddlePanel;
+
+    public static void main(String[] args) {
+        //Создаем фрейм в потоке обработки событий
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new  MatrixMultiply(new ViewModel());
+            }
+        });
+    }
 
     private MatrixMultiply(ViewModel viewModel) {
         JFrame frame = new JFrame("JTableExample");
@@ -70,6 +67,71 @@ public class MatrixMultiply {
 
         this.viewModel = viewModel;
 
+        initializeListeners();
+        statusUpdate();
+    }
+
+    private void initializePanels() {
+        mainPanel = new JPanel(new FlowLayout());
+        topPanel = new JPanel(new GridLayout(2,4));
+        middlePanel = new JPanel(new FlowLayout());
+        bottomPanel = new JPanel(new FlowLayout());
+    }
+
+    private void initializeTopPanel() {
+        firstMatrixLabel = new JLabel("M and N first matrix:");
+        mFirstMatrixText = new JTextField("");//("3");
+        nFirstMatrixText = new JTextField("2");
+        secondMatrixLabel = new JLabel("M and N second matrix:");
+        mSecondMatrixText = new JTextField("2");
+        nSecondMatrixText = new JTextField("1");
+        okButton = new JButton("Ok");
+
+        topPanel.add(firstMatrixLabel);
+        topPanel.add(mFirstMatrixText);
+        topPanel.add(nFirstMatrixText);
+        topPanel.add(okButton);
+        topPanel.add(secondMatrixLabel);
+        topPanel.add(mSecondMatrixText);
+        topPanel.add(nSecondMatrixText);
+
+        //topPanel.setFocusable(true);
+        Action pressed = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.remove(topPanel);
+                mainPanel.updateUI();
+            }
+        };
+        mFirstMatrixText.getInputMap().put(KeyStroke.getKeyStroke("F2"), pressed);
+    }
+
+    private void initializeMiddlePanel() {
+        firstMultiplier = new JTable(1, 1);
+        secondMultiplier = new JTable(1, 1);
+
+        middlePanel.add(firstMultiplier);
+        middlePanel.add(secondMultiplier);
+    }
+
+    private void initializeBottomPanel() {
+        resultMatrix = new JTable(1, 1);
+        bottomPanel.add(resultMatrix);
+    }
+
+    private void initializeMainPanel() {
+        mainPanel.add(topPanel);
+        mainPanel.add(middlePanel);
+
+        calculateButton = new JButton("Multiply");
+        mainPanel.add(calculateButton);
+
+        mainPanel.add(bottomPanel);
+
+        labelStatus = new JLabel();
+        mainPanel.add(labelStatus);
+    }
+
+    private void initializeListeners() {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
@@ -84,77 +146,26 @@ public class MatrixMultiply {
             }
         });
 
-        keyListener = new KeyAdapter() {
+        keyListenerTopPanel = new KeyAdapter() {
             public void keyReleased(final KeyEvent e) {
-                keyProcess(e);
+                keyProcessTopPanel(e);
             }
         };
+        topPanel.addKeyListener(keyListenerTopPanel);
 
-        mFirstMatrixText.addKeyListener(keyListener);
-        nFirstMatrixText.addKeyListener(keyListener);
-        mSecondMatrixText.addKeyListener(keyListener);
-        nSecondMatrixText.addKeyListener(keyListener);
-    }
-
-    private void initializePanels() {
-        mainPanel = new JPanel(new FlowLayout());
-        topPanel = new JPanel(new GridLayout(2,4));
-        middlePanel = new JPanel(new FlowLayout());
-        bottomPanel = new JPanel(new FlowLayout());
-    }
-
-    private void initializeTopPanel() {
-        firstMatrixLabel = new JLabel("M and N first matrix:");
-        mFirstMatrixText = new JTextField("1");//("3");
-        nFirstMatrixText = new JTextField("2");
-        secondMatrixLabel = new JLabel("M and N second matrix:");
-        mSecondMatrixText = new JTextField("2");
-        nSecondMatrixText = new JTextField("1");
-        okButton = new JButton("Ok");
-
-        topPanel.add(firstMatrixLabel);
-        topPanel.add(mFirstMatrixText);
-        topPanel.add(nFirstMatrixText);
-        topPanel.add(okButton);
-        topPanel.add(secondMatrixLabel);
-        topPanel.add(mSecondMatrixText);
-        topPanel.add(nSecondMatrixText);
-    }
-
-    private void initializeMiddlePanel() {
-        firstMultiplier = new JTable(1, 1);
-        secondMultiplier = new JTable(1, 1);
-
-        middlePanel.add(firstMultiplier);
-        middlePanel.add(secondMultiplier);
-    }
-
-    private void initializeBottomPanel() {
-        resultMatrix = new JTable(1, 1);
-        resultMatrix.setEnabled(false);
-
-        calculateButton = new JButton("Multiply");
-        bottomPanel.add(calculateButton);
-        bottomPanel.add(resultMatrix);
-
-        labelStatus = new JLabel();
-        bottomPanel.add(labelStatus);
-    }
-
-    private void initializeMainPanel() {
-        mainPanel.add(topPanel);
-        mainPanel.add(middlePanel);
-        mainPanel.add(bottomPanel);
-    }
-
-    public static void main(String[] args) {
-        //Создаем фрейм в потоке обработки событий
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new  MatrixMultiply(new ViewModel());
+        keyListenerMiddlePanel = new KeyAdapter() {
+            public void keyReleased(final KeyEvent e) {
+                keyProcessMiddlePanel(e);
             }
-        });
+        };
+        //middlePanel.addKeyListener(keyListenerMiddlePanel);
+        /*firstMultiplier.addKeyListener(keyListenerMiddlePanel);
+        secondMultiplier.addKeyListener(keyListenerMiddlePanel);
+
+        mFirstMatrixText.addKeyListener(keyListenerTopPanel);
+        nFirstMatrixText.addKeyListener(keyListenerTopPanel);
+        mSecondMatrixText.addKeyListener(keyListenerTopPanel);
+        nSecondMatrixText.addKeyListener(keyListenerTopPanel);*/
     }
 
     private void clickOkButton() {
@@ -172,8 +183,11 @@ public class MatrixMultiply {
 
     private void backBindMN() {
         okButton.setEnabled(viewModel.isOkButtonEnabled());
-
         reinitializeMiddlePanel();
+        statusUpdate();
+    }
+
+    private void statusUpdate() {
         labelStatus.setText(viewModel.getStatus());
     }
 
@@ -182,7 +196,6 @@ public class MatrixMultiply {
         middlePanel.remove(secondMultiplier);
 
         firstMultiplier = new JTable(viewModel.getM1(), viewModel.getN1());
-        //firstMultiplier.setValueAt("1", 0, 0);
         secondMultiplier = new JTable(viewModel.getM2(), viewModel.getN2());
 
         middlePanel.add(firstMultiplier);
@@ -197,33 +210,34 @@ public class MatrixMultiply {
     }
 
     private void bindMatrixes() {
-        //firstMultiplier.
-        //secondMultiplier.updateUI();
-        //firstMultiplier.removeEditor();
-        //secondMultiplier.removeEditor();
-        boolean t = firstMultiplier.isEditing();
-        int p = firstMultiplier.getEditingRow();
-        int k = firstMultiplier.getEditingColumn();
-        firstMultiplier.getCellEditor().stopCellEditing();
-        secondMultiplier.getCellEditor().stopCellEditing();
-        //firstMultiplier.editingStopped(null);
-        //secondMultiplier.editingStopped(null);
+        stopEditingMatrixes();
+        initializeFirstMultiplier();
+        initializeSecondMultiplier();
+    }
+
+    private void stopEditingMatrixes() {
+        if(firstMultiplier.isEditing()) {
+            firstMultiplier.getCellEditor().stopCellEditing();
+        }
+        if (secondMultiplier.isEditing()) {
+            secondMultiplier.getCellEditor().stopCellEditing();
+        }
+    }
+
+    private void initializeFirstMultiplier() {
         int columnCount = firstMultiplier.getColumnCount();
         int rowCount = firstMultiplier.getRowCount();
         for(int i = 0; i < rowCount; i++) {
             for(int j = 0; j < columnCount; j++) {
-                //firstMultiplier.removeEditor();
-                //firstMultiplier.editingStopped(null);
-                //Object o = firstMultiplier.getValueAt(i, j);
-                //TableCellEditor editor = firstMultiplier.getCellEditor(0, 0);
-                //Object o2 = editor.getCellEditorValue();
                 String stringValue = (String)firstMultiplier.getValueAt(i, j);
                 viewModel.setValueToFirstMatrix(i, j, stringValue);
             }
         }
+    }
 
-        columnCount = secondMultiplier.getColumnCount();
-        rowCount = secondMultiplier.getRowCount();
+    private void  initializeSecondMultiplier() {
+        int columnCount = secondMultiplier.getColumnCount();
+        int rowCount = secondMultiplier.getRowCount();
         for(int i = 0; i < rowCount; i++) {
             for(int j = 0; j < columnCount; j++) {
                 String value = (String)secondMultiplier.getValueAt(i, j);
@@ -234,31 +248,43 @@ public class MatrixMultiply {
 
     private void backBindMatrixes() {
         Matrix result = viewModel.getResultMatrix();
+        reinitializeBottomPanel(result);
+        statusUpdate();
+    }
+
+    private  void reinitializeBottomPanel(Matrix result) {
+        bottomPanel.remove(resultMatrix);
+
+        initializeResultMatrix(result);
+        bottomPanel.add(resultMatrix);
+        bottomPanel.updateUI();
+    }
+
+    private void initializeResultMatrix(Matrix result) {
         int columnCount = result.getWidth();
         int rowCount = result.getHeight();
-        bottomPanel.remove(resultMatrix);
         resultMatrix = new JTable(rowCount, columnCount);
+
         for(int i = 0; i < rowCount; i++) {
             for(int j = 0; j < columnCount; j++) {
                 String value = result.getElement(i, j).convertToString();
-                resultMatrix.setValueAt((Object)value, i, j);
-                //resultMatrix.removeEditor();
-                //resultMatrix.editingStopped(null);
+                resultMatrix.setValueAt(value, i, j);
             }
         }
-        bottomPanel.add(resultMatrix);
-        bottomPanel.updateUI();
-
     }
 
-    private void keyProcess(final KeyEvent e) {
+    private void keyProcessTopPanel(final KeyEvent e) {
         if(e.getKeyCode() == KeyboardKeys.ENTER) {
             clickOkButton();
-        } else if(e.getKeyCode() == KeyboardKeys.M) {
-
         }
                 /*bind();
                 Calculator.this.viewModel.processKeyInTextField(e.getKeyCode());
                 backBind();*/
+    }
+
+    private  void keyProcessMiddlePanel(final KeyEvent e) {
+        if(e.getKeyCode() == KeyboardKeys.M) {
+            clickMultiplyButton();
+        }
     }
 }
