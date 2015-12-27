@@ -32,12 +32,12 @@ public class ViewModelTests {
     }
 
     @Test
-    public void isStatusWAITING_MNInTheBeginning() {
+    public void isStatusWaitingMNInTheBeginning() {
         assertEquals(Status.WAITING_MN, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusREADY_OKWhenFieldsMNAreFill() {
+    public void isStatusReadyOkWhenFieldsMNAreFill() {
         fillMNFields();
 
         viewModel.parseInputMN();
@@ -61,7 +61,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canReportBAD_FORMAT() {
+    public void canReportBadFormat() {
         viewModel.setMFirstMatrix("a");
         viewModel.processingInputMN();
 
@@ -171,9 +171,9 @@ public class ViewModelTests {
     }
 
     @Test
-    public void isStatusREADY_MULTIPLYWhenAllFieldsAreFill() {
+    public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
         fillMNFields1x2And2x1();
-        viewModel.processingInputMN();;
+        viewModel.processingInputMN();
         fillMatrix1x2And2x1();
         viewModel.parseInputMatrices();
 
