@@ -57,11 +57,11 @@ public class ViewModel {
 
     public void parseInputColsRows() {
         isMultiplyButtonEnabled = false;
+        isOkButtonEnabled = false;
 
         try {
             tryParseInputColsRows();
 
-            isOkButtonEnabled = false;
             if (isInputColsRowsAvailable() && cols1 == rows2) {
                 isOkButtonEnabled = true;
             }
@@ -74,7 +74,6 @@ public class ViewModel {
             }
         } catch (Exception e) {
             status = Status.BAD_FORMAT;
-            isOkButtonEnabled = false;
         }
     }
 
@@ -96,10 +95,8 @@ public class ViewModel {
     public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
 
     private boolean isInputColsRowsAvailable() {
-        boolean isAvailable = !rowsFirstMatrix.isEmpty() && !colsFirstMatrix.isEmpty()
-                            && !rowsSecondMatrix.isEmpty() && !colsSecondMatrix.isEmpty();
-
-        return isAvailable;
+        return !(rowsFirstMatrix.isEmpty() || colsFirstMatrix.isEmpty()
+                || rowsSecondMatrix.isEmpty() || colsSecondMatrix.isEmpty());
     }
 
     public void processingInputMatrices() {
@@ -136,7 +133,7 @@ public class ViewModel {
             for (int j = 0; j < cols; j++) {
                 value = new LongNumber(matrix[i][j]);
                 if (value.isUndefined()) {
-                    throw new Exception("Can't parse input matrices, bad format");
+                    throw new BadFormatToCellExeption("Can't parse input matrices, bad format");
                 }
 
                 if(matrix == firstMatrixTable) {
@@ -157,21 +154,17 @@ public class ViewModel {
     public String getRowsFirstMatrix() { return rowsFirstMatrix; }
 
     public void setRowsFirstMatrix(final String rowsFirstMatrix) {
-        if (rowsFirstMatrix.equals(this.rowsFirstMatrix)) {
-            return;
+        if (!rowsFirstMatrix.equals(this.rowsFirstMatrix)) {
+            this.rowsFirstMatrix = rowsFirstMatrix;
         }
-
-        this.rowsFirstMatrix = rowsFirstMatrix;
     }
 
     public String getColsFirstMatrix() { return colsFirstMatrix; }
 
     public void setColsFirstMatrix(final String colsFirstMatrix) {
-        if (colsFirstMatrix.equals(this.colsFirstMatrix)) {
-            return;
+        if (!colsFirstMatrix.equals(this.colsFirstMatrix)) {
+            this.colsFirstMatrix = colsFirstMatrix;
         }
-
-        this.colsFirstMatrix = colsFirstMatrix;
     }
 
     public String getRowsSecondMatrix() { return rowsSecondMatrix; }
