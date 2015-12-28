@@ -187,14 +187,14 @@ public final class MatrixMultiply {
 
     private void clickMultiplyButton() {
         bindMatrixes();
-        MatrixMultiply.this.viewModel.processingInputMatrices();
+        viewModel.processingInputMatrices();
         backBindMatrixes();
     }
 
     private void bindMatrixes() {
         stopEditingMatrixes();
-        initializeFirstMultiplier();
-        initializeSecondMultiplier();
+        initializeMultiplier(firstMultiplier);
+        initializeMultiplier(secondMultiplier);
     }
 
     private void stopEditingMatrixes() {
@@ -206,24 +206,17 @@ public final class MatrixMultiply {
         }
     }
 
-    private void initializeFirstMultiplier() {
-        int columnCount = firstMultiplier.getColumnCount();
-        int rowCount = firstMultiplier.getRowCount();
+    private void initializeMultiplier(JTable multiplier) {
+        int columnCount = multiplier.getColumnCount();
+        int rowCount = multiplier.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                String stringValue = (String) firstMultiplier.getValueAt(i, j);
-                viewModel.setValueToFirstMatrix(i, j, stringValue);
-            }
-        }
-    }
-
-    private void  initializeSecondMultiplier() {
-        int columnCount = secondMultiplier.getColumnCount();
-        int rowCount = secondMultiplier.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < columnCount; j++) {
-                String value = (String) secondMultiplier.getValueAt(i, j);
-                viewModel.setValueToSecondMatrix(i, j, value);
+                String stringValue = (String) multiplier.getValueAt(i, j);
+                if(multiplier == firstMultiplier) {
+                    viewModel.setValueToFirstMatrix(i, j, stringValue);
+                } else {
+                    viewModel.setValueToSecondMatrix(i, j, stringValue);
+                }
             }
         }
     }
