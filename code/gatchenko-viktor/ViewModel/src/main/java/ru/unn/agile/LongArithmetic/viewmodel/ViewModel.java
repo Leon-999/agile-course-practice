@@ -117,7 +117,7 @@ public class ViewModel {
             tryParseMatrix(secondMatrixTable);
             isInputMatricesAvailable = true;
             status = Status.READY_MULTIPLY;
-        } catch (BadFormatToCellException e) {
+        } catch (Exception e) {
             isInputMatricesAvailable = false;
             status = Status.BAD_FORMAT;
         }
@@ -125,7 +125,7 @@ public class ViewModel {
 
     private boolean isInputMatricesAvailable() { return isInputMatricesAvailable; }
 
-    private void tryParseMatrix(final String[][] matrix) throws BadFormatToCellException {
+    private void tryParseMatrix(final String[][] matrix) throws Exception {
         LongNumber value;
         int rows = matrix.length;
         for (int i = 0; i < rows; i++) {
@@ -214,7 +214,8 @@ public class ViewModel {
     }
 
     public final class Status {
-        public static final String WAITING_COLS_AND_ROWS = "Please provide input data: M and N for matrices";
+        public static final String WAITING_COLS_AND_ROWS
+                                        = "Please provide input data: M and N for matrices";
         public static final String WAITING = "Please provide input data: write in matrices";
         public static final String READY_OK = "Press 'Ok'";
         public static final String READY_MULTIPLY = "Press 'Multiply'";
