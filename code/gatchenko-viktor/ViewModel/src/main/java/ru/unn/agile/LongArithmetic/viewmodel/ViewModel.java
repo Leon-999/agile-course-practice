@@ -136,7 +136,7 @@ public class ViewModel {
                     throw new BadFormatToCellException("Can't parse input matrices, bad format");
                 }
 
-                if (matrix == firstMatrixTable) {
+                if (matrix.equals(firstMatrixTable)) {
                     firstMultiplier.setElement(i, j, value);
                 } else {
                     secondMultiplier.setElement(i, j, value);
