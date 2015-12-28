@@ -24,58 +24,58 @@ public class ViewModelTests {
 
     @Test
     public void canSetDefaultValues() {
-        assertEquals("", viewModel.getMFirstMatrix());
-        assertEquals("", viewModel.getNFirstMatrix());
-        assertEquals("", viewModel.getMSecondMatrix());
-        assertEquals("", viewModel.getNSecondMatrix());
-        assertEquals(Status.WAITING_MN, viewModel.getStatus());
+        assertEquals("", viewModel.getRowsFirstMatrix());
+        assertEquals("", viewModel.getColsFirstMatrix());
+        assertEquals("", viewModel.getRowsSecondMatrix());
+        assertEquals("", viewModel.getColsSecondMatrix());
+        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusWaitingMNInTheBeginning() {
-        assertEquals(Status.WAITING_MN, viewModel.getStatus());
+    public void isStatusWaitingColsRowsInTheBeginning() {
+        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusReadyOkWhenFieldsMNAreFill() {
-        fillMNFields();
+    public void isStatusReadyOkWhenFieldsColsRowsAreFill() {
+        fillColsRowsFields();
 
-        viewModel.parseInputMN();
+        viewModel.parseInputColsRows();
 
         assertEquals(Status.READY_OK, viewModel.getStatus());
     }
 
-    private void fillMNFields() {
-        viewModel.setMFirstMatrix("1");
-        viewModel.setNFirstMatrix("1");
-        viewModel.setMSecondMatrix("1");
-        viewModel.setNSecondMatrix("1");
+    private void fillColsRowsFields() {
+        viewModel.setRowsFirstMatrix("1");
+        viewModel.setColsFirstMatrix("1");
+        viewModel.setRowsSecondMatrix("1");
+        viewModel.setColsSecondMatrix("1");
     }
 
 
     @Test
-    public void isStatusWaitingWhenMultiplyWithEmptyFieldsMN() {
+    public void isStatusWaitingWhenMultiplyWithEmptyFieldsColsRows() {
         viewModel.processingInputMatrices();
 
-        assertEquals(Status.WAITING_MN, viewModel.getStatus());
+        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
     }
 
     @Test
     public void canReportBadFormat() {
-        viewModel.setMFirstMatrix("a");
-        viewModel.processingInputMN();
+        viewModel.setRowsFirstMatrix("a");
+        viewModel.processingInputColsRows();
 
         assertEquals(Status.BAD_FORMAT, viewModel.getStatus());
     }
 
     @Test
     public void canCleanStatusIfParseIsOK() {
-        viewModel.setMFirstMatrix("a");
-        viewModel.processingInputMN();
-        viewModel.setMFirstMatrix("1");
-        viewModel.processingInputMN();
+        viewModel.setRowsFirstMatrix("a");
+        viewModel.processingInputColsRows();
+        viewModel.setRowsFirstMatrix("1");
+        viewModel.processingInputColsRows();
 
-        assertEquals(Status.WAITING_MN, viewModel.getStatus());
+        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
     }
 
     @Test
@@ -90,39 +90,39 @@ public class ViewModelTests {
 
     @Test
     public void isOkButtonDisabledWhenFormatIsBad() {
-        fillMNFields();
-        viewModel.processingInputMN();
+        fillColsRowsFields();
+        viewModel.processingInputColsRows();
         assertEquals(true, viewModel.isOkButtonEnabled());
 
-        viewModel.setMFirstMatrix("some");
-        viewModel.processingInputMN();
+        viewModel.setRowsFirstMatrix("some");
+        viewModel.processingInputColsRows();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
     }
 
     @Test
     public void isOkButtonDisabledWithIncompleteInput() {
-        viewModel.setMFirstMatrix("1");
-        viewModel.setNFirstMatrix("1");
+        viewModel.setRowsFirstMatrix("1");
+        viewModel.setColsFirstMatrix("1");
 
-        viewModel.processingInputMN();
+        viewModel.processingInputColsRows();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
     }
 
     @Test
     public void isOkButtonEnabledWithCorrectInput() {
-        fillMNFields();
+        fillColsRowsFields();
 
-        viewModel.processingInputMN();
+        viewModel.processingInputColsRows();
 
         assertEquals(true, viewModel.isOkButtonEnabled());
     }
 
     @Test
     public void canPerformMultiplyAction() {
-        fillMNFields();
-        viewModel.processingInputMN();
+        fillColsRowsFields();
+        viewModel.processingInputColsRows();
         viewModel.setValueToFirstMatrix(0, 0, "2");
         viewModel.setValueToSecondMatrix(0, 0, "2");
 
@@ -135,8 +135,8 @@ public class ViewModelTests {
 
     @Test
     public void canPerformMultiplyMatrix1x2And2x1() {
-        fillMNFields1x2And2x1();
-        viewModel.processingInputMN();
+        fillColsRowsFields1x2And2x1();
+        viewModel.processingInputColsRows();
         fillMatrix1x2And2x1();
         viewModel.processingInputMatrices();
 
@@ -146,11 +146,11 @@ public class ViewModelTests {
         assertEquals(true, success);
     }
 
-    private void fillMNFields1x2And2x1() {
-        viewModel.setMFirstMatrix("1");
-        viewModel.setNFirstMatrix("2");
-        viewModel.setMSecondMatrix("2");
-        viewModel.setNSecondMatrix("1");
+    private void fillColsRowsFields1x2And2x1() {
+        viewModel.setRowsFirstMatrix("1");
+        viewModel.setColsFirstMatrix("2");
+        viewModel.setRowsSecondMatrix("2");
+        viewModel.setColsSecondMatrix("1");
     }
 
     private void fillMatrix1x2And2x1() {
@@ -162,8 +162,8 @@ public class ViewModelTests {
 
     @Test
     public void canSetSuccessMessage() {
-        fillMNFields1x2And2x1();
-        viewModel.processingInputMN();
+        fillColsRowsFields1x2And2x1();
+        viewModel.processingInputColsRows();
         fillMatrix1x2And2x1();
         viewModel.processingInputMatrices();
 
@@ -172,8 +172,8 @@ public class ViewModelTests {
 
     @Test
     public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
-        fillMNFields1x2And2x1();
-        viewModel.processingInputMN();
+        fillColsRowsFields1x2And2x1();
+        viewModel.processingInputColsRows();
         fillMatrix1x2And2x1();
         viewModel.parseInputMatrices();
 
