@@ -186,7 +186,7 @@ public class ViewModelTests {
         viewModel.processingInputColsRows();
 
         boolean success = false;
-        if(viewModel.getRows1() == 1 && viewModel.getCols1() == 2
+        if (viewModel.getRows1() == 1 && viewModel.getCols1() == 2
            && viewModel.getRows2() == 2 && viewModel.getCols2() == 1) {
             success = true;
         }
