@@ -4,6 +4,7 @@ import ru.unn.agile.LongArithmetic.model.Matrix;
 import ru.unn.agile.LongArithmetic.viewmodel.ViewModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -93,8 +94,8 @@ public final class MatrixMultiply {
     }
 
     private void initializeMiddlePanel() {
-        firstMultiplier = new JTable(1, 1);
-        secondMultiplier = new JTable(1, 1);
+        firstMultiplier = new JTable(new DefaultTableModel(1, 1));
+        secondMultiplier = new JTable(new DefaultTableModel(1, 1));
 
         middlePanel.add(firstMultiplier);
         middlePanel.add(secondMultiplier);
@@ -173,14 +174,14 @@ public final class MatrixMultiply {
     }
 
     private void reinitializeMiddlePanel() {
-        middlePanel.remove(firstMultiplier);
-        middlePanel.remove(secondMultiplier);
+        DefaultTableModel tableModel1 = (DefaultTableModel) firstMultiplier.getModel();
+        tableModel1.setRowCount(viewModel.getRows1());
+        tableModel1.setColumnCount(viewModel.getCols1());
 
-        firstMultiplier = new JTable(viewModel.getRows1(), viewModel.getCols1());
-        secondMultiplier = new JTable(viewModel.getRows2(), viewModel.getCols2());
+        DefaultTableModel tableModel2 = (DefaultTableModel) secondMultiplier.getModel();
+        tableModel2.setRowCount(viewModel.getRows2());
+        tableModel2.setColumnCount(viewModel.getCols2());
 
-        middlePanel.add(firstMultiplier);
-        middlePanel.add(secondMultiplier);
         middlePanel.updateUI();
     }
 
@@ -234,26 +235,28 @@ public final class MatrixMultiply {
     }
 
     private  void reinitializeBottomPanel(final Matrix result) {
-        bottomPanel.remove(resultMatrix);
+        DefaultTableModel tableModel = (DefaultTableModel) resultMatrix.getModel();
 
-        initializeResultMatrix(result);
-        bottomPanel.add(resultMatrix);
+        if (result == null) {
+            tableModel.setRowCount(1);
+            tableModel.setColumnCount(1);
+        } else {
+            tableModel.setRowCount(result.getHeight());
+            tableModel.setColumnCount(result.getWidth());
+
+            initializeResultMatrix(result);
+        }
         bottomPanel.updateUI();
     }
 
     private void initializeResultMatrix(final Matrix result) {
-        if (result == null) {
-            resultMatrix = new JTable(1, 1);
-        } else {
-            int columnCount = result.getWidth();
-            int rowCount = result.getHeight();
-            resultMatrix = new JTable(rowCount, columnCount);
+        int columnCount = result.getWidth();
+        int rowCount = result.getHeight();
 
-            for (int i = 0; i < rowCount; i++) {
-                for (int j = 0; j < columnCount; j++) {
-                    String value = result.getElement(i, j).convertToString();
-                    resultMatrix.setValueAt(value, i, j);
-                }
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                String value = result.getElement(i, j).convertToString();
+                resultMatrix.setValueAt(value, i, j);
             }
         }
     }
