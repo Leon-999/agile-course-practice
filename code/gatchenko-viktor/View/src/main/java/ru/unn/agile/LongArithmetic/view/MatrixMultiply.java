@@ -206,13 +206,13 @@ public final class MatrixMultiply {
         }
     }
 
-    private void initializeMultiplier(JTable multiplier) {
+    private void initializeMultiplier(final JTable multiplier) {
         int columnCount = multiplier.getColumnCount();
         int rowCount = multiplier.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 String stringValue = (String) multiplier.getValueAt(i, j);
-                if(multiplier == firstMultiplier) {
+                if (multiplier == firstMultiplier) {
                     viewModel.setValueToFirstMatrix(i, j, stringValue);
                 } else {
                     viewModel.setValueToSecondMatrix(i, j, stringValue);

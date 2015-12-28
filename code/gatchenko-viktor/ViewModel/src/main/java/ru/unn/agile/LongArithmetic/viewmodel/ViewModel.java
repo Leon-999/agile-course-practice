@@ -117,7 +117,7 @@ public class ViewModel {
             tryParseMatrix(secondMatrixTable);
             isInputMatricesAvailable = true;
             status = Status.READY_MULTIPLY;
-        } catch (Exception e) {
+        } catch (BadFormatToCellException e) {
             isInputMatricesAvailable = false;
             status = Status.BAD_FORMAT;
         }
@@ -125,7 +125,7 @@ public class ViewModel {
 
     private boolean isInputMatricesAvailable() { return isInputMatricesAvailable; }
 
-    private void tryParseMatrix(String[][] matrix) throws Exception {
+    private void tryParseMatrix(final String[][] matrix) throws BadFormatToCellException {
         LongNumber value;
         int rows = matrix.length;
         for (int i = 0; i < rows; i++) {
@@ -133,10 +133,10 @@ public class ViewModel {
             for (int j = 0; j < cols; j++) {
                 value = new LongNumber(matrix[i][j]);
                 if (value.isUndefined()) {
-                    throw new BadFormatToCellExeption("Can't parse input matrices, bad format");
+                    throw new BadFormatToCellException("Can't parse input matrices, bad format");
                 }
 
-                if(matrix == firstMatrixTable) {
+                if (matrix == firstMatrixTable) {
                     firstMultiplier.setElement(i, j, value);
                 } else {
                     secondMultiplier.setElement(i, j, value);

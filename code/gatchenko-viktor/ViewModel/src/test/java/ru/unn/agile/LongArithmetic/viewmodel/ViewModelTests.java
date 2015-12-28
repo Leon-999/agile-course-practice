@@ -135,9 +135,7 @@ public class ViewModelTests {
 
     @Test
     public void canPerformMultiplyMatrix1x2And2x1() {
-        fillColsRowsFields1x2And2x1();
-        viewModel.processingInputColsRows();
-        fillMatrix1x2And2x1();
+        defaultInput();
         viewModel.processingInputMatrices();
 
         Matrix resultMatrix = viewModel.getResultMatrix();
@@ -162,9 +160,7 @@ public class ViewModelTests {
 
     @Test
     public void canSetSuccessMessage() {
-        fillColsRowsFields1x2And2x1();
-        viewModel.processingInputColsRows();
-        fillMatrix1x2And2x1();
+        defaultInput();
         viewModel.processingInputMatrices();
 
         assertEquals(Status.SUCCESS, viewModel.getStatus());
@@ -172,11 +168,29 @@ public class ViewModelTests {
 
     @Test
     public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
-        fillColsRowsFields1x2And2x1();
-        viewModel.processingInputColsRows();
-        fillMatrix1x2And2x1();
+        defaultInput();
         viewModel.parseInputMatrices();
 
         assertEquals(Status.READY_MULTIPLY, viewModel.getStatus());
+    }
+
+    private void defaultInput() {
+        fillColsRowsFields1x2And2x1();
+        viewModel.processingInputColsRows();
+        fillMatrix1x2And2x1();
+    }
+
+    @Test
+    public void checkGettersAndSettersForRowsAndCols() {
+        fillColsRowsFields1x2And2x1();
+        viewModel.processingInputColsRows();
+
+        boolean success = false;
+        if(viewModel.getRows1() == 1 && viewModel.getCols1() == 2
+           && viewModel.getRows2() == 2 && viewModel.getCols2() == 1)
+        {
+            success = true;
+        }
+        assertEquals(true, success);
     }
 }
