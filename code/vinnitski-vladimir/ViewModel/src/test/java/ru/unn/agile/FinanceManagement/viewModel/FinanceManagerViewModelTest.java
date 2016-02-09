@@ -295,7 +295,7 @@ public class FinanceManagerViewModelTest {
         int countMonth = 12;
         Integer[] months = new Integer[countMonth];
         for (int i = 0; i < countMonth; i++) {
-            months[i] = (i + 1);
+            months[i] = i + 1;
         }
 
         assertTrue(Arrays.deepEquals(months, viewModel.getMonths()));
