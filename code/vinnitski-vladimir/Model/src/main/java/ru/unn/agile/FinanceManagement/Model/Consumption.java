@@ -28,6 +28,18 @@ public class Consumption {
         return calendar;
     }
 
+    public String toString() {
+        String converterConsumption = "";
+        converterConsumption += category + ",";
+        converterConsumption += name + ",";
+        converterConsumption += count + ",";
+        converterConsumption += price + ",";
+        converterConsumption += date.get(Calendar.YEAR) + ",";
+        converterConsumption += date.get(Calendar.MONTH) + 1 + ",";
+        converterConsumption += date.get(Calendar.DAY_OF_MONTH);
+        return converterConsumption;
+    }
+
     @Override
     public int hashCode() {
         final int shift = 32;

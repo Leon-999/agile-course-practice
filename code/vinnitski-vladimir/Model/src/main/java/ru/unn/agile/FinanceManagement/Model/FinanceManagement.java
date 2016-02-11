@@ -4,20 +4,20 @@ import java.util.*;
 
 public class FinanceManagement {
 
-    private final ArrayList<NameInCategoryConsumption> memberCategory;
+    private final ArrayList<CategoryAndNames> memberCategory;
     private final ArrayList<Consumption> consumptions;
     private double balance;
 
     public FinanceManagement() {
-        memberCategory = new ArrayList<NameInCategoryConsumption>();
+        memberCategory = new ArrayList<CategoryAndNames>();
         consumptions = new ArrayList<Consumption>();
         balance = 0;
     }
 
     private void addNewCategory(final String category) {
 
-        NameInCategoryConsumption addedNewCategory =
-                new NameInCategoryConsumption(category);
+        CategoryAndNames addedNewCategory =
+                new CategoryAndNames(category);
 
         if (memberCategory.contains(addedNewCategory)) {
             return;
@@ -28,8 +28,8 @@ public class FinanceManagement {
 
     private void addNewNameInCategory(final String category, final String name) {
 
-        NameInCategoryConsumption categoryFromAdded =
-                new NameInCategoryConsumption(category);
+        CategoryAndNames categoryFromAdded =
+                new CategoryAndNames(category);
 
         Integer indexCategory = memberCategory.indexOf(categoryFromAdded);
 
@@ -49,8 +49,8 @@ public class FinanceManagement {
     public ArrayList<String> getAllNameInCategory(final String category) {
 
         ArrayList<String> arrayName = new ArrayList<String>();
-        NameInCategoryConsumption categoryContainName =
-                new NameInCategoryConsumption(category);
+        CategoryAndNames categoryContainName =
+                new CategoryAndNames(category);
 
         Integer indexCategory = memberCategory.indexOf(categoryContainName);
 

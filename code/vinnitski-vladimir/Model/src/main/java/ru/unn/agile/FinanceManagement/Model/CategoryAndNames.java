@@ -2,12 +2,12 @@ package ru.unn.agile.FinanceManagement.Model;
 
 import java.util.ArrayList;
 
-class NameInCategoryConsumption {
+class CategoryAndNames {
 
     private final String category;
     private final ArrayList<String> names;
 
-    public NameInCategoryConsumption(final String nameCategory) {
+    public CategoryAndNames(final String nameCategory) {
         this.category = nameCategory;
         this.names = new ArrayList<String>();
     }
@@ -26,7 +26,7 @@ class NameInCategoryConsumption {
             return false;
         }
 
-        NameInCategoryConsumption newCategory = (NameInCategoryConsumption) object;
+        CategoryAndNames newCategory = (CategoryAndNames) object;
 
         return category.equals(newCategory.category);
 

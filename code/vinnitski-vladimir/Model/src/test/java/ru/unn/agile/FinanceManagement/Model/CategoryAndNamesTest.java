@@ -4,13 +4,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-public class NameInCategoryConsumptionTest {
+public class CategoryAndNamesTest {
 
-    private NameInCategoryConsumption consumption;
+    private CategoryAndNames consumption;
 
     private String initializeTest() {
         String nameCategory = "new category";
-        consumption = new NameInCategoryConsumption(nameCategory);
+        consumption = new CategoryAndNames(nameCategory);
         return nameCategory;
     }
 

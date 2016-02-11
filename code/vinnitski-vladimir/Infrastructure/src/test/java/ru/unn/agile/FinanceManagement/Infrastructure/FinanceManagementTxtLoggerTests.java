@@ -3,6 +3,10 @@ package ru.unn.agile.FinanceManagement.Infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.FinanceManagement.Model.Consumption;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Calendar;
 
 import static org.junit.Assert.*;
@@ -17,10 +21,18 @@ public class FinanceManagementTxtLoggerTests {
     }
 
     @Test
-    public void canInstantiateTxtLogger() {
+    public void canInitializedTxtLogger() {
         assertNotNull(logger);
     }
 
+    @Test
+    public void isLogFileCreatedAfterLoggerHadBeenInstantiated() {
+        try {
+            new BufferedReader(new FileReader(LOG_PATH));
+        } catch (FileNotFoundException e) {
+            fail("File " + LOG_PATH + " is not created");
+        }
+    }
 
     @Test
     public void canWriteMessageIntoLog() {
@@ -37,3 +49,4 @@ public class FinanceManagementTxtLoggerTests {
         assertTrue(membersConsumption.equals(consumption));
     }
 }
+

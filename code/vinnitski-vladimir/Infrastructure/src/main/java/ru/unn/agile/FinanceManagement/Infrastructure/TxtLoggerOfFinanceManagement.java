@@ -20,22 +20,10 @@ public class TxtLoggerOfFinanceManagement implements ILoggerOfFinanceManagement 
         }
     }
 
-    private String consumptionToString(final Consumption consumption) {
-        String converterConsumption = "";
-        converterConsumption += consumption.getCategory() + ",";
-        converterConsumption += consumption.getName() + ",";
-        converterConsumption += consumption.getCount() + ",";
-        converterConsumption += consumption.getPrice() + ",";
-        converterConsumption += consumption.getDate().get(Calendar.YEAR) + ",";
-        converterConsumption += consumption.getDate().get(Calendar.MONTH) + 1 + ",";
-        converterConsumption += consumption.getDate().get(Calendar.DAY_OF_MONTH);
-        return converterConsumption;
-    }
-
     @Override
     public void addConsumption(final Consumption consumption) {
          try {
-            String message = consumptionToString(consumption);
+            String message = consumption.toString();
             logger.write(message);
             logger.newLine();
             logger.flush();

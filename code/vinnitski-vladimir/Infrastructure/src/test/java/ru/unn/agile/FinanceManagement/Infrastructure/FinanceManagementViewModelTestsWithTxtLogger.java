@@ -14,3 +14,4 @@ public class FinanceManagementViewModelTestsWithTxtLogger
         super.setViewModelAndLogger(viewModel, logger);
     }
 }
+
