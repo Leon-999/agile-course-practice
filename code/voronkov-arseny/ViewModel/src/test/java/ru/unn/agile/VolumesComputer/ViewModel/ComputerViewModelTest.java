@@ -12,7 +12,7 @@ public class ComputerViewModelTest {
 
     @Before
     public void initialize() {
-        viewModel = new ComputerViewModel();
+        viewModel = new ComputerViewModel(new LoggerFake());
     }
     @After
     public void free() {

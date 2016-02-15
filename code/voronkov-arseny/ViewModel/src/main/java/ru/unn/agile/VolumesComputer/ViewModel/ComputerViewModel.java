@@ -2,11 +2,27 @@ package ru.unn.agile.VolumesComputer.ViewModel;
 
 import ru.unn.agile.VolumesComputer.Model.*;
 
+import java.util.List;
+
 public class ComputerViewModel {
     public static final String BAD_VOLUME_STRING
             = "I can't solve volume for this strange figure!";
-    public static final String EMPTY_VOLUME_STRING = "";
-    public static final String DISABLE_PARAMETER_STRING = "No parameter";
+    public static final String EMPTY_VOLUME_STRING
+            = "";
+    public static final String DISABLE_PARAMETER_STRING
+            = "No parameter";
+    public static final String LOG_SOLVE_BAD_FIGURE
+            = "Solving failed. Reason: incorrect figure type.";
+    public static final String LOG_SOLVE_BAD_PARAMETERS
+            = "Solving failed. Reason: negative parameters.";
+    public static final String LOG_SOLVE_BAD_PARSE
+            = "Solving failed. Reason: unparsed parameters.";
+    public static final String LOG_SOLVE
+            = "Solving success. Volume is %s.";
+    public static final String LOG_SET_PARAMETER
+            = "Set %s to %s.";
+    public static final String LOG_SET_FIGURE
+            = "Set current figure to %s.";
     private static final int THREE = 3;
     private String parameter1str;
     private String parameter2str;
@@ -18,8 +34,9 @@ public class ComputerViewModel {
     private boolean inputCorrect;
     private boolean parsed;
     private String volumeStr;
+    private ILogger logger;
 
-    public ComputerViewModel() {
+    public ComputerViewModel(final ILogger logger) {
         parameter1str = "";
         parameter2str = "";
         parameter3str = "";
@@ -30,6 +47,8 @@ public class ComputerViewModel {
         inputCorrect = false;
         parsed = false;
         volumeStr = EMPTY_VOLUME_STRING;
+        this.logger = logger;
+        updateFigure();
     }
     public void setParameter1(final String parameterString) {
         parsed = parameter1str.equals(parameterString);
@@ -46,6 +65,7 @@ public class ComputerViewModel {
     public void setFigure(final FigureName figureName) {
         parsed = this.figureName.equals(figureName);
         this.figureName = figureName;
+        updateFigure();
     }
     public String getParameter1() {
         return parameter1str;
@@ -69,9 +89,7 @@ public class ComputerViewModel {
         return figureName.getParametersCount() >= THREE;
     }
     public boolean isInputCorrect() {
-        if (!parsed) {
-            parse();
-        }
+        parse();
         return inputCorrect;
     }
     public String getVolume() {
@@ -87,28 +105,28 @@ public class ComputerViewModel {
         return getParameterName(THREE);
     }
     public void parse() {
-        parsed = true;
-        final int paramsCount = figureName.getParametersCount();
-        inputCorrect = true;
-        if (paramsCount < 1) {
-            return;
-        }
-        if (paramsCount > THREE) {
-            inputCorrect = false;
-            return;
-        }
-        parameter1 = parseParameter(parameter1str);
-        if (inputCorrect && paramsCount > 1) {
-            parameter2 = parseParameter(parameter2str);
-        }
-        if (inputCorrect && paramsCount > 2) {
-            parameter3 = parseParameter(parameter3str);
+        if (!parsed) {
+            parsed = true;
+            final int paramsCount = figureName.getParametersCount();
+            inputCorrect = true;
+            if (paramsCount < 1) {
+                return;
+            }
+            if (paramsCount > THREE) {
+                inputCorrect = false;
+                return;
+            }
+            parameter1 = parseParameter(parameter1str);
+            if (inputCorrect && paramsCount > 1) {
+                parameter2 = parseParameter(parameter2str);
+            }
+            if (inputCorrect && paramsCount > 2) {
+                parameter3 = parseParameter(parameter3str);
+            }
         }
     }
     public void solve() {
-        if (!parsed) {
-            parse();
-        }
+        parse();
         if (inputCorrect) {
             try {
                 if (figureName == FigureName.CUBOID) {
@@ -121,13 +139,30 @@ public class ComputerViewModel {
                     solveRightCircularCone();
                 } else {
                     volumeStr = BAD_VOLUME_STRING;
+                    logger.log(LOG_SOLVE_BAD_FIGURE);
+                    return;
                 }
+                logger.log(String.format(LOG_SOLVE, volumeStr).toString());
             } catch (NegativeParametersException e) {
                 volumeStr = BAD_VOLUME_STRING;
+                logger.log(LOG_SOLVE_BAD_PARAMETERS);
             }
         } else {
             volumeStr = EMPTY_VOLUME_STRING;
+            logger.log(LOG_SOLVE_BAD_PARSE);
         }
+    }
+    public void update1() {
+        update(parameter1str, 0);
+    }
+    public void update2() {
+        update(parameter2str, 1);
+    }
+    public void update3() {
+        update(parameter3str, 2);
+    }
+    public List<String> getLog() {
+        return logger.getLines();
     }
 
     private double parseParameter(final String parameterString) {
@@ -159,5 +194,30 @@ public class ComputerViewModel {
     private void solveRightCircularCone() {
         volumeStr = String.valueOf(VolumesComputer.solve(
                 new RightCircularCone(parameter1, parameter2)));
+    }
+    private void update(final String parameterStr, final int parameterIndex) {
+        if (parameterIndex < figureName.getParametersCount() && !parameterStr.isEmpty()) {
+            parse();
+            logger.log(String.format(
+                    LOG_SET_PARAMETER,
+                    figureName.getParametersNames()[parameterIndex],
+                    parameterStr));
+        }
+    }
+    private void updateFigure() {
+        if (!parsed) {
+            volumeStr = EMPTY_VOLUME_STRING;
+            logger.log(String.format(LOG_SET_FIGURE, figureName.toString()));
+            int count = figureName.getParametersCount();
+            if (count > 0) {
+                update1();
+            }
+            if (count > 1) {
+                update2();
+            }
+            if (count > 2) {
+                update3();
+            }
+        }
     }
 }
