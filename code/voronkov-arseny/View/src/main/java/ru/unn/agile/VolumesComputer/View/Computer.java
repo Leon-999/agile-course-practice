@@ -75,7 +75,7 @@ public final class Computer {
         });
         textFieldParameter1.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusLost(FocusEvent e) {
+            public void focusLost(final FocusEvent e) {
                 viewModel.update1();
             }
         });
@@ -90,7 +90,7 @@ public final class Computer {
         });
         textFieldParameter2.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusLost(FocusEvent e) {
+            public void focusLost(final FocusEvent e) {
                 viewModel.update2();
             }
         });
@@ -105,7 +105,7 @@ public final class Computer {
         });
         textFieldParameter3.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusLost(FocusEvent e) {
+            public void focusLost(final FocusEvent e) {
                 viewModel.update3();
             }
         });
