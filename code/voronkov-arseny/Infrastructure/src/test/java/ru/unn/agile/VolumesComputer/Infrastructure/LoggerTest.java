@@ -47,7 +47,7 @@ public class LoggerTest {
     public void writeDate() {
         logger.log("xexexe");
         assertTrue(Pattern.matches(
-                logger.getDateFormat() + "*",
+                logger.getDateFormat() + ".*",
                 logger.getLines().get(0)));
     }
 }

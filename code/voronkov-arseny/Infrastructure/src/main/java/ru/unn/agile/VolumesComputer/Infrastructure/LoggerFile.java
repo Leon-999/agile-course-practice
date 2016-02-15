@@ -57,6 +57,6 @@ public class LoggerFile implements ILogger {
 
     @Override
     public String getDateFormat() {
-        return "^\\d{2}.\\d{2}.\\d{2} \\d{2}:\\d{2}:\\d{2}.";
+        return "^\\d{2}\\.\\d{2}\\.\\d{2} \\d{2}:\\d{2}:\\d{2}";
     }
 }
