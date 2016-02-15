@@ -2,6 +2,7 @@ package ru.unn.agile.VolumesComputer.ViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
+import sun.rmi.runtime.Log;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
@@ -122,22 +123,22 @@ public class ComputerViewModelLogTest {
     }
     private String getLogSetFigure() {
         return String.format(
-                viewModel.LOG_SET_FIGURE,
+                LogString.SET_FIGURE.toString(),
                 viewModel.getFigure().toString());
     }
     private String getLogSetParameter(final String parameter, final int index) {
         return String.format(
-                viewModel.LOG_SET_PARAMETER,
+                LogString.SET_PARAMETER.toString(),
                 viewModel.getFigure().getParametersNames()[index].toString(),
                 parameter);
     }
     private String getLogSolveBadParse() {
-        return viewModel.LOG_SOLVE_BAD_PARSE;
+        return LogString.SOLVE_BAD_PARSE.toString();
     }
     private String getLogSolveBadParameters() {
-        return viewModel.LOG_SOLVE_BAD_PARAMETERS;
+        return LogString.SOLVE_BAD_PARAMETERS.toString();
     }
     private String getLogSolveSuccess() {
-        return String.format(viewModel.LOG_SOLVE, viewModel.getVolume());
+        return String.format(LogString.SOLVE.toString(), viewModel.getVolume());
     }
 }

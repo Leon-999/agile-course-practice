@@ -11,18 +11,6 @@ public final class ComputerViewModel {
             = "";
     public static final String DISABLE_PARAMETER_STRING
             = "No parameter";
-    public static final String LOG_SOLVE_BAD_FIGURE
-            = "Solving failed. Reason: incorrect figure type.";
-    public static final String LOG_SOLVE_BAD_PARAMETERS
-            = "Solving failed. Reason: negative parameters.";
-    public static final String LOG_SOLVE_BAD_PARSE
-            = "Solving failed. Reason: unparsed parameters.";
-    public static final String LOG_SOLVE
-            = "Solving success. Volume is %s.";
-    public static final String LOG_SET_PARAMETER
-            = "Set %s to %s.";
-    public static final String LOG_SET_FIGURE
-            = "Set current figure to %s.";
     private static final int THREE = 3;
     private String parameter1str;
     private String parameter2str;
@@ -139,17 +127,17 @@ public final class ComputerViewModel {
                     solveRightCircularCone();
                 } else {
                     volumeStr = BAD_VOLUME_STRING;
-                    logger.log(LOG_SOLVE_BAD_FIGURE);
+                    logger.log(LogString.SOLVE_BAD_FIGURE.toString());
                     return;
                 }
-                logger.log(String.format(LOG_SOLVE, volumeStr).toString());
+                logger.log(String.format(LogString.SOLVE.toString(), volumeStr).toString());
             } catch (NegativeParametersException e) {
                 volumeStr = BAD_VOLUME_STRING;
-                logger.log(LOG_SOLVE_BAD_PARAMETERS);
+                logger.log(LogString.SOLVE_BAD_PARAMETERS.toString());
             }
         } else {
             volumeStr = EMPTY_VOLUME_STRING;
-            logger.log(LOG_SOLVE_BAD_PARSE);
+            logger.log(LogString.SOLVE_BAD_PARSE.toString());
         }
     }
     public void update1() {
@@ -199,7 +187,7 @@ public final class ComputerViewModel {
         if (parameterIndex < figureName.getParametersCount() && !parameterStr.isEmpty()) {
             parse();
             logger.log(String.format(
-                    LOG_SET_PARAMETER,
+                    LogString.SET_PARAMETER.toString(),
                     figureName.getParametersNames()[parameterIndex],
                     parameterStr));
         }
@@ -207,7 +195,7 @@ public final class ComputerViewModel {
     private void updateFigure() {
         if (!parsed) {
             volumeStr = EMPTY_VOLUME_STRING;
-            logger.log(String.format(LOG_SET_FIGURE, figureName.toString()));
+            logger.log(String.format(LogString.SET_FIGURE.toString(), figureName.toString()));
             int count = figureName.getParametersCount();
             if (count > 0) {
                 update1();

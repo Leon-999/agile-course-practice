@@ -33,7 +33,7 @@ public class LoggerTest {
     }
 
     @Test
-    public void writeThoMessages() {
+    public void writeTwoMessages() {
         final String msg1 = "xexexe";
         final String msg2 = "xaxaxa";
         logger.log(msg1);
