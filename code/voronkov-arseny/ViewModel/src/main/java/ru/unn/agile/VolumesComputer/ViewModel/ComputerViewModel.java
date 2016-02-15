@@ -4,7 +4,7 @@ import ru.unn.agile.VolumesComputer.Model.*;
 
 import java.util.List;
 
-public class ComputerViewModel {
+public final class ComputerViewModel {
     public static final String BAD_VOLUME_STRING
             = "I can't solve volume for this strange figure!";
     public static final String EMPTY_VOLUME_STRING
@@ -204,7 +204,7 @@ public class ComputerViewModel {
                     parameterStr));
         }
     }
-    private final void updateFigure() {
+    private void updateFigure() {
         if (!parsed) {
             volumeStr = EMPTY_VOLUME_STRING;
             logger.log(String.format(LOG_SET_FIGURE, figureName.toString()));
