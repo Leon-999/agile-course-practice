@@ -34,7 +34,7 @@ public class ComputerViewModel {
     private boolean inputCorrect;
     private boolean parsed;
     private String volumeStr;
-    private ILogger logger;
+    private final ILogger logger;
 
     public ComputerViewModel(final ILogger logger) {
         parameter1str = "";
@@ -204,7 +204,7 @@ public class ComputerViewModel {
                     parameterStr));
         }
     }
-    private void updateFigure() {
+    private final void updateFigure() {
         if (!parsed) {
             volumeStr = EMPTY_VOLUME_STRING;
             logger.log(String.format(LOG_SET_FIGURE, figureName.toString()));
