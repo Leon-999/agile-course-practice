@@ -13,20 +13,21 @@ import java.util.List;
 import java.util.Locale;
 
 public class LoggerFile implements ILogger {
-    private BufferedWriter out;
+    private final BufferedWriter out;
     private final String fileName;
     private final Calendar calendar;
     private final SimpleDateFormat dateFormat;
     public LoggerFile(final String fileName) {
         this.fileName = fileName;
-        out = null;
         calendar = Calendar.getInstance();
         dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm:ss", Locale.ENGLISH);
+        BufferedWriter outToAvoidCheckstyleError = null;
         try {
-            out = new BufferedWriter(new FileWriter(fileName));
+            outToAvoidCheckstyleError = new BufferedWriter(new FileWriter(fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        out = outToAvoidCheckstyleError;
     }
 
     @Override
