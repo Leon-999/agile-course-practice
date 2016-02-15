@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class ComputerViewModelLogTest {
-    protected ComputerViewModel viewModel;
+    private ComputerViewModel viewModel;
     @Before
     public void initialize() {
         viewModel = new ComputerViewModel(new LoggerFake());
@@ -117,13 +117,15 @@ public class ComputerViewModelLogTest {
         viewModel.solve();
         assertThat(viewModel.getLog().get(4), containsString(getLogSolveSuccess()));
     }
-
+    public void setViewModel(final ComputerViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
     private String getLogSetFigure() {
         return String.format(
                 viewModel.LOG_SET_FIGURE,
                 viewModel.getFigure().toString());
     }
-    private String getLogSetParameter(String parameter, int index) {
+    private String getLogSetParameter(final String parameter, final int index) {
         return String.format(
                 viewModel.LOG_SET_PARAMETER,
                 viewModel.getFigure().getParametersNames()[index].toString(),
