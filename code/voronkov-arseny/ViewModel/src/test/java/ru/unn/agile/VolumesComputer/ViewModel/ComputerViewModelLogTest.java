@@ -2,7 +2,6 @@ package ru.unn.agile.VolumesComputer.ViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
-import sun.rmi.runtime.Log;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
