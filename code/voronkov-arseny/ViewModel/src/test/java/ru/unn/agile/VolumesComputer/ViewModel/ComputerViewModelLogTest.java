@@ -121,15 +121,15 @@ public class ComputerViewModelLogTest {
         this.viewModel = viewModel;
     }
     private String getLogSetFigure() {
-        return String.format(
-                LogString.SET_FIGURE.toString(),
-                viewModel.getFigure().toString());
+        String logString = LogString.SET_FIGURE.toString();
+        String figName = viewModel.getFigure().toString();
+        return String.format(logString, figName);
     }
     private String getLogSetParameter(final String parameter, final int index) {
-        return String.format(
-                LogString.SET_PARAMETER.toString(),
-                viewModel.getFigure().getParametersNames()[index].toString(),
-                parameter);
+        String logString = LogString.SET_PARAMETER.toString();
+        FigureName fig = viewModel.getFigure();
+        String parameterName = fig.getParametersNames()[index];
+        return String.format(logString, parameterName, parameter);
     }
     private String getLogSolveBadParse() {
         return LogString.SOLVE_BAD_PARSE.toString();
@@ -138,6 +138,8 @@ public class ComputerViewModelLogTest {
         return LogString.SOLVE_BAD_PARAMETERS.toString();
     }
     private String getLogSolveSuccess() {
-        return String.format(LogString.SOLVE.toString(), viewModel.getVolume());
+        String logString = LogString.SOLVE.toString();
+        String vol = viewModel.getVolume();
+        return String.format(logString, vol);
     }
 }

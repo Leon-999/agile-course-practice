@@ -24,10 +24,10 @@ public final class Computer {
 
     public static void main(final String[] agrs) {
         JFrame frame = new JFrame("VolumesComputer");
-        frame.setContentPane(
-                new Computer(
-                        new ComputerViewModel(
-                                new LoggerFile("./Computer.log"))).panelMain);
+        LoggerFile logger = new LoggerFile("./Computer.log");
+        ComputerViewModel viewModel = new ComputerViewModel(logger);
+        Computer computer = new Computer(viewModel);
+        frame.setContentPane(computer.panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
