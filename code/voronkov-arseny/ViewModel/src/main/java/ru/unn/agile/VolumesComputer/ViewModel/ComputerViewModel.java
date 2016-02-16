@@ -186,10 +186,9 @@ public final class ComputerViewModel {
     private void update(final String parameterStr, final int parameterIndex) {
         if (parameterIndex < figureName.getParametersCount() && !parameterStr.isEmpty()) {
             parse();
-            logger.log(String.format(
-                    LogString.SET_PARAMETER.toString(),
-                    figureName.getParametersNames()[parameterIndex],
-                    parameterStr));
+            String logString = LogString.SET_PARAMETER.toString();
+            String parName = figureName.getParametersNames()[parameterIndex];
+            logger.log(String.format(logString, parName, parameterStr));
         }
     }
     private void updateFigure() {
