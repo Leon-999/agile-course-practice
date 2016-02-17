@@ -7,14 +7,14 @@ public class ViewModel {
 
     private static final int INITIAL_SIZE_MATRIX = 1;
 
-    private String rowsFirstMatrix;
-    private String colsFirstMatrix;
-    private String rowsSecondMatrix;
-    private String colsSecondMatrix;
-    private int rows1;
-    private int cols1;
-    private int rows2;
-    private int cols2;
+    private String heightFirstMatrix;
+    private String widthFirstMatrix;
+    private String heightSecondMatrix;
+    private String widthSecondMatrix;
+    private int height1;
+    private int width1;
+    private int height2;
+    private int width2;
 
     private String [][] firstMatrixTable;
     private String [][] secondMatrixTable;
@@ -29,10 +29,10 @@ public class ViewModel {
 
 
     public ViewModel() {
-        rowsFirstMatrix = "";
-        colsFirstMatrix = "";
-        rowsSecondMatrix = "";
-        colsSecondMatrix = "";
+        heightFirstMatrix = "";
+        widthFirstMatrix = "";
+        heightSecondMatrix = "";
+        widthSecondMatrix = "";
         status = Status.WAITING_COLS_AND_ROWS;
 
         firstMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
@@ -43,26 +43,26 @@ public class ViewModel {
         isInputMatricesAvailable = false;
     }
 
-    public void processingInputColsRows() {
-        parseInputColsRows();
+    public void processingInputMatrixSizes() {
+        parseInputMatrixSizes();
         if (isOkButtonEnabled()) {
-            firstMatrixTable = new String[rows1][cols1];
-            secondMatrixTable = new String[rows2][cols2];
-            firstMultiplier = new Matrix(rows1, cols1);
-            secondMultiplier = new Matrix(rows2, cols2);
+            firstMatrixTable = new String[height1][width1];
+            secondMatrixTable = new String[height2][width2];
+            firstMultiplier = new Matrix(height1, width1);
+            secondMultiplier = new Matrix(height2, width2);
             status = Status.WAITING;
             isMultiplyButtonEnabled = true;
         }
     }
 
-    public void parseInputColsRows() {
+    public void parseInputMatrixSizes() {
         isMultiplyButtonEnabled = false;
         isOkButtonEnabled = false;
 
         try {
-            tryParseInputColsRows();
+            tryParseInputMatrixSizes();
 
-            if (isInputColsRowsAvailable() && cols1 == rows2) {
+            if (isInputMatrixSizesAvailable() && width1 == height2) {
                 isOkButtonEnabled = true;
             }
             if (status != Status.WAITING) {
@@ -77,26 +77,26 @@ public class ViewModel {
         }
     }
 
-    private void tryParseInputColsRows() {
-        if (!rowsFirstMatrix.isEmpty()) {
-            rows1 = Integer.parseInt(rowsFirstMatrix);
+    private void tryParseInputMatrixSizes() {
+        if (!heightFirstMatrix.isEmpty()) {
+            height1 = Integer.parseInt(heightFirstMatrix);
         }
-        if (!colsFirstMatrix.isEmpty()) {
-            cols1 = Integer.parseInt(colsFirstMatrix);
+        if (!widthFirstMatrix.isEmpty()) {
+            width1 = Integer.parseInt(widthFirstMatrix);
         }
-        if (!rowsSecondMatrix.isEmpty()) {
-            rows2 = Integer.parseInt(rowsSecondMatrix);
+        if (!heightSecondMatrix.isEmpty()) {
+            height2 = Integer.parseInt(heightSecondMatrix);
         }
-        if (!colsSecondMatrix.isEmpty()) {
-            cols2 = Integer.parseInt(colsSecondMatrix);
+        if (!widthSecondMatrix.isEmpty()) {
+            width2 = Integer.parseInt(widthSecondMatrix);
         }
     }
 
     public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
 
-    private boolean isInputColsRowsAvailable() {
-        return !(rowsFirstMatrix.isEmpty() || colsFirstMatrix.isEmpty()
-                || rowsSecondMatrix.isEmpty() || colsSecondMatrix.isEmpty());
+    private boolean isInputMatrixSizesAvailable() {
+        return !(heightFirstMatrix.isEmpty() || widthFirstMatrix.isEmpty()
+                || heightSecondMatrix.isEmpty() || widthSecondMatrix.isEmpty());
     }
 
     public void processingInputMatrices() {
@@ -151,64 +151,60 @@ public class ViewModel {
         }
     }
 
-    public String getRowsFirstMatrix() { return rowsFirstMatrix; }
+    public String getHeightFirstMatrixStr() { return heightFirstMatrix; }
 
-    public void setRowsFirstMatrix(final String rowsFirstMatrix) {
-        if (!rowsFirstMatrix.equals(this.rowsFirstMatrix)) {
-            this.rowsFirstMatrix = rowsFirstMatrix;
+    public void setHeightFirstMatrixStr(final String heightFirstMatrix) {
+        if (!heightFirstMatrix.equals(this.heightFirstMatrix)) {
+            this.heightFirstMatrix = heightFirstMatrix;
         }
     }
 
-    public String getColsFirstMatrix() { return colsFirstMatrix; }
+    public String getWidthFirstMatrixStr() { return widthFirstMatrix; }
 
-    public void setColsFirstMatrix(final String colsFirstMatrix) {
-        if (!colsFirstMatrix.equals(this.colsFirstMatrix)) {
-            this.colsFirstMatrix = colsFirstMatrix;
+    public void setWidthFirstMatrixStr(final String widthFirstMatrix) {
+        if (!widthFirstMatrix.equals(this.widthFirstMatrix)) {
+            this.widthFirstMatrix = widthFirstMatrix;
         }
     }
 
-    public String getRowsSecondMatrix() { return rowsSecondMatrix; }
+    public String getHeightSecondMatrixStr() { return heightSecondMatrix; }
 
-    public void setRowsSecondMatrix(final String rowsSecondMatrix) {
-        if (rowsSecondMatrix.equals(this.rowsSecondMatrix)) {
-            return;
+    public void setHeightSecondMatrixStr(final String heightSecondMatrix) {
+        if (!heightSecondMatrix.equals(this.heightSecondMatrix)) {
+            this.heightSecondMatrix = heightSecondMatrix;
         }
-
-        this.rowsSecondMatrix = rowsSecondMatrix;
     }
 
-    public String getColsSecondMatrix() { return colsSecondMatrix; }
+    public String getWidthSecondMatrixStr() { return widthSecondMatrix; }
 
-    public void setColsSecondMatrix(final String colsSecondMatrix) {
-        if (colsSecondMatrix.equals(this.colsSecondMatrix)) {
-            return;
+    public void setWidthSecondMatrixStr(final String widthSecondMatrix) {
+        if (!widthSecondMatrix.equals(this.widthSecondMatrix)) {
+            this.widthSecondMatrix = widthSecondMatrix;
         }
-
-        this.colsSecondMatrix = colsSecondMatrix;
     }
 
     public boolean isMultiplyButtonEnabled() { return isMultiplyButtonEnabled; }
 
-    public int getRows1() { return rows1; }
+    public int getHeightFirstMatrix() { return height1; }
 
-    public int getCols1() { return cols1; }
+    public int getWidthFirstMatrix() { return width1; }
 
-    public int getRows2() { return rows2; }
+    public int getHeightSecondMatrix() { return height2; }
 
-    public int getCols2() { return cols2; }
+    public int getWidthSecondMatrix() { return width2; }
 
     public Matrix getResultMatrix() { return resultMatrix; }
 
     public String getStatus() { return status; }
 
     public void setValueToFirstMatrix(final int i, final int j, final String newValue) {
-        if (i > -1 && i < rows1 && i > -1 && j < cols1) {
+        if (i > -1 && i < height1 && i > -1 && j < width1) {
             firstMatrixTable[i][j] = newValue;
         }
     }
 
     public void setValueToSecondMatrix(final int i, final int j, final String newValue) {
-        if (i > -1 && i < rows2 && i > -1 && j < cols2) {
+        if (i > -1 && i < height2 && i > -1 && j < width2) {
             secondMatrixTable[i][j] = newValue;
         }
     }

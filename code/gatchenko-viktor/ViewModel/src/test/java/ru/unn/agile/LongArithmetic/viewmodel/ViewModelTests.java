@@ -24,10 +24,10 @@ public class ViewModelTests {
 
     @Test
     public void canSetDefaultValues() {
-        assertEquals("", viewModel.getRowsFirstMatrix());
-        assertEquals("", viewModel.getColsFirstMatrix());
-        assertEquals("", viewModel.getRowsSecondMatrix());
-        assertEquals("", viewModel.getColsSecondMatrix());
+        assertEquals("", viewModel.getHeightFirstMatrixStr());
+        assertEquals("", viewModel.getWidthFirstMatrixStr());
+        assertEquals("", viewModel.getHeightSecondMatrixStr());
+        assertEquals("", viewModel.getWidthSecondMatrixStr());
         assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
     }
 
@@ -40,16 +40,16 @@ public class ViewModelTests {
     public void isStatusReadyOkWhenFieldsColsRowsAreFill() {
         fillColsRowsFields();
 
-        viewModel.parseInputColsRows();
+        viewModel.parseInputMatrixSizes();
 
         assertEquals(Status.READY_OK, viewModel.getStatus());
     }
 
     private void fillColsRowsFields() {
-        viewModel.setRowsFirstMatrix("1");
-        viewModel.setColsFirstMatrix("1");
-        viewModel.setRowsSecondMatrix("1");
-        viewModel.setColsSecondMatrix("1");
+        viewModel.setHeightFirstMatrixStr("1");
+        viewModel.setWidthFirstMatrixStr("1");
+        viewModel.setHeightSecondMatrixStr("1");
+        viewModel.setWidthSecondMatrixStr("1");
     }
 
 
@@ -62,18 +62,18 @@ public class ViewModelTests {
 
     @Test
     public void canReportBadFormat() {
-        viewModel.setRowsFirstMatrix("a");
-        viewModel.processingInputColsRows();
+        viewModel.setHeightFirstMatrixStr("a");
+        viewModel.processingInputMatrixSizes();
 
         assertEquals(Status.BAD_FORMAT, viewModel.getStatus());
     }
 
     @Test
     public void canCleanStatusIfParseIsOK() {
-        viewModel.setRowsFirstMatrix("a");
-        viewModel.processingInputColsRows();
-        viewModel.setRowsFirstMatrix("1");
-        viewModel.processingInputColsRows();
+        viewModel.setHeightFirstMatrixStr("a");
+        viewModel.processingInputMatrixSizes();
+        viewModel.setHeightFirstMatrixStr("1");
+        viewModel.processingInputMatrixSizes();
 
         assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
     }
@@ -91,21 +91,21 @@ public class ViewModelTests {
     @Test
     public void isOkButtonDisabledWhenFormatIsBad() {
         fillColsRowsFields();
-        viewModel.processingInputColsRows();
+        viewModel.processingInputMatrixSizes();
         assertEquals(true, viewModel.isOkButtonEnabled());
 
-        viewModel.setRowsFirstMatrix("some");
-        viewModel.processingInputColsRows();
+        viewModel.setHeightFirstMatrixStr("some");
+        viewModel.processingInputMatrixSizes();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
     }
 
     @Test
     public void isOkButtonDisabledWithIncompleteInput() {
-        viewModel.setRowsFirstMatrix("1");
-        viewModel.setColsFirstMatrix("1");
+        viewModel.setHeightFirstMatrixStr("1");
+        viewModel.setWidthFirstMatrixStr("1");
 
-        viewModel.processingInputColsRows();
+        viewModel.processingInputMatrixSizes();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
     }
@@ -114,7 +114,7 @@ public class ViewModelTests {
     public void isOkButtonEnabledWithCorrectInput() {
         fillColsRowsFields();
 
-        viewModel.processingInputColsRows();
+        viewModel.processingInputMatrixSizes();
 
         assertEquals(true, viewModel.isOkButtonEnabled());
     }
@@ -122,7 +122,7 @@ public class ViewModelTests {
     @Test
     public void canPerformMultiplyAction() {
         fillColsRowsFields();
-        viewModel.processingInputColsRows();
+        viewModel.processingInputMatrixSizes();
         viewModel.setValueToFirstMatrix(0, 0, "2");
         viewModel.setValueToSecondMatrix(0, 0, "2");
 
@@ -145,10 +145,10 @@ public class ViewModelTests {
     }
 
     private void fillColsRowsFields1x2And2x1() {
-        viewModel.setRowsFirstMatrix("1");
-        viewModel.setColsFirstMatrix("2");
-        viewModel.setRowsSecondMatrix("2");
-        viewModel.setColsSecondMatrix("1");
+        viewModel.setHeightFirstMatrixStr("1");
+        viewModel.setWidthFirstMatrixStr("2");
+        viewModel.setHeightSecondMatrixStr("2");
+        viewModel.setWidthSecondMatrixStr("1");
     }
 
     private void fillMatrix1x2And2x1() {
@@ -176,18 +176,18 @@ public class ViewModelTests {
 
     private void defaultInput() {
         fillColsRowsFields1x2And2x1();
-        viewModel.processingInputColsRows();
+        viewModel.processingInputMatrixSizes();
         fillMatrix1x2And2x1();
     }
 
     @Test
     public void checkGettersAndSettersForRowsAndCols() {
         fillColsRowsFields1x2And2x1();
-        viewModel.processingInputColsRows();
+        viewModel.processingInputMatrixSizes();
 
         boolean success = false;
-        if (viewModel.getRows1() == 1 && viewModel.getCols1() == 2
-           && viewModel.getRows2() == 2 && viewModel.getCols2() == 1) {
+        if (viewModel.getHeightFirstMatrix() == 1 && viewModel.getWidthFirstMatrix() == 2
+           && viewModel.getHeightSecondMatrix() == 2 && viewModel.getWidthFirstMatrix() == 1) {
             success = true;
         }
         assertEquals(true, success);

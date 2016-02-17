@@ -12,8 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public final class MatrixMultiply {
-    private static final int FORM_WIDTH  = 600;
-    private static final int FORM_HEIGHT  = 500;
+    private static final int FORM_WIDTH  = 800;
+    private static final int FORM_HEIGHT  = 300;
     private static final int WIDTH_GRID_TOP_PANEL = 2;
     private static final int HEIGHT_GRID_TOP_PANEL = 4;
 
@@ -24,10 +24,10 @@ public final class MatrixMultiply {
     private JPanel middlePanel;
     private JPanel bottomPanel;
 
-    private JTextField rowsFirstMatrixText;
-    private JTextField colsFirstMatrixText;
-    private JTextField rowsSecondMatrixText;
-    private JTextField colsSecondMatrixText;
+    private JTextField heightFirstMatrixText;
+    private JTextField widthFirstMatrixText;
+    private JTextField heightSecondMatrixText;
+    private JTextField widthSecondMatrixText;
     private JButton okButton;
     private JButton calculateButton;
 
@@ -75,22 +75,22 @@ public final class MatrixMultiply {
     }
 
     private void initializeTopPanel() {
-        JLabel firstMatrixLabel = new JLabel("M and N first matrix:");
-        rowsFirstMatrixText = new JTextField("");
-        colsFirstMatrixText = new JTextField("2");
-        JLabel secondMatrixLabel = new JLabel("M and N second matrix:");
-        rowsSecondMatrixText = new JTextField("2");
-        colsSecondMatrixText = new JTextField("1");
+        JLabel firstMatrixLabel = new JLabel("Height and width first matrix: ");
+        heightFirstMatrixText = new JTextField("");
+        widthFirstMatrixText = new JTextField("2");
+        JLabel secondMatrixLabel = new JLabel("Height and width second matrix: ");
+        heightSecondMatrixText = new JTextField("2");
+        widthSecondMatrixText = new JTextField("1");
         okButton = new JButton("Ok");
         okButton.setEnabled(false);
 
         topPanel.add(firstMatrixLabel);
-        topPanel.add(rowsFirstMatrixText);
-        topPanel.add(colsFirstMatrixText);
+        topPanel.add(heightFirstMatrixText);
+        topPanel.add(widthFirstMatrixText);
         topPanel.add(okButton);
         topPanel.add(secondMatrixLabel);
-        topPanel.add(rowsSecondMatrixText);
-        topPanel.add(colsSecondMatrixText);
+        topPanel.add(heightSecondMatrixText);
+        topPanel.add(widthSecondMatrixText);
     }
 
     private void initializeMiddlePanel() {
@@ -135,35 +135,35 @@ public final class MatrixMultiply {
             }
         });
 
-        KeyAdapter keyListenerInputNM = new KeyAdapter() {
+        KeyAdapter keyListenerInputMatrixSizes = new KeyAdapter() {
             public void keyReleased(final KeyEvent e) {
-                keyProcessInputColsRows();
+                keyProcessInputMatrixSizes();
             }
         };
 
-        rowsFirstMatrixText.addKeyListener(keyListenerInputNM);
-        colsFirstMatrixText.addKeyListener(keyListenerInputNM);
-        rowsSecondMatrixText.addKeyListener(keyListenerInputNM);
-        colsSecondMatrixText.addKeyListener(keyListenerInputNM);
+        heightFirstMatrixText.addKeyListener(keyListenerInputMatrixSizes);
+        widthFirstMatrixText.addKeyListener(keyListenerInputMatrixSizes);
+        heightSecondMatrixText.addKeyListener(keyListenerInputMatrixSizes);
+        widthSecondMatrixText.addKeyListener(keyListenerInputMatrixSizes);
 
 
     }
 
     private void clickOkButton() {
-        bindColsRows();
-        viewModel.processingInputColsRows();
-        backBindColsRows();
+        bindMatrixSizes();
+        viewModel.processingInputMatrixSizes();
+        backBindMatrixSizes();
         calculateButton.setEnabled(viewModel.isMultiplyButtonEnabled());
     }
 
-    private void  bindColsRows() {
-        viewModel.setRowsFirstMatrix(rowsFirstMatrixText.getText());
-        viewModel.setColsFirstMatrix(colsFirstMatrixText.getText());
-        viewModel.setRowsSecondMatrix(rowsSecondMatrixText.getText());
-        viewModel.setColsSecondMatrix(colsSecondMatrixText.getText());
+    private void  bindMatrixSizes() {
+        viewModel.setHeightFirstMatrixStr(heightFirstMatrixText.getText());
+        viewModel.setWidthFirstMatrixStr(widthFirstMatrixText.getText());
+        viewModel.setHeightSecondMatrixStr(heightSecondMatrixText.getText());
+        viewModel.setWidthSecondMatrixStr(widthSecondMatrixText.getText());
     }
 
-    private void backBindColsRows() {
+    private void backBindMatrixSizes() {
         okButton.setEnabled(viewModel.isOkButtonEnabled());
         reinitializeMiddlePanel();
         statusUpdate();
@@ -175,12 +175,12 @@ public final class MatrixMultiply {
 
     private void reinitializeMiddlePanel() {
         DefaultTableModel tableModel1 = (DefaultTableModel) firstMultiplier.getModel();
-        tableModel1.setRowCount(viewModel.getRows1());
-        tableModel1.setColumnCount(viewModel.getCols1());
+        tableModel1.setRowCount(viewModel.getHeightFirstMatrix());
+        tableModel1.setColumnCount(viewModel.getWidthFirstMatrix());
 
         DefaultTableModel tableModel2 = (DefaultTableModel) secondMultiplier.getModel();
-        tableModel2.setRowCount(viewModel.getRows2());
-        tableModel2.setColumnCount(viewModel.getCols2());
+        tableModel2.setRowCount(viewModel.getHeightSecondMatrix());
+        tableModel2.setColumnCount(viewModel.getWidthSecondMatrix());
 
         middlePanel.updateUI();
     }
@@ -254,9 +254,9 @@ public final class MatrixMultiply {
         }
     }
 
-    private void keyProcessInputColsRows() {
-        bindColsRows();
-        viewModel.parseInputColsRows();
+    private void keyProcessInputMatrixSizes() {
+        bindMatrixSizes();
+        viewModel.parseInputMatrixSizes();
         statusUpdate();
         okButton.setEnabled(viewModel.isOkButtonEnabled());
         calculateButton.setEnabled(viewModel.isMultiplyButtonEnabled());
