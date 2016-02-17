@@ -111,7 +111,6 @@ public class ViewModel {
         if (status == Status.WAITING_COLS_AND_ROWS) {
             return;
         }
-
         try {
             tryParseMatrix(firstMatrixTable);
             tryParseMatrix(secondMatrixTable);

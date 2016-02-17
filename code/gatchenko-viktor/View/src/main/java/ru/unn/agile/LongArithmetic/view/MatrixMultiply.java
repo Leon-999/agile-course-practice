@@ -59,7 +59,6 @@ public final class MatrixMultiply {
 
         frame.add(mainPanel);
         frame.setVisible(true);
-
         this.viewModel = viewModel;
 
         initializeListeners();
@@ -114,7 +113,6 @@ public final class MatrixMultiply {
         mainPanel.add(calculateButton);
 
         mainPanel.add(bottomPanel);
-
         labelStatus = new JLabel();
         mainPanel.add(labelStatus);
     }
@@ -126,7 +124,6 @@ public final class MatrixMultiply {
                 clickOkButton();
             }
         });
-
         calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
@@ -139,7 +136,6 @@ public final class MatrixMultiply {
                 keyProcessInputMatrixSizes();
             }
         };
-
         heightFirstMatrixText.addKeyListener(keyListenerInputMatrixSizes);
         widthFirstMatrixText.addKeyListener(keyListenerInputMatrixSizes);
         heightSecondMatrixText.addKeyListener(keyListenerInputMatrixSizes);

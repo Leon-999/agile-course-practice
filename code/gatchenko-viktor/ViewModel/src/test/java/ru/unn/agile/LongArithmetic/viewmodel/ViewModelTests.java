@@ -39,7 +39,6 @@ public class ViewModelTests {
     @Test
     public void isStatusReadyOkWhenFieldsColsRowsAreFill() {
         fillColsRowsFields();
-
         viewModel.parseInputMatrixSizes();
 
         assertEquals(Status.READY_OK, viewModel.getStatus());
@@ -104,7 +103,6 @@ public class ViewModelTests {
     public void isOkButtonDisabledWithIncompleteInput() {
         viewModel.setHeightFirstMatrixStr("1");
         viewModel.setWidthFirstMatrixStr("1");
-
         viewModel.processingInputMatrixSizes();
 
         assertEquals(false, viewModel.isOkButtonEnabled());
@@ -113,7 +111,6 @@ public class ViewModelTests {
     @Test
     public void isOkButtonEnabledWithCorrectInput() {
         fillColsRowsFields();
-
         viewModel.processingInputMatrixSizes();
 
         assertEquals(true, viewModel.isOkButtonEnabled());
