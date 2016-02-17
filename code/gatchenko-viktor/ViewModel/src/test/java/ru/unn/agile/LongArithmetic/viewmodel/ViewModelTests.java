@@ -187,7 +187,7 @@ public class ViewModelTests {
 
         boolean success = false;
         if (viewModel.getHeightFirstMatrix() == 1 && viewModel.getWidthFirstMatrix() == 2
-           && viewModel.getHeightSecondMatrix() == 2 && viewModel.getWidthFirstMatrix() == 1) {
+           && viewModel.getHeightSecondMatrix() == 2 && viewModel.getWidthSecondMatrix() == 1) {
             success = true;
         }
         assertEquals(true, success);
