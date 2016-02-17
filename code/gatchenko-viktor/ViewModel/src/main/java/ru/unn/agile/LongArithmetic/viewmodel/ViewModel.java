@@ -96,7 +96,7 @@ public class ViewModel {
 
     private boolean isInputMatrixSizesAvailable() {
         return !(heightFirstMatrix.isEmpty() || widthFirstMatrix.isEmpty()
-                || heightSecondMatrix.isEmpty() || widthSecondMatrix.isEmpty());
+               || heightSecondMatrix.isEmpty() || widthSecondMatrix.isEmpty());
     }
 
     public void processingInputMatrices() {

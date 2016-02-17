@@ -38,7 +38,6 @@ public final class MatrixMultiply {
     private JLabel labelStatus;
 
     public static void main(final String[] args) {
-        //Создаем фрейм в потоке обработки событий
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
