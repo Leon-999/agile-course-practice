@@ -8,16 +8,20 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Calendar;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
 public class FinanceManagementTxtLoggerTests {
-    private static final String LOG_PATH = "FinanceManagementLogger.log";
+    private String logPath;
     private TxtLoggerOfFinanceManagement logger;
 
     @Before
     public void setUp() {
-        logger = new TxtLoggerOfFinanceManagement(LOG_PATH);
+        final int seedRand = 1000;
+        final Random rand = new Random(seedRand);
+        logPath = "FinanceManagementLogger" + rand.nextInt() + ".log";
+        logger = new TxtLoggerOfFinanceManagement(logPath);
     }
 
     @Test
@@ -28,9 +32,9 @@ public class FinanceManagementTxtLoggerTests {
     @Test
     public void isLogFileCreatedAfterLoggerHadBeenInstantiated() {
         try {
-            new BufferedReader(new FileReader(LOG_PATH));
+            new BufferedReader(new FileReader(logPath));
         } catch (FileNotFoundException e) {
-            fail("File " + LOG_PATH + " is not created");
+            fail("File " + logPath + " is not created");
         }
     }
 
