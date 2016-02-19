@@ -4,13 +4,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-public class CategoryAndNamesTest {
+public class CategoryAndGoodsNamesTest {
 
-    private CategoryAndNames consumption;
+    private CategoryAndGoodsNames consumption;
 
     private String initializeTest() {
         String nameCategory = "new category";
-        consumption = new CategoryAndNames(nameCategory);
+        consumption = new CategoryAndGoodsNames(nameCategory);
         return nameCategory;
     }
 
@@ -33,26 +33,26 @@ public class CategoryAndNamesTest {
     public void canAddNewName() {
         initializeTest();
         String newName = "name 1";
-        assertTrue(consumption.tryAddNewName(newName));
+        assertTrue(consumption.tryAddGoodsName(newName));
     }
 
     @Test
     public void canAddOldName() {
         initializeTest();
         String newName = "name 1";
-        consumption.tryAddNewName(newName);
-        assertFalse(consumption.tryAddNewName(newName));
+        consumption.tryAddGoodsName(newName);
+        assertFalse(consumption.tryAddGoodsName(newName));
     }
 
     @Test
-    public void canGetName() {
+    public void cangetGoodsName() {
         initializeTest();
         ArrayList<String> names = new ArrayList<String>();
         names.add("name 1");
         names.add("name 2");
-        consumption.tryAddNewName(names.get(0));
-        consumption.tryAddNewName(names.get(1));
-        assertEquals(names, consumption.getName());
+        consumption.tryAddGoodsName(names.get(0));
+        consumption.tryAddGoodsName(names.get(1));
+        assertEquals(names, consumption.getGoodsName());
     }
 
     @Test

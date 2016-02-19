@@ -4,20 +4,20 @@ import java.util.*;
 
 public class FinanceManagement {
 
-    private final ArrayList<CategoryAndNames> memberCategory;
+    private final ArrayList<CategoryAndGoodsNames> memberCategory;
     private final ArrayList<Consumption> consumptions;
     private double balance;
 
     public FinanceManagement() {
-        memberCategory = new ArrayList<CategoryAndNames>();
+        memberCategory = new ArrayList<CategoryAndGoodsNames>();
         consumptions = new ArrayList<Consumption>();
         balance = 0;
     }
 
     private void addNewCategory(final String category) {
 
-        CategoryAndNames addedNewCategory =
-                new CategoryAndNames(category);
+        CategoryAndGoodsNames addedNewCategory =
+                new CategoryAndGoodsNames(category);
 
         if (memberCategory.contains(addedNewCategory)) {
             return;
@@ -28,13 +28,13 @@ public class FinanceManagement {
 
     private void addNewNameInCategory(final String category, final String name) {
 
-        CategoryAndNames categoryFromAdded =
-                new CategoryAndNames(category);
+        CategoryAndGoodsNames categoryFromAdded =
+                new CategoryAndGoodsNames(category);
 
         Integer indexCategory = memberCategory.indexOf(categoryFromAdded);
 
         if (indexCategory >= 0) {
-            memberCategory.get(indexCategory).tryAddNewName(name);
+            memberCategory.get(indexCategory).tryAddGoodsName(name);
         }
     }
 
@@ -49,14 +49,14 @@ public class FinanceManagement {
     public ArrayList<String> getAllNameInCategory(final String category) {
 
         ArrayList<String> arrayName = new ArrayList<String>();
-        CategoryAndNames categoryContainName =
-                new CategoryAndNames(category);
+        CategoryAndGoodsNames categoryContainName =
+                new CategoryAndGoodsNames(category);
 
         Integer indexCategory = memberCategory.indexOf(categoryContainName);
 
         if (indexCategory >= 0) {
             categoryContainName = memberCategory.get(indexCategory);
-            arrayName = categoryContainName.getName();
+            arrayName = categoryContainName.getGoodsName();
         }
         return arrayName;
     }

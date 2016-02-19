@@ -2,21 +2,21 @@ package ru.unn.agile.FinanceManagement.Model;
 
 import java.util.ArrayList;
 
-class CategoryAndNames {
+class CategoryAndGoodsNames {
 
     private final String category;
-    private final ArrayList<String> names;
+    private final ArrayList<String> goodsName;
 
-    public CategoryAndNames(final String nameCategory) {
+    public CategoryAndGoodsNames(final String nameCategory) {
         this.category = nameCategory;
-        this.names = new ArrayList<String>();
+        this.goodsName = new ArrayList<String>();
     }
 
     @Override
     public int hashCode() {
         final int shift = 5;
         int result = category.hashCode();
-        result = result << shift + names.hashCode();
+        result = result << shift + goodsName.hashCode();
         return result;
     }
 
@@ -26,15 +26,15 @@ class CategoryAndNames {
             return false;
         }
 
-        CategoryAndNames newCategory = (CategoryAndNames) object;
+        CategoryAndGoodsNames newCategory = (CategoryAndGoodsNames) object;
 
         return category.equals(newCategory.category);
 
     }
 
-    public boolean tryAddNewName(final String name) {
-        if (!this.names.contains(name)) {
-            this.addNewName(name);
+    public boolean tryAddGoodsName(final String goodsName) {
+        if (!this.goodsName.contains(goodsName)) {
+            this.addGoodsName(goodsName);
 
             return true;
         }
@@ -42,15 +42,15 @@ class CategoryAndNames {
         return false;
     }
 
-    private void addNewName(final String name) {
-        this.names.add(name);
+    private void addGoodsName(final String goodsName) {
+        this.goodsName.add(goodsName);
     }
 
     public String getCategory() {
         return this.category;
     }
 
-    public ArrayList<String> getName() {
-        return this.names;
+    public ArrayList<String> getGoodsName() {
+        return this.goodsName;
     }
 }
