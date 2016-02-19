@@ -141,7 +141,7 @@ public class ViewModelTests {
         assertEquals(true, success);
     }
 
-    private void fillColsRowsFields1x2And2x1() {
+    private void fillMatrixSizeFields1x2And2x1() {
         viewModel.setHeightFirstMatrixStr("1");
         viewModel.setWidthFirstMatrixStr("2");
         viewModel.setHeightSecondMatrixStr("2");
@@ -172,14 +172,14 @@ public class ViewModelTests {
     }
 
     private void defaultInput() {
-        fillColsRowsFields1x2And2x1();
+        fillMatrixSizeFields1x2And2x1();
         viewModel.processingInputMatrixSizes();
         fillMatrix1x2And2x1();
     }
 
     @Test
     public void checkGettersAndSettersForRowsAndCols() {
-        fillColsRowsFields1x2And2x1();
+        fillMatrixSizeFields1x2And2x1();
         viewModel.processingInputMatrixSizes();
 
         boolean success = false;
