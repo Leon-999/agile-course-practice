@@ -12,10 +12,12 @@ public class PomodoroTimerViewModel extends EventGenerator {
     private String currentStatus;
     private Boolean canStartTimer;
     private String pomodoroCount;
+    private String logsString;
     private final SessionManager sessionManager;
     private final ActionEvent viewModelChangedActionEvent;
+    private ILogger logger;
 
-    public PomodoroTimerViewModel(final SessionManager sessionManager) {
+    public PomodoroTimerViewModel(final SessionManager sessionManager, final ILogger logger) {
         seconds = "00";
         minutes = "00";
         currentStatus = Status.WAITING.toString();
@@ -23,9 +25,16 @@ public class PomodoroTimerViewModel extends EventGenerator {
         canStartTimer = true;
         viewModelChangedActionEvent = new ActionEvent(this, 0, "View model is changed");
         this.sessionManager = sessionManager;
+        this.logger = logger;
         this.sessionManager.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
+                if (isCurrentStatusChanged(sessionManager.getStatus())) {
+                    if (currentStatus.equals(Status.WAITING.toString())) {
+                        logStartPomodoroSessionEvent();
+                    }
+                    logChangeStatusEvent(sessionManager.getStatus());
+                }
                 currentStatus = sessionManager.getStatus();
                 pomodoroCount = String.valueOf(sessionManager.getPomodoroCount());
                 seconds = String.valueOf(sessionManager.getPomodoroTime().getSecondCount());
@@ -54,9 +63,20 @@ public class PomodoroTimerViewModel extends EventGenerator {
         return formatTimeString(seconds);
     }
 
-
     public String getMinutes() {
         return formatTimeString(minutes);
+    }
+
+    public String getLogs() {
+        constructLogsStringForView();
+        return logsString; }
+
+    private void constructLogsStringForView() {
+        StringBuilder newLogsString = new StringBuilder();
+        for (String logRecord:logger.getLog()) {
+            newLogsString.append(logRecord + '\n');
+        }
+        logsString = newLogsString.toString();
     }
 
     private boolean isStringContainOneCharNumber(final String stringWithNumber) {
@@ -78,6 +98,24 @@ public class PomodoroTimerViewModel extends EventGenerator {
         return timeValue;
     }
 
+    private Boolean isCurrentStatusChanged(final String newStatus) {
+        if (!newStatus.equals(currentStatus)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void logChangeStatusEvent(final String newStatus) {
+        StringBuilder logString = new StringBuilder(LogMessages.STATUS_WAS_CHANGED.toString());
+        logString.append(newStatus);
+        logger.addLogLine(logString.toString());
+    }
+
+    private void logStartPomodoroSessionEvent() {
+        StringBuilder logString = new StringBuilder(LogMessages.SESSION_STARTED.toString());
+        logger.addLogLine(logString.toString());
+    }
+
     public enum Status {
         WAITING("Waiting"),
         POMODORO("Pomodoro"),
@@ -94,4 +132,20 @@ public class PomodoroTimerViewModel extends EventGenerator {
             return name;
         }
     }
+
+    public enum LogMessages {
+        SESSION_STARTED("Start pomodoro session"),
+        STATUS_WAS_CHANGED("Session status changed to ");
+
+        private final String name;
+        private LogMessages(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
 }
