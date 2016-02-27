@@ -152,10 +152,10 @@ public final class MatrixMultiply {
     }
 
     private void  bindMatrixSizes() {
-        viewModel.setHeightFirstMatrixStr(heightFirstMatrixText.getText());
-        viewModel.setWidthFirstMatrixStr(widthFirstMatrixText.getText());
-        viewModel.setHeightSecondMatrixStr(heightSecondMatrixText.getText());
-        viewModel.setWidthSecondMatrixStr(widthSecondMatrixText.getText());
+        viewModel.setHeightFirstMatrix(heightFirstMatrixText.getText());
+        viewModel.setWidthFirstMatrix(widthFirstMatrixText.getText());
+        viewModel.setHeightSecondMatrix(heightSecondMatrixText.getText());
+        viewModel.setWidthSecondMatrix(widthSecondMatrixText.getText());
     }
 
     private void backBindMatrixSizes() {

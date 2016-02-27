@@ -5,6 +5,7 @@ import ru.unn.agile.LongArithmetic.model.Matrix;
 
 public class ViewModel {
 
+    public static final int UNDEFINED_SIZE = -1;
     private static final int INITIAL_SIZE_MATRIX = 1;
 
     private String heightFirstMatrix;
@@ -33,6 +34,10 @@ public class ViewModel {
         widthFirstMatrix = "";
         heightSecondMatrix = "";
         widthSecondMatrix = "";
+        height1 = UNDEFINED_SIZE;
+        width1 = UNDEFINED_SIZE;
+        height2 = UNDEFINED_SIZE;
+        width2 = UNDEFINED_SIZE;
         status = Status.WAITING_COLS_AND_ROWS;
 
         firstMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
@@ -150,35 +155,31 @@ public class ViewModel {
         }
     }
 
-    public String getHeightFirstMatrixStr() { return heightFirstMatrix; }
-
-    public void setHeightFirstMatrixStr(final String heightFirstMatrix) {
+    public void setHeightFirstMatrix(final String heightFirstMatrix) {
         if (!heightFirstMatrix.equals(this.heightFirstMatrix)) {
             this.heightFirstMatrix = heightFirstMatrix;
+            height1 = UNDEFINED_SIZE;
         }
     }
 
-    public String getWidthFirstMatrixStr() { return widthFirstMatrix; }
-
-    public void setWidthFirstMatrixStr(final String widthFirstMatrix) {
+    public void setWidthFirstMatrix(final String widthFirstMatrix) {
         if (!widthFirstMatrix.equals(this.widthFirstMatrix)) {
             this.widthFirstMatrix = widthFirstMatrix;
+            width1 = UNDEFINED_SIZE;
         }
     }
 
-    public String getHeightSecondMatrixStr() { return heightSecondMatrix; }
-
-    public void setHeightSecondMatrixStr(final String heightSecondMatrix) {
+    public void setHeightSecondMatrix(final String heightSecondMatrix) {
         if (!heightSecondMatrix.equals(this.heightSecondMatrix)) {
             this.heightSecondMatrix = heightSecondMatrix;
+            height2 = UNDEFINED_SIZE;
         }
     }
 
-    public String getWidthSecondMatrixStr() { return widthSecondMatrix; }
-
-    public void setWidthSecondMatrixStr(final String widthSecondMatrix) {
+    public void setWidthSecondMatrix(final String widthSecondMatrix) {
         if (!widthSecondMatrix.equals(this.widthSecondMatrix)) {
             this.widthSecondMatrix = widthSecondMatrix;
+            width2 = UNDEFINED_SIZE;
         }
     }
 
