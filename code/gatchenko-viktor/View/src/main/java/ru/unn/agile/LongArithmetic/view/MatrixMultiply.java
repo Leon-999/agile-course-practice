@@ -206,7 +206,7 @@ public final class MatrixMultiply {
         int rowCount = multiplier.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                String stringValue = (String) multiplier.getValueAt(i, j);
+                String stringValue = multiplier.getValueAt(i, j).toString();
                 if (multiplier.equals(firstMultiplier)) {
                     viewModel.setValueToFirstMatrix(i, j, stringValue);
                 } else {

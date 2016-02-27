@@ -222,7 +222,7 @@ public class WhenWorkWithLongNumber {
     }
 
     @Test(expected = LongNumberCanNotConvertExeption.class)
-    public void convertVeryLongNumberToint() {
+    public void convertVeryLongNumberToInt() {
         longNumber1 = new LongNumber("19283746519283746519283746519283745619");
         int number = longNumber1.convertToInt();
     }
