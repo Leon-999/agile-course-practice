@@ -28,23 +28,23 @@ public class ViewModelTests {
         assertEquals(ViewModel.UNDEFINED_SIZE, viewModel.getWidthFirstMatrix());
         assertEquals(ViewModel.UNDEFINED_SIZE, viewModel.getHeightSecondMatrix());
         assertEquals(ViewModel.UNDEFINED_SIZE, viewModel.getWidthSecondMatrix());
-        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
+        assertEquals(Status.WAITING_WIDTH_AND_HEIGHT_MATRICES, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusWaitingColsRowsInTheBeginning() {
-        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
+    public void isStatusWaitingMatrixSizesInTheBeginning() {
+        assertEquals(Status.WAITING_WIDTH_AND_HEIGHT_MATRICES, viewModel.getStatus());
     }
 
     @Test
-    public void isStatusReadyOkWhenFieldsColsRowsAreFill() {
-        fillColsRowsFields();
+    public void isStatusReadyOkWhenFieldsMatrixSizesAreFill() {
+        fillMatrixSizesFields();
         viewModel.parseInputMatrixSizes();
 
         assertEquals(Status.READY_OK, viewModel.getStatus());
     }
 
-    private void fillColsRowsFields() {
+    private void fillMatrixSizesFields() {
         viewModel.setHeightFirstMatrix("1");
         viewModel.setWidthFirstMatrix("1");
         viewModel.setHeightSecondMatrix("1");
@@ -53,10 +53,10 @@ public class ViewModelTests {
 
 
     @Test
-    public void isStatusWaitingWhenMultiplyWithEmptyFieldsColsRows() {
+    public void isStatusWaitingWhenMultiplyWithEmptyFieldsMatrixSizes() {
         viewModel.processingInputMatrices();
 
-        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
+        assertEquals(Status.WAITING_WIDTH_AND_HEIGHT_MATRICES, viewModel.getStatus());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ViewModelTests {
         viewModel.setHeightFirstMatrix("1");
         viewModel.processingInputMatrixSizes();
 
-        assertEquals(Status.WAITING_COLS_AND_ROWS, viewModel.getStatus());
+        assertEquals(Status.WAITING_WIDTH_AND_HEIGHT_MATRICES, viewModel.getStatus());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ViewModelTests {
 
     @Test
     public void isOkButtonDisabledWhenFormatIsBad() {
-        fillColsRowsFields();
+        fillMatrixSizesFields();
         viewModel.processingInputMatrixSizes();
         assertEquals(true, viewModel.isOkButtonEnabled());
 
@@ -110,7 +110,7 @@ public class ViewModelTests {
 
     @Test
     public void isOkButtonEnabledWithCorrectInput() {
-        fillColsRowsFields();
+        fillMatrixSizesFields();
         viewModel.processingInputMatrixSizes();
 
         assertEquals(true, viewModel.isOkButtonEnabled());
@@ -118,7 +118,7 @@ public class ViewModelTests {
 
     @Test
     public void canPerformMultiplyAction() {
-        fillColsRowsFields();
+        fillMatrixSizesFields();
         viewModel.processingInputMatrixSizes();
         viewModel.setValueToFirstMatrix(0, 0, "2");
         viewModel.setValueToSecondMatrix(0, 0, "2");
@@ -178,7 +178,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void checkGettersAndSettersForRowsAndCols() {
+    public void checkGettersAndSettersForMatrixSizes() {
         fillMatrixSizeFields1x2And2x1();
         viewModel.processingInputMatrixSizes();
 

@@ -38,7 +38,7 @@ public class ViewModel {
         width1 = UNDEFINED_SIZE;
         height2 = UNDEFINED_SIZE;
         width2 = UNDEFINED_SIZE;
-        status = Status.WAITING_COLS_AND_ROWS;
+        status = Status.WAITING_WIDTH_AND_HEIGHT_MATRICES;
 
         firstMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
         secondMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
@@ -74,7 +74,7 @@ public class ViewModel {
                 if (isOkButtonEnabled) {
                     status = Status.READY_OK;
                 } else {
-                    status = Status.WAITING_COLS_AND_ROWS;
+                    status = Status.WAITING_WIDTH_AND_HEIGHT_MATRICES;
                 }
             }
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class ViewModel {
     }
 
     public  void parseInputMatrices() {
-        if (status == Status.WAITING_COLS_AND_ROWS) {
+        if (status == Status.WAITING_WIDTH_AND_HEIGHT_MATRICES) {
             return;
         }
         try {
@@ -210,8 +210,8 @@ public class ViewModel {
     }
 
     public final class Status {
-        public static final String WAITING_COLS_AND_ROWS
-                                        = "Please provide input data: M and N for matrices";
+        public static final String WAITING_WIDTH_AND_HEIGHT_MATRICES
+                                        = "Please provide input data: width and height for matrices";
         public static final String WAITING = "Please provide input data: write in matrices";
         public static final String READY_OK = "Press 'Ok'";
         public static final String READY_MULTIPLY = "Press 'Multiply'";
