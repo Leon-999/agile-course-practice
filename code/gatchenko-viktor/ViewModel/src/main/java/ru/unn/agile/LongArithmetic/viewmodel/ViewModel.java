@@ -70,12 +70,10 @@ public class ViewModel {
             if (isInputMatrixSizesAvailable() && width1 == height2) {
                 isOkButtonEnabled = true;
             }
-            if (status != Status.WAITING) {
-                if (isOkButtonEnabled) {
-                    status = Status.READY_OK;
-                } else {
-                    status = Status.WAITING_WIDTH_AND_HEIGHT_MATRICES;
-                }
+            if (isOkButtonEnabled) {
+                status = Status.READY_OK;
+            } else {
+                status = Status.WAITING_WIDTH_AND_HEIGHT_MATRICES;
             }
         } catch (Exception e) {
             status = Status.BAD_FORMAT;
