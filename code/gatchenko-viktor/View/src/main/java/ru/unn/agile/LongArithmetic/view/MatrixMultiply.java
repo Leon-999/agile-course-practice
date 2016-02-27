@@ -153,7 +153,7 @@ public final class MatrixMultiply {
         secondMultiplier.addKeyListener(keyListenerInputMatrix);
     }
 
-    private void startInitializeTable(JTable table) {
+    private void startInitializeTable(final JTable table) {
         int columnCount = table.getColumnCount();
         int rowCount = table.getRowCount();
         for (int i = 0; i < rowCount; i++) {
