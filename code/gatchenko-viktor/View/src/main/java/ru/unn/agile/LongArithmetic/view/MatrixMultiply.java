@@ -95,6 +95,9 @@ public final class MatrixMultiply {
         firstMultiplier = new JTable(new DefaultTableModel(1, 1));
         secondMultiplier = new JTable(new DefaultTableModel(1, 1));
 
+        startInitializeTable(firstMultiplier);
+        startInitializeTable(secondMultiplier);
+
         middlePanel.add(firstMultiplier);
         middlePanel.add(secondMultiplier);
     }
@@ -141,7 +144,23 @@ public final class MatrixMultiply {
         heightSecondMatrixText.addKeyListener(keyListenerInputMatrixSizes);
         widthSecondMatrixText.addKeyListener(keyListenerInputMatrixSizes);
 
+        KeyAdapter keyListenerInputMatrix = new KeyAdapter() {
+            public void keyReleased(final KeyEvent e) {
+                keyProcessInputMatrix();
+            }
+        };
+        firstMultiplier.addKeyListener(keyListenerInputMatrix);
+        secondMultiplier.addKeyListener(keyListenerInputMatrix);
+    }
 
+    private void startInitializeTable(JTable table) {
+        int columnCount = table.getColumnCount();
+        int rowCount = table.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                table.setValueAt("0", i, j);
+            }
+        }
     }
 
     private void clickOkButton() {
@@ -172,17 +191,20 @@ public final class MatrixMultiply {
         DefaultTableModel tableModel1 = (DefaultTableModel) firstMultiplier.getModel();
         tableModel1.setRowCount(viewModel.getHeightFirstMatrix());
         tableModel1.setColumnCount(viewModel.getWidthFirstMatrix());
+        startInitializeTable(firstMultiplier);
 
         DefaultTableModel tableModel2 = (DefaultTableModel) secondMultiplier.getModel();
         tableModel2.setRowCount(viewModel.getHeightSecondMatrix());
         tableModel2.setColumnCount(viewModel.getWidthSecondMatrix());
+        startInitializeTable(secondMultiplier);
 
         middlePanel.updateUI();
     }
 
     private void clickMultiplyButton() {
         bindMatrixes();
-        viewModel.processingInputMatrices();
+        viewModel.parseInputMatrices();
+        viewModel.multiplyMatrices();
         backBindMatrixes();
     }
 
@@ -255,5 +277,11 @@ public final class MatrixMultiply {
         statusUpdate();
         okButton.setEnabled(viewModel.isOkButtonEnabled());
         calculateButton.setEnabled(viewModel.isMultiplyButtonEnabled());
+    }
+
+    private void keyProcessInputMatrix() {
+        bindMatrixes();
+        viewModel.parseInputMatrices();
+        statusUpdate();
     }
 }

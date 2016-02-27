@@ -104,14 +104,6 @@ public class ViewModel {
                || heightSecondMatrix.isEmpty() || widthSecondMatrix.isEmpty());
     }
 
-    public void processingInputMatrices() {
-        parseInputMatrices();
-        if (isInputMatricesAvailable()) {
-            multiplyMatrices();
-            status = Status.SUCCESS;
-        }
-    }
-
     public  void parseInputMatrices() {
         if (status == Status.WAITING_WIDTH_AND_HEIGHT_MATRICES) {
             return;
@@ -139,7 +131,6 @@ public class ViewModel {
                 if (value.isUndefined()) {
                     throw new BadFormatToCellException("Can't parse input matrices, bad format");
                 }
-
                 if (matrix.equals(firstMatrixTable)) {
                     firstMultiplier.setElement(i, j, value);
                 } else {
@@ -149,9 +140,10 @@ public class ViewModel {
         }
     }
 
-    private void multiplyMatrices() {
-        if (status == Status.READY_MULTIPLY) {
+    public void multiplyMatrices() {
+        if (isInputMatricesAvailable() && status == Status.READY_MULTIPLY) {
             resultMatrix = firstMultiplier.multiply(secondMultiplier);
+            status = Status.SUCCESS;
         }
     }
 
@@ -215,7 +207,7 @@ public class ViewModel {
 
     public final class Status {
         public static final String WAITING_WIDTH_AND_HEIGHT_MATRICES
-                                        = "Please provide input data: width and height for matrices";
+                               = "Please provide input data: width and height for matrices";
         public static final String WAITING = "Please provide input data: write in matrices";
         public static final String READY_OK = "Press 'Ok'";
         public static final String READY_MULTIPLY = "Press 'Multiply'";

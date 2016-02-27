@@ -49,7 +49,8 @@ public class ViewModelTests {
 
     @Test
     public void isStatusWaitingWhenMultiplyWithEmptyFieldsMatrixSizes() {
-        viewModel.processingInputMatrices();
+        viewModel.parseInputMatrices();
+        viewModel.multiplyMatrices();
 
         assertEquals(Status.WAITING_WIDTH_AND_HEIGHT_MATRICES, viewModel.getStatus());
     }
@@ -118,7 +119,8 @@ public class ViewModelTests {
         viewModel.setValueToFirstMatrix(0, 0, "2");
         viewModel.setValueToSecondMatrix(0, 0, "2");
 
-        viewModel.processingInputMatrices();
+        viewModel.parseInputMatrices();
+        viewModel.multiplyMatrices();
         Matrix resultMatrix = viewModel.getResultMatrix();
         boolean success = resultMatrix.getElement(0, 0).equals(4);
 
@@ -128,7 +130,8 @@ public class ViewModelTests {
     @Test
     public void canPerformMultiplyMatrix1x2And2x1() {
         defaultInput();
-        viewModel.processingInputMatrices();
+        viewModel.parseInputMatrices();
+        viewModel.multiplyMatrices();
 
         Matrix resultMatrix = viewModel.getResultMatrix();
         boolean success = resultMatrix.getElement(0, 0).equals(4);
@@ -153,7 +156,8 @@ public class ViewModelTests {
     @Test
     public void canSetSuccessMessage() {
         defaultInput();
-        viewModel.processingInputMatrices();
+        viewModel.parseInputMatrices();
+        viewModel.multiplyMatrices();
 
         assertEquals(Status.SUCCESS, viewModel.getStatus());
     }
