@@ -45,7 +45,6 @@ public class ViewModelTests {
         viewModel.setWidthSecondMatrix("1");
     }
 
-
     @Test
     public void isStatusWaitingWhenMultiplyWithEmptyFieldsMatrixSizes() {
         viewModel.parseInputMatrices();

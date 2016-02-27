@@ -239,7 +239,6 @@ public class LongNumber {
         } else {
             throw new LongNumberCanNotConvertExeption("This long number can't convert to int");
         }
-
         return intNum;
     }
 
@@ -258,7 +257,6 @@ public class LongNumber {
         } else {
             isEqual = false;
         }
-
         return isEqual;
     }
 

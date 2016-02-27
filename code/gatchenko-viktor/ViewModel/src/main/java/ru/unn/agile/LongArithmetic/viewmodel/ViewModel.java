@@ -28,7 +28,6 @@ public class ViewModel {
     private boolean isMultiplyButtonEnabled;
     private boolean isInputMatricesAvailable;
 
-
     public ViewModel() {
         heightFirstMatrix = "";
         widthFirstMatrix = "";

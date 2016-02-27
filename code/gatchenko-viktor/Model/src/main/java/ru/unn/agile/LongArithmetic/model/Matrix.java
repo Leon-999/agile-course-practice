@@ -51,7 +51,6 @@ public class Matrix {
         } else {
             throw new MatrixesCanNotMultiplyExeption("This pair matrixes can't multiply");
         }
-
         return resultMatrix;
     }
 
@@ -64,7 +63,6 @@ public class Matrix {
             partSum = firstMultiplier.element[i][w].multiply(secondMultiplier.element[w][j]);
             result = result.add(partSum);
         }
-
         return result;
     }
 
@@ -90,7 +88,6 @@ public class Matrix {
         } else {
             matrixEqual = false;
         }
-
         return matrixEqual;
     }
 
