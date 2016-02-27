@@ -182,4 +182,18 @@ public class ViewModelTests {
         assertEquals(2, viewModel.getHeightSecondMatrix());
         assertEquals(1, viewModel.getWidthSecondMatrix());
     }
+
+    @Test(expected = OutOfRangeMatrix.class)
+    public void setValueToOutOfRangeIndexInFirstMatrix() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        viewModel.setValueToFirstMatrix(0, -1, "1");
+    }
+
+    @Test(expected = OutOfRangeMatrix.class)
+    public void setValueToOutOfRangeIndexInSecondMatrix() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        viewModel.setValueToSecondMatrix(0, -1, "1");
+    }
 }

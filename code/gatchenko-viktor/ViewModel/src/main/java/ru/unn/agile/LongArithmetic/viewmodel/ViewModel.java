@@ -198,14 +198,18 @@ public class ViewModel {
     public String getStatus() { return status; }
 
     public void setValueToFirstMatrix(final int i, final int j, final String newValue) {
-        if (i > -1 && i < height1 && i > -1 && j < width1) {
+        if (i > -1 && i < height1 && j > -1 && j < width1) {
             firstMatrixTable[i][j] = newValue;
+        } else {
+            throw new OutOfRangeMatrix("Error: out of range matrix");
         }
     }
 
     public void setValueToSecondMatrix(final int i, final int j, final String newValue) {
-        if (i > -1 && i < height2 && i > -1 && j < width2) {
+        if (i > -1 && i < height2 && j > -1 && j < width2) {
             secondMatrixTable[i][j] = newValue;
+        } else {
+            throw new OutOfRangeMatrix("Error: out of range matrix");
         }
     }
 
