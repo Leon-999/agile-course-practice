@@ -17,11 +17,6 @@ public class ViewModelTests {
         viewModel = new ViewModel();
     }
 
-    @After
-    public void tearDown() {
-        viewModel = null;
-    }
-
     @Test
     public void canSetDefaultValues() {
         assertEquals(ViewModel.UNDEFINED_SIZE, viewModel.getHeightFirstMatrix());
@@ -182,11 +177,9 @@ public class ViewModelTests {
         fillMatrixSizeFields1x2And2x1();
         viewModel.processingInputMatrixSizes();
 
-        boolean success = false;
-        if (viewModel.getHeightFirstMatrix() == 1 && viewModel.getWidthFirstMatrix() == 2
-           && viewModel.getHeightSecondMatrix() == 2 && viewModel.getWidthSecondMatrix() == 1) {
-            success = true;
-        }
-        assertEquals(true, success);
+        assertEquals(1, viewModel.getHeightFirstMatrix());
+        assertEquals(2, viewModel.getWidthFirstMatrix());
+        assertEquals(2, viewModel.getHeightSecondMatrix());
+        assertEquals(1, viewModel.getWidthSecondMatrix());
     }
 }
