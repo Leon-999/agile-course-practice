@@ -121,9 +121,9 @@ public class ViewModelTests {
         viewModel.parseInputMatrices();
         viewModel.multiplyMatrices();
         Matrix resultMatrix = viewModel.getResultMatrix();
-        boolean success = resultMatrix.getElement(0, 0).equals(4);
+        int matrixElement = resultMatrix.getElement(0, 0).convertToInt();
 
-        assertEquals(true, success);
+        assertEquals(4, matrixElement);
     }
 
     @Test
@@ -133,9 +133,9 @@ public class ViewModelTests {
         viewModel.multiplyMatrices();
 
         Matrix resultMatrix = viewModel.getResultMatrix();
-        boolean success = resultMatrix.getElement(0, 0).equals(4);
+        int matrixElement = resultMatrix.getElement(0, 0).convertToInt();
 
-        assertEquals(true, success);
+        assertEquals(4, matrixElement);
     }
 
     private void fillMatrixSizeFields1x2And2x1() {

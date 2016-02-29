@@ -1,5 +1,6 @@
 package ru.unn.agile.LongArithmetic.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -75,11 +76,8 @@ public class WhenWorkWithMatrix {
 
         Matrix resultMatrix = firstMatrix.multiply(secondMatrix);
 
-        boolean success = true;
-        if (resultMatrix.getHeight() != 5 || resultMatrix.getWidth() != 5) {
-            success = false;
-        }
-        assertTrue(success);
+        assertEquals(5, resultMatrix.getHeight());
+        assertEquals(5, resultMatrix.getWidth());
     }
 
     @Test(expected = MatrixesCanNotMultiplyExeption.class)
@@ -131,11 +129,11 @@ public class WhenWorkWithMatrix {
         matrix.setElement(4, 5, 33);
         LongNumber element = matrix.getElement(4, 5);
 
-        boolean success = false;
-        if (height == 6 && width == 7 && element.equals(33)) {
-            success = true;
-        }
+        assertEquals(6, height);
+        assertEquals(7, width);
+        assertTrue(element.equals(33));
 
-        assertTrue(success);
+
+
     }
 }
