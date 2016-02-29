@@ -9,6 +9,7 @@ import ru.unn.agile.LongArithmetic.viewmodel.ViewModel.Status;
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
+
     private ViewModel viewModel;
 
     @Before
@@ -111,7 +112,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canPerformMultiplyAction() {
+    public void canPerformMultiply() {
         fillMatrixSizesFields();
         viewModel.processingInputMatrixSizes();
         viewModel.setValueToFirstMatrix(0, 0, "2");

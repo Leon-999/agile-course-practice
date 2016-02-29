@@ -12,6 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public final class MatrixMultiply {
+
     private static final int FORM_WIDTH  = 800;
     private static final int FORM_HEIGHT  = 300;
     private static final int WIDTH_GRID_TOP_PANEL = 2;
