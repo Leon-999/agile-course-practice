@@ -8,14 +8,14 @@ public class ViewModel {
     public static final int UNDEFINED_SIZE = -1;
     private static final int INITIAL_SIZE_MATRIX = 1;
 
-    private String heightFirstMatrix;
-    private String widthFirstMatrix;
-    private String heightSecondMatrix;
-    private String widthSecondMatrix;
-    private int height1;
-    private int width1;
-    private int height2;
-    private int width2;
+    private String stringHeight1;
+    private String stringWidth1;
+    private String stringHeight2;
+    private String stringWidth2;
+    private int intHeight1;
+    private int intWidth1;
+    private int intHeight2;
+    private int intWidth2;
 
     private String [][] firstMatrixTable;
     private String [][] secondMatrixTable;
@@ -29,14 +29,14 @@ public class ViewModel {
     private boolean isInputMatricesAvailable;
 
     public ViewModel() {
-        heightFirstMatrix = "";
-        widthFirstMatrix = "";
-        heightSecondMatrix = "";
-        widthSecondMatrix = "";
-        height1 = UNDEFINED_SIZE;
-        width1 = UNDEFINED_SIZE;
-        height2 = UNDEFINED_SIZE;
-        width2 = UNDEFINED_SIZE;
+        stringHeight1 = "";
+        stringWidth1 = "";
+        stringHeight2 = "";
+        stringWidth2 = "";
+        intHeight1 = UNDEFINED_SIZE;
+        intWidth1 = UNDEFINED_SIZE;
+        intHeight2 = UNDEFINED_SIZE;
+        intWidth2 = UNDEFINED_SIZE;
         status = Status.WAITING_WIDTH_AND_HEIGHT_MATRICES;
 
         firstMatrixTable = new String[INITIAL_SIZE_MATRIX][INITIAL_SIZE_MATRIX];
@@ -50,10 +50,10 @@ public class ViewModel {
     public void processingInputMatrixSizes() {
         parseInputMatrixSizes();
         if (isOkButtonEnabled()) {
-            firstMatrixTable = new String[height1][width1];
-            secondMatrixTable = new String[height2][width2];
-            firstMultiplier = new Matrix(height1, width1);
-            secondMultiplier = new Matrix(height2, width2);
+            firstMatrixTable = new String[intHeight1][intWidth1];
+            secondMatrixTable = new String[intHeight2][intWidth2];
+            firstMultiplier = new Matrix(intHeight1, intWidth1);
+            secondMultiplier = new Matrix(intHeight2, intWidth2);
             status = Status.WAITING;
             isMultiplyButtonEnabled = true;
         }
@@ -66,7 +66,7 @@ public class ViewModel {
         try {
             tryParseInputMatrixSizes();
 
-            if (isInputMatrixSizesAvailable() && width1 == height2) {
+            if (isInputMatrixSizesAvailable() && intWidth1 == intHeight2) {
                 isOkButtonEnabled = true;
             }
             if (isOkButtonEnabled) {
@@ -80,25 +80,25 @@ public class ViewModel {
     }
 
     private void tryParseInputMatrixSizes() {
-        if (!heightFirstMatrix.isEmpty()) {
-            height1 = Integer.parseInt(heightFirstMatrix);
+        if (!stringHeight1.isEmpty()) {
+            intHeight1 = Integer.parseInt(stringHeight1);
         }
-        if (!widthFirstMatrix.isEmpty()) {
-            width1 = Integer.parseInt(widthFirstMatrix);
+        if (!stringWidth1.isEmpty()) {
+            intWidth1 = Integer.parseInt(stringWidth1);
         }
-        if (!heightSecondMatrix.isEmpty()) {
-            height2 = Integer.parseInt(heightSecondMatrix);
+        if (!stringHeight2.isEmpty()) {
+            intHeight2 = Integer.parseInt(stringHeight2);
         }
-        if (!widthSecondMatrix.isEmpty()) {
-            width2 = Integer.parseInt(widthSecondMatrix);
+        if (!stringWidth2.isEmpty()) {
+            intWidth2 = Integer.parseInt(stringWidth2);
         }
     }
 
     public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
 
     private boolean isInputMatrixSizesAvailable() {
-        return !(heightFirstMatrix.isEmpty() || widthFirstMatrix.isEmpty()
-               || heightSecondMatrix.isEmpty() || widthSecondMatrix.isEmpty());
+        return !(stringHeight1.isEmpty() || stringWidth1.isEmpty()
+               || stringHeight2.isEmpty() || stringWidth2.isEmpty());
     }
 
     public  void parseInputMatrices() {
@@ -145,49 +145,49 @@ public class ViewModel {
     }
 
     public void setHeightFirstMatrix(final String heightFirstMatrix) {
-        if (!heightFirstMatrix.equals(this.heightFirstMatrix)) {
-            this.heightFirstMatrix = heightFirstMatrix;
-            height1 = UNDEFINED_SIZE;
+        if (!heightFirstMatrix.equals(this.stringHeight1)) {
+            this.stringHeight1 = heightFirstMatrix;
+            intHeight1 = UNDEFINED_SIZE;
         }
     }
 
     public void setWidthFirstMatrix(final String widthFirstMatrix) {
-        if (!widthFirstMatrix.equals(this.widthFirstMatrix)) {
-            this.widthFirstMatrix = widthFirstMatrix;
-            width1 = UNDEFINED_SIZE;
+        if (!widthFirstMatrix.equals(this.stringWidth1)) {
+            this.stringWidth1 = widthFirstMatrix;
+            intWidth1 = UNDEFINED_SIZE;
         }
     }
 
     public void setHeightSecondMatrix(final String heightSecondMatrix) {
-        if (!heightSecondMatrix.equals(this.heightSecondMatrix)) {
-            this.heightSecondMatrix = heightSecondMatrix;
-            height2 = UNDEFINED_SIZE;
+        if (!heightSecondMatrix.equals(this.stringHeight2)) {
+            this.stringHeight2 = heightSecondMatrix;
+            intHeight2 = UNDEFINED_SIZE;
         }
     }
 
     public void setWidthSecondMatrix(final String widthSecondMatrix) {
-        if (!widthSecondMatrix.equals(this.widthSecondMatrix)) {
-            this.widthSecondMatrix = widthSecondMatrix;
-            width2 = UNDEFINED_SIZE;
+        if (!widthSecondMatrix.equals(this.stringWidth2)) {
+            this.stringWidth2 = widthSecondMatrix;
+            intWidth2 = UNDEFINED_SIZE;
         }
     }
 
     public boolean isMultiplyButtonEnabled() { return isMultiplyButtonEnabled; }
 
-    public int getHeightFirstMatrix() { return height1; }
+    public int getHeightFirstMatrix() { return intHeight1; }
 
-    public int getWidthFirstMatrix() { return width1; }
+    public int getWidthFirstMatrix() { return intWidth1; }
 
-    public int getHeightSecondMatrix() { return height2; }
+    public int getHeightSecondMatrix() { return intHeight2; }
 
-    public int getWidthSecondMatrix() { return width2; }
+    public int getWidthSecondMatrix() { return intWidth2; }
 
     public Matrix getResultMatrix() { return resultMatrix; }
 
     public String getStatus() { return status; }
 
     public void setValueToFirstMatrix(final int i, final int j, final String newValue) {
-        if (i > -1 && i < height1 && j > -1 && j < width1) {
+        if (i > -1 && i < intHeight1 && j > -1 && j < intWidth1) {
             firstMatrixTable[i][j] = newValue;
         } else {
             throw new OutOfRangeMatrix("Error: out of range matrix");
@@ -195,7 +195,7 @@ public class ViewModel {
     }
 
     public void setValueToSecondMatrix(final int i, final int j, final String newValue) {
-        if (i > -1 && i < height2 && j > -1 && j < width2) {
+        if (i > -1 && i < intHeight2 && j > -1 && j < intWidth2) {
             secondMatrixTable[i][j] = newValue;
         } else {
             throw new OutOfRangeMatrix("Error: out of range matrix");
