@@ -20,7 +20,6 @@ public class PomodoroTimerViewModelShould {
     public void setUp() {
         logger = new FakeLogger();
         prepareViewModel(logger);
-
     }
     @Test
     public void haveDefaultValueOnStart() {
@@ -28,7 +27,7 @@ public class PomodoroTimerViewModelShould {
     }
     @Test
     public void changeCurrentStatusOnPomodoroWhenStartPomodoroAndOneSecondLeft() {
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         mockObservableTimer.throwTicks(1);
 
         assertEquals(Status.POMODORO.toString(), pomodoroTimerViewModel.getCurrentStatus());
@@ -37,7 +36,7 @@ public class PomodoroTimerViewModelShould {
     public void changeSecondsNumberWhenStartPomodoroAndOneSecondLeft() {
         String expectedSecondsNumber = "59";
 
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         mockObservableTimer.throwTicks(1);
 
         assertEquals(expectedSecondsNumber, pomodoroTimerViewModel.getSeconds());
@@ -46,14 +45,14 @@ public class PomodoroTimerViewModelShould {
     public void changeMinutesNumberWhenStartPomodoroAndOneSecondLeft() {
         String expectedMinutesNumber = "24";
 
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         mockObservableTimer.throwTicks(1);
 
         assertEquals(expectedMinutesNumber, pomodoroTimerViewModel.getMinutes());
     }
     @Test
     public void changeCurrentStatusOnBreakWhenPomodoroIsOver() {
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completePomodoro();
 
         assertEquals(Status.BREAK.toString(), pomodoroTimerViewModel.getCurrentStatus());
@@ -62,7 +61,7 @@ public class PomodoroTimerViewModelShould {
     public void changeSecondsNumberToDefaultBreakSecondsWhenPomodoroIsOver() {
         String defaultBreakSeconds = "00";
 
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completePomodoro();
 
         assertEquals(defaultBreakSeconds, pomodoroTimerViewModel.getSeconds());
@@ -71,21 +70,21 @@ public class PomodoroTimerViewModelShould {
     public void changeMinutesNumberToDefaultBreakMinutesWhenPomodoroIsOver() {
         String defaultBreakMinutes = "05";
 
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completePomodoro();
 
         assertEquals(defaultBreakMinutes, pomodoroTimerViewModel.getMinutes());
     }
     @Test
     public void changePomodoroToOneWhenOnePomodoroOver() {
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completePomodoro();
 
         assertEquals("1", pomodoroTimerViewModel.getPomodoroCount());
     }
     @Test
     public void changeStatusOnWaitingWhenPomodoroAndBreakIsOver() {
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completePomodoro();
         completeBreak();
 
@@ -102,7 +101,7 @@ public class PomodoroTimerViewModelShould {
     public void changeSecondsNumberToDefaultBigBreakSecondsWhenFourPomodorosIsOver() {
         String defaultBreakSeconds = "00";
 
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completeFourPomodoros();
 
         assertEquals(defaultBreakSeconds, pomodoroTimerViewModel.getSeconds());
@@ -111,7 +110,7 @@ public class PomodoroTimerViewModelShould {
     public void changeMinutesNumberToDefaultBigBreakMinutesWhenFourPomodorosIsOver() {
         String defaultBreakMinutes = "30";
 
-         sessionManager.startNewPomodoro();
+        sessionManager.startNewPomodoro();
         completeFourPomodoros();
 
         assertEquals(defaultBreakMinutes, pomodoroTimerViewModel.getMinutes());

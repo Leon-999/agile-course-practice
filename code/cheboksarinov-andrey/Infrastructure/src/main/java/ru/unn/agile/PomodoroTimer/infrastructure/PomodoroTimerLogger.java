@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 
 public class PomodoroTimerLogger implements ILogger {
     private static final String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
+    private static final String LOG_FILE_HANDLE = "<?xml version=\"1.0\" "
+            + "encoding=\"utf-8\"?>\n<logger>\n";
     private final BufferedWriter writer;
     private final String logFileName;
 
@@ -31,12 +33,7 @@ public class PomodoroTimerLogger implements ILogger {
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(logFileName));
-
-            logWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            logWriter.newLine();
-            logWriter.write("<logger>");
-            logWriter.newLine();
-
+            logWriter.write(LOG_FILE_HANDLE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,8 +44,7 @@ public class PomodoroTimerLogger implements ILogger {
     public void addLogLine(final String stringForWrite) {
         try {
             writer.write("  <event time=\"" + "[" + getCurrentTime() + "]"
-                    + "\" message=\"" + stringForWrite + "\" />");
-            writer.newLine();
+                    + "\" message=\"" + stringForWrite + "\" />\n");
             writer.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
