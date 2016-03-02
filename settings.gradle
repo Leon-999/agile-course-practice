@@ -94,8 +94,12 @@ include "code/garina-anastasia/Infrastructure"
 project(":code/garina-anastasia/Infrastructure").name = "garina-anastasia-Infrastructure"
 
 // Gatchenko Viktor
-include "code/gatchenko-viktor"
-project(":code/gatchenko-viktor").name = "gatchenko-viktor-Model"
+include "code/gatchenko-viktor/Model"
+project(":code/gatchenko-viktor/Model").name = "gatchenko-viktor-Model"
+include "code/gatchenko-viktor/View"
+project(":code/gatchenko-viktor/View").name = "gatchenko-viktor-View"
+include "code/gatchenko-viktor/ViewModel"
+project(":code/gatchenko-viktor/ViewModel").name = "gatchenko-viktor-ViewModel"
 
 // Golodyaev Andrej
 include "code/golodyaev-andrey/Model"
