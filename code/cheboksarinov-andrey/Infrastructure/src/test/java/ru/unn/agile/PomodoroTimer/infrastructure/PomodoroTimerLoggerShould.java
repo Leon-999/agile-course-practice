@@ -15,11 +15,10 @@ import static org.junit.Assert.fail;
 
 public class PomodoroTimerLoggerShould {
     private static final String FILE_LOG_NAME = "./PomodoroTimerLog.xml";
-    private PomodoroTimerLogger pomodoroTimerLogger;
-
+    private PomodoroTimerXmlLogger pomodoroTimerLogger;
     @Before
     public void setUp() {
-        pomodoroTimerLogger = new PomodoroTimerLogger(FILE_LOG_NAME);
+        pomodoroTimerLogger = new PomodoroTimerXmlLogger(FILE_LOG_NAME);
     }
     @Test
     public void beCreatedCorrectly() {
@@ -33,12 +32,11 @@ public class PomodoroTimerLoggerShould {
             fail("File " + FILE_LOG_NAME + " not found");
         }
     }
-
     @Test
     public void addSingleLineToLog() {
         String logMessageForTest = "Log message 1";
 
-        pomodoroTimerLogger.addLogLine(logMessageForTest);
+        pomodoroTimerLogger.addRecord(logMessageForTest);
         String firstLogMessage = pomodoroTimerLogger.getLog().get(0);
 
         assertTrue(firstLogMessage.contains(logMessageForTest));
@@ -47,8 +45,8 @@ public class PomodoroTimerLoggerShould {
     public void addLinesToLog() {
         String[] messages = {"Log message 1", "Log message 2"};
 
-        pomodoroTimerLogger.addLogLine(messages[0]);
-        pomodoroTimerLogger.addLogLine(messages[1]);
+        pomodoroTimerLogger.addRecord(messages[0]);
+        pomodoroTimerLogger.addRecord(messages[1]);
 
         List<String> fullLogMessage = pomodoroTimerLogger.getLog();
 
@@ -59,7 +57,7 @@ public class PomodoroTimerLoggerShould {
     public void writeDateAndTimeInLogMessage() {
         String testMessage = "Log message 1";
 
-        pomodoroTimerLogger.addLogLine(testMessage);
+        pomodoroTimerLogger.addRecord(testMessage);
 
         String logLine = pomodoroTimerLogger.getLog().get(0);
 

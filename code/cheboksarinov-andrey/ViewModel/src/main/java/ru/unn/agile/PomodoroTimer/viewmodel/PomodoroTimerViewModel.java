@@ -69,7 +69,8 @@ public class PomodoroTimerViewModel extends EventGenerator {
 
     public String getLogs() {
         constructLogsStringForView();
-        return logsString; }
+        return logsString;
+    }
 
     private void constructLogsStringForView() {
         StringBuilder newLogsString = new StringBuilder();
@@ -108,12 +109,12 @@ public class PomodoroTimerViewModel extends EventGenerator {
     private void logChangeStatusEvent(final String newStatus) {
         StringBuilder logString = new StringBuilder(LogMessages.STATUS_WAS_CHANGED.toString());
         logString.append(newStatus);
-        logger.addLogLine(logString.toString());
+        logger.addRecord(logString.toString());
     }
 
     private void logStartPomodoroSessionEvent() {
         StringBuilder logString = new StringBuilder(LogMessages.SESSION_STARTED.toString());
-        logger.addLogLine(logString.toString());
+        logger.addRecord(logString.toString());
     }
 
     public enum Status {

@@ -3,7 +3,7 @@ package ru.unn.agile.PomodoroTimer.viewmodel;
 import java.util.List;
 
 public interface ILogger {
-    void addLogLine(final String s);
+    void addRecord(final String stringForAdd);
 
     List<String> getLog();
 }

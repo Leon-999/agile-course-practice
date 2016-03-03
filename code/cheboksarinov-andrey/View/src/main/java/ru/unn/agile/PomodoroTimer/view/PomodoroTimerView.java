@@ -1,6 +1,6 @@
 package ru.unn.agile.PomodoroTimer.view;
 
-import ru.unn.agile.PomodoroTimer.infrastructure.PomodoroTimerLogger;
+import ru.unn.agile.PomodoroTimer.infrastructure.PomodoroTimerXmlLogger;
 import ru.unn.agile.PomodoroTimer.viewmodel.PomodoroTimerViewModel;
 import ru.unn.agile.pomodoro.ObservableTimer;
 import ru.unn.agile.pomodoro.SessionManager;
@@ -25,7 +25,7 @@ public final class PomodoroTimerView {
         JFrame frame = new JFrame("PomodoroTimerView");
         SessionManager sessionManager = new SessionManager(new SessionTimeManager(),
                 new ObservableTimer());
-        PomodoroTimerLogger logger = new PomodoroTimerLogger("./PomodoroLog.xml");
+        PomodoroTimerXmlLogger logger = new PomodoroTimerXmlLogger("./PomodoroLog.xml");
         PomodoroTimerViewModel viewModel = new PomodoroTimerViewModel(sessionManager, logger);
         frame.setContentPane(new PomodoroTimerView(viewModel).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
