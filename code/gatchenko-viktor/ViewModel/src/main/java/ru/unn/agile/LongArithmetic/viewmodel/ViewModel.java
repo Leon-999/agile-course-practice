@@ -8,10 +8,10 @@ public class ViewModel {
     public static final int UNDEFINED_SIZE = -1;
     private static final int INITIAL_SIZE_MATRIX = 1;
 
-    private String tittleHeightFirstMatrix;
-    private String tittleWidthFirstMatrix;
-    private String tittleHeightSecondMatrix;
-    private String tittleWidthSecondMatrix;
+    private String titleHeightFirstMatrix;
+    private String titleWidthFirstMatrix;
+    private String titleHeightSecondMatrix;
+    private String titleWidthSecondMatrix;
     private int heightFirstMatrix;
     private int widthFirstMatrix;
     private int heightSecondMatrix;
@@ -29,10 +29,10 @@ public class ViewModel {
     private boolean isInputMatricesAvailable;
 
     public ViewModel() {
-        tittleHeightFirstMatrix = "";
-        tittleWidthFirstMatrix = "";
-        tittleHeightSecondMatrix = "";
-        tittleWidthSecondMatrix = "";
+        titleHeightFirstMatrix = "";
+        titleWidthFirstMatrix = "";
+        titleHeightSecondMatrix = "";
+        titleWidthSecondMatrix = "";
         heightFirstMatrix = UNDEFINED_SIZE;
         widthFirstMatrix = UNDEFINED_SIZE;
         heightSecondMatrix = UNDEFINED_SIZE;
@@ -80,25 +80,27 @@ public class ViewModel {
     }
 
     private void tryParseInputMatrixSizes() {
-        if (!tittleHeightFirstMatrix.isEmpty()) {
-            heightFirstMatrix = Integer.parseInt(tittleHeightFirstMatrix);
+        if (!titleHeightFirstMatrix.isEmpty()) {
+            heightFirstMatrix = Integer.parseInt(titleHeightFirstMatrix);
         }
-        if (!tittleWidthFirstMatrix.isEmpty()) {
-            widthFirstMatrix = Integer.parseInt(tittleWidthFirstMatrix);
+        if (!titleWidthFirstMatrix.isEmpty()) {
+            widthFirstMatrix = Integer.parseInt(titleWidthFirstMatrix);
         }
-        if (!tittleHeightSecondMatrix.isEmpty()) {
-            heightSecondMatrix = Integer.parseInt(tittleHeightSecondMatrix);
+        if (!titleHeightSecondMatrix.isEmpty()) {
+            heightSecondMatrix = Integer.parseInt(titleHeightSecondMatrix);
         }
-        if (!tittleWidthSecondMatrix.isEmpty()) {
-            widthSecondMatrix = Integer.parseInt(tittleWidthSecondMatrix);
+        if (!titleWidthSecondMatrix.isEmpty()) {
+            widthSecondMatrix = Integer.parseInt(titleWidthSecondMatrix);
         }
     }
 
-    public boolean isOkButtonEnabled() { return isOkButtonEnabled; }
+    public boolean isOkButtonEnabled() {
+        return isOkButtonEnabled;
+    }
 
     private boolean isInputMatrixSizesAvailable() {
-        return !(tittleHeightFirstMatrix.isEmpty() || tittleWidthFirstMatrix.isEmpty()
-               || tittleHeightSecondMatrix.isEmpty() || tittleWidthSecondMatrix.isEmpty());
+        return !(titleHeightFirstMatrix.isEmpty() || titleWidthFirstMatrix.isEmpty()
+               || titleHeightSecondMatrix.isEmpty() || titleWidthSecondMatrix.isEmpty());
     }
 
     public  void parseInputMatrices() {
@@ -116,7 +118,9 @@ public class ViewModel {
         }
     }
 
-    private boolean isInputMatricesAvailable() { return isInputMatricesAvailable; }
+    private boolean isInputMatricesAvailable() {
+        return isInputMatricesAvailable;
+    }
 
     private void tryParseMatrix(final String[][] matrix) throws Exception {
         LongNumber value;
@@ -144,47 +148,61 @@ public class ViewModel {
         }
     }
 
-    public void setHeightFirstMatrix(final String heightFirstMatrix) {
-        if (!heightFirstMatrix.equals(this.tittleHeightFirstMatrix)) {
-            this.tittleHeightFirstMatrix = heightFirstMatrix;
+    public void setHeightFirstMatrix(final String titleHeightFirstMatrix) {
+        if (!titleHeightFirstMatrix.equals(this.titleHeightFirstMatrix)) {
+            this.titleHeightFirstMatrix = titleHeightFirstMatrix;
             this.heightFirstMatrix = UNDEFINED_SIZE;
         }
     }
 
-    public void setWidthFirstMatrix(final String widthFirstMatrix) {
-        if (!widthFirstMatrix.equals(this.tittleWidthFirstMatrix)) {
-            this.tittleWidthFirstMatrix = widthFirstMatrix;
+    public void setWidthFirstMatrix(final String titleWidthFirstMatrix) {
+        if (!titleWidthFirstMatrix.equals(this.titleWidthFirstMatrix)) {
+            this.titleWidthFirstMatrix = titleWidthFirstMatrix;
             this.widthFirstMatrix = UNDEFINED_SIZE;
         }
     }
 
-    public void setHeightSecondMatrix(final String heightSecondMatrix) {
-        if (!heightSecondMatrix.equals(this.tittleHeightSecondMatrix)) {
-            this.tittleHeightSecondMatrix = heightSecondMatrix;
+    public void setHeightSecondMatrix(final String titleHeightSecondMatrix) {
+        if (!titleHeightSecondMatrix.equals(this.titleHeightSecondMatrix)) {
+            this.titleHeightSecondMatrix = titleHeightSecondMatrix;
             this.heightSecondMatrix = UNDEFINED_SIZE;
         }
     }
 
-    public void setWidthSecondMatrix(final String widthSecondMatrix) {
-        if (!widthSecondMatrix.equals(this.tittleWidthSecondMatrix)) {
-            this.tittleWidthSecondMatrix = widthSecondMatrix;
+    public void setWidthSecondMatrix(final String titleWidthSecondMatrix) {
+        if (!titleWidthSecondMatrix.equals(this.titleWidthSecondMatrix)) {
+            this.titleWidthSecondMatrix = titleWidthSecondMatrix;
             this.widthSecondMatrix = UNDEFINED_SIZE;
         }
     }
 
-    public boolean isMultiplyButtonEnabled() { return isMultiplyButtonEnabled; }
+    public boolean isMultiplyButtonEnabled() {
+        return isMultiplyButtonEnabled;
+    }
 
-    public int getHeightFirstMatrix() { return heightFirstMatrix; }
+    public int getHeightFirstMatrix() {
+        return heightFirstMatrix;
+    }
 
-    public int getWidthFirstMatrix() { return widthFirstMatrix; }
+    public int getWidthFirstMatrix() {
+        return widthFirstMatrix;
+    }
 
-    public int getHeightSecondMatrix() { return heightSecondMatrix; }
+    public int getHeightSecondMatrix() {
+        return heightSecondMatrix;
+    }
 
-    public int getWidthSecondMatrix() { return widthSecondMatrix; }
+    public int getWidthSecondMatrix() {
+        return widthSecondMatrix;
+    }
 
-    public Matrix getResultMatrix() { return resultMatrix; }
+    public Matrix getResultMatrix() {
+        return resultMatrix;
+    }
 
-    public String getStatus() { return status; }
+    public String getStatus() {
+        return status;
+    }
 
     public void setValueToFirstMatrix(final int i, final int j, final String newValue) {
         if (i > -1 && i < heightFirstMatrix && j > -1 && j < widthFirstMatrix) {
