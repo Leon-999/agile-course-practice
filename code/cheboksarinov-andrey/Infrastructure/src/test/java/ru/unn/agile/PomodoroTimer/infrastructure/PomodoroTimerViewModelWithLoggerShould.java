@@ -7,7 +7,7 @@ public class PomodoroTimerViewModelWithLoggerShould extends PomodoroTimerViewMod
     @Override
     public void setUp() {
         PomodoroTimerXmlLogger pomodoroTimeLogger =
-                new PomodoroTimerXmlLogger("./PomodoroViewModelWithLoggerTests.xml");
+                new PomodoroTimerXmlLogger("./PomodoroViewModelWithLoggerTest.xml");
         super.prepareViewModel(pomodoroTimeLogger);
     }
 }
