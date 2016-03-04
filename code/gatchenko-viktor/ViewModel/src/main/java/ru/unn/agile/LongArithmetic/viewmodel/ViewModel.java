@@ -28,7 +28,10 @@ public class ViewModel {
     private boolean isMultiplyButtonEnabled;
     private boolean isInputMatricesAvailable;
 
-    public ViewModel() {
+    private ILogger logger;
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
         titleHeightFirstMatrix = "";
         titleWidthFirstMatrix = "";
         titleHeightSecondMatrix = "";
@@ -45,6 +48,13 @@ public class ViewModel {
         isOkButtonEnabled = false;
         isMultiplyButtonEnabled = false;
         isInputMatricesAvailable = false;
+    }
+
+    public void setLogger (final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Illegal argument: logger parameter can't be null");
+        }
+        this.logger = logger;
     }
 
     public void processingInputMatrixSizes() {
