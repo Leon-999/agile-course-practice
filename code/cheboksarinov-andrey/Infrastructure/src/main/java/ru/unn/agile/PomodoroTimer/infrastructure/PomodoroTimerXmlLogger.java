@@ -18,9 +18,9 @@ public class PomodoroTimerXmlLogger implements ILogger {
     private static final String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
     private static final String LOG_FILE_HANDLE = "<?xml version=\"1.0\" "
             + "encoding=\"utf-8\"?>\n<logger>\n";
-    private String recordTagName;
     private final BufferedWriter writer;
     private final String logFileName;
+    private LogRecordXmlTag logRecordXmlTag;
 
     private static String getCurrentTime() {
         Calendar calendar = Calendar.getInstance();
@@ -28,10 +28,10 @@ public class PomodoroTimerXmlLogger implements ILogger {
         return simpleDateFormat.format(calendar.getTime());
     }
 
-    public PomodoroTimerXmlLogger(final String logFileName) {
+    public PomodoroTimerXmlLogger(final String logFileName,
+                                  final LogRecordXmlTag logRecordXmlTag) {
         this.logFileName = logFileName;
-        this.recordTagName = "event";
-
+        this.logRecordXmlTag = logRecordXmlTag;
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(logFileName));
@@ -41,24 +41,23 @@ public class PomodoroTimerXmlLogger implements ILogger {
         }
         writer = logWriter;
     }
-
     @Override
-    public void addRecord(final String stringForWrite) {
+    public void addRecord(final String messageString) {
         try {
-            writer.write("  <" + recordTagName + " time=\"" + "[" + getCurrentTime() + "]"
-                    + "\" message=\"" + stringForWrite + "\" />\n");
+            logRecordXmlTag.setTimeAttributeValue(getCurrentTime());
+            logRecordXmlTag.setMessageAttributeValue(messageString);
+            writer.write(logRecordXmlTag.toString());
+            writer.newLine();
             writer.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
     @Override
     public List<String> getLog() {
         BufferedReader logReader;
         ArrayList<String> logMessage = new ArrayList<>();
-        Pattern logMessagePattern = Pattern.compile("^  <" + recordTagName + " time=\"(?<date>.*)"
-                                        + "\" message=\"(?<message>.*)\" />$");
+        Pattern logMessagePattern = Pattern.compile(constructXmlRecordPatternString());
         try {
             logReader = new BufferedReader(new FileReader(logFileName));
             String logLine = logReader.readLine();
@@ -77,7 +76,17 @@ public class PomodoroTimerXmlLogger implements ILogger {
         return logMessage;
     }
 
-    public void setRecordTagName(final String recordTagName) {
-        this.recordTagName = recordTagName;
+    private String constructXmlRecordPatternString() {
+        return "^  <" + this.logRecordXmlTag.getName() + " "
+                + this.logRecordXmlTag.getTimeAttributeName() + "=\"(?<date>.*)" + "\" "
+                + this.logRecordXmlTag.getMessageAttributeName() + "=\"(?<message>.*)\" />$";
+    }
+
+    public void setLogRecordXmlTag(final LogRecordXmlTag logRecordXmlTag) {
+        this.logRecordXmlTag = logRecordXmlTag;
+    }
+
+    public LogRecordXmlTag getLogRecordXmlTag() {
+        return logRecordXmlTag;
     }
 }

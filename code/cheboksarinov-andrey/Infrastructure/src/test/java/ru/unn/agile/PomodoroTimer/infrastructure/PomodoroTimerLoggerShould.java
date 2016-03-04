@@ -16,9 +16,11 @@ import static org.junit.Assert.fail;
 public class PomodoroTimerLoggerShould {
     private static final String FILE_LOG_NAME = "./PomodoroTimerLog.xml";
     private PomodoroTimerXmlLogger pomodoroTimerLogger;
+    private LogRecordXmlTag logRecordXmlTag;
     @Before
     public void setUp() {
-        pomodoroTimerLogger = new PomodoroTimerXmlLogger(FILE_LOG_NAME);
+        logRecordXmlTag = new LogRecordXmlTag();
+        pomodoroTimerLogger = new PomodoroTimerXmlLogger(FILE_LOG_NAME, logRecordXmlTag);
     }
     @Test
     public void beCreatedCorrectly() {
