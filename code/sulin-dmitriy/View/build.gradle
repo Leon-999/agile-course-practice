@@ -1,5 +1,6 @@
 dependencies {
     compile project(':sulin-dmitriy-ViewModel')
+    compile project(':sulin-dmitriy-Infrastructure')
 }
 
 sourceSets {
