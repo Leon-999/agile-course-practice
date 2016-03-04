@@ -1,5 +1,6 @@
 package ru.unn.agile.LongArithmetic.view;
 
+import ru.unn.agile.LongArithmetic.infrastructure.TxtLogger;
 import ru.unn.agile.LongArithmetic.model.Matrix;
 import ru.unn.agile.LongArithmetic.viewmodel.ViewModel;
 
@@ -42,7 +43,8 @@ public final class MatrixMultiply {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new  MatrixMultiply(new ViewModel());
+                TxtLogger logger = new TxtLogger();
+                new  MatrixMultiply(new ViewModel(logger));
             }
         });
     }

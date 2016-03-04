@@ -1,6 +1,6 @@
 dependencies {
     compile project(':gatchenko-viktor-ViewModel')
-	compile project(':gatchenko-viktor-Infrastructure')
+    testCompile project(':gatchenko-viktor-ViewModel').sourceSets.test.output
 }
 
 sourceSets {

@@ -100,6 +100,8 @@ include "code/gatchenko-viktor/View"
 project(":code/gatchenko-viktor/View").name = "gatchenko-viktor-View"
 include "code/gatchenko-viktor/ViewModel"
 project(":code/gatchenko-viktor/ViewModel").name = "gatchenko-viktor-ViewModel"
+include "code/gatchenko-viktor/Infrastructure"
+project(":code/gatchenko-viktor/Infrastructure").name = "gatchenko-viktor-Infrastructure"
 
 // Golodyaev Andrej
 include "code/golodyaev-andrey/Model"
