@@ -349,6 +349,8 @@ include "code/voronkov-arseny/View"
 project(":code/voronkov-arseny/View").name = "voronkov-arseny-lab2-View"
 include "code/voronkov-arseny/ViewModel"
 project(":code/voronkov-arseny/ViewModel").name = "voronkov-arseny-lab2-ViewModel"
+include "code/voronkov-arseny/Infrastructure"
+project(":code/voronkov-arseny/Infrastructure").name = "voronkov-arseny-lab3-Infrastructure"
 
 // Yusipov Igor
 include "code/yusipov-igor/Model"
