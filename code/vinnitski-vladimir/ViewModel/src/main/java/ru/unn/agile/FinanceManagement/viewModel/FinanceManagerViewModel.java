@@ -170,6 +170,7 @@ public class FinanceManagerViewModel {
     }
 
     public void addConsumption() {
+        Consumption consumption = new Consumption();
         Calendar date = consumption.convertStringsToDate(year, month, day);
         Consumption consumption = new Consumption(category, name, Double.parseDouble(count),
                 Double.parseDouble(price), date);
