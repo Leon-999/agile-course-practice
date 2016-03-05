@@ -52,6 +52,8 @@ include "code/cheboksarinov-andrey/View"
 project(":code/cheboksarinov-andrey/View").name = "cheboksarinov-andrey-View"
 include "code/cheboksarinov-andrey/ViewModel"
 project(":code/cheboksarinov-andrey/ViewModel").name = "cheboksarinov-andrey-ViewModel"
+include "code/cheboksarinov-andrey/Infrastructure"
+project(":code/cheboksarinov-andrey/Infrastructure").name = "cheboksarinov-andrey-Infrastructure"
 // Eremeeva Aleksandra
 include "code/eremeeva-alexandra/Model"
 project(":code/eremeeva-alexandra/Model").name = "eremeeva-alexandra-Model"

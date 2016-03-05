@@ -31,6 +31,7 @@ public class SessionManagerShould {
     public void decreaseMinuteByOneIfPomodoroStartAndOneMinuteLeft() {
         sessionManager.startNewPomodoro();
         final int minuteCountAfterOneLeft = 24;
+
         tickOneMinute();
 
         assertEquals(minuteCountAfterOneLeft, sessionTimeManager.getTime().getMinuteCount());
