@@ -47,7 +47,8 @@ public class TxtLoggerOfFinanceManagement implements ILoggerOfFinanceManagement 
         date.set(Calendar.YEAR, Integer.parseInt(parcedMessage[yearIndex]));
         date.set(Calendar.MONTH, Integer.parseInt(parcedMessage[monthIndex]) - 1);
         date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(parcedMessage[dayIndex]));
-        Consumption consumption = new Consumption(parcedMessage[categoryIndex], parcedMessage[nameIndex],
+        Consumption consumption = new Consumption(parcedMessage[categoryIndex],
+                parcedMessage[nameIndex],
                 Double.parseDouble(parcedMessage[countIndex]),
                 Double.parseDouble(parcedMessage[priceIndex]), date);
         return consumption;
