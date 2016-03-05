@@ -9,7 +9,7 @@ public class Consumption {
     private final Double price;
     private final Calendar date;
 
-    Consumption(final String category, final String name,
+    public Consumption(final String category, final String name,
                                final Double count, final Double price, final Calendar date) {
         this.category = category;
         this.name = name;
