@@ -41,8 +41,12 @@ public class TxtLoggerOfFinanceManagement implements ILoggerOfFinanceManagement 
         final int yearIndex = 4;
         final int monthIndex = 5;
         final int dayIndex = 6;
-        Calendar date = Consumption.convertStringsToDate(parcedMessage[yearIndex],
-                parcedMessage[monthIndex], parcedMessage[dayIndex]);
+        Calendar date;
+        date = Calendar.getInstance();
+        date.clear();
+        date.set(Calendar.YEAR, Integer.parseInt(year));
+        date.set(Calendar.MONTH, Integer.parseInt(month) - 1);
+        date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
         Consumption consumption = new Consumption(parcedMessage[categoryIndex], parcedMessage[nameIndex],
                 Double.parseDouble(parcedMessage[countIndex]),
                 Double.parseDouble(parcedMessage[priceIndex]), date);
