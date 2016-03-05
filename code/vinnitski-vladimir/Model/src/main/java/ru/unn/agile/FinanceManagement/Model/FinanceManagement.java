@@ -3,7 +3,6 @@ package ru.unn.agile.FinanceManagement.Model;
 import java.util.*;
 
 public class FinanceManagement {
-
     private final ArrayList<CategoryAndGoodsNames> memberCategory;
     private final ArrayList<Consumption> consumptions;
     private double balance;
@@ -15,14 +14,11 @@ public class FinanceManagement {
     }
 
     private void addNewCategory(final String category) {
-
         CategoryAndGoodsNames addedNewCategory =
                 new CategoryAndGoodsNames(category);
-
         if (memberCategory.contains(addedNewCategory)) {
             return;
         }
-
         memberCategory.add(addedNewCategory);
     }
 
@@ -30,9 +26,7 @@ public class FinanceManagement {
 
         CategoryAndGoodsNames categoryFromAdded =
                 new CategoryAndGoodsNames(category);
-
         Integer indexCategory = memberCategory.indexOf(categoryFromAdded);
-
         if (indexCategory >= 0) {
             memberCategory.get(indexCategory).tryAddGoodsName(name);
         }
@@ -47,13 +41,10 @@ public class FinanceManagement {
     }
 
     public ArrayList<String> getAllNameInCategory(final String category) {
-
         ArrayList<String> arrayName = new ArrayList<String>();
         CategoryAndGoodsNames categoryContainName =
                 new CategoryAndGoodsNames(category);
-
         Integer indexCategory = memberCategory.indexOf(categoryContainName);
-
         if (indexCategory >= 0) {
             categoryContainName = memberCategory.get(indexCategory);
             arrayName = categoryContainName.getGoodsName();

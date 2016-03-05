@@ -3,13 +3,11 @@ package ru.unn.agile.FinanceManagement.Infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.FinanceManagement.Model.Consumption;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Calendar;
 import java.util.Random;
-
 import static org.junit.Assert.*;
 
 public class FinanceManagementTxtLoggerTests {
@@ -46,10 +44,11 @@ public class FinanceManagementTxtLoggerTests {
         Double count = 1.;
         Double price = 100.;
         Calendar time = Calendar.getInstance();
-
         consumption.addConsumption(category, name, count, price, time);
         logger.addConsumption(consumption);
+
         Consumption membersConsumption = logger.getConsumptions().get(0);
+
         assertTrue(membersConsumption.equals(consumption));
     }
 }

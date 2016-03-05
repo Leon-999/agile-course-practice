@@ -8,8 +8,8 @@ class CategoryAndGoodsNames {
     private final ArrayList<String> goodsName;
 
     public CategoryAndGoodsNames(final String nameCategory) {
-        this.category = nameCategory;
-        this.goodsName = new ArrayList<String>();
+        category = nameCategory;
+        goodsName = new ArrayList<String>();
     }
 
     @Override
@@ -25,9 +25,7 @@ class CategoryAndGoodsNames {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-
         CategoryAndGoodsNames newCategory = (CategoryAndGoodsNames) object;
-
         return category.equals(newCategory.category);
 
     }
@@ -35,10 +33,8 @@ class CategoryAndGoodsNames {
     public boolean tryAddGoodsName(final String goodsName) {
         if (!this.goodsName.contains(goodsName)) {
             this.addGoodsName(goodsName);
-
             return true;
         }
-
         return false;
     }
 
@@ -47,10 +43,10 @@ class CategoryAndGoodsNames {
     }
 
     public String getCategory() {
-        return this.category;
+        return category;
     }
 
     public ArrayList<String> getGoodsName() {
-        return this.goodsName;
+        return goodsName;
     }
 }

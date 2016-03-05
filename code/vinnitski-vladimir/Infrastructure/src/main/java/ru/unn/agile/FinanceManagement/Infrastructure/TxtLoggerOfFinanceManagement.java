@@ -53,7 +53,6 @@ public class TxtLoggerOfFinanceManagement implements ILoggerOfFinanceManagement 
     @Override
     public ArrayList<Consumption> getConsumptions() {
         ArrayList<Consumption> log = new ArrayList<>();
-
         try {
             BufferedReader reader = new BufferedReader(new FileReader(logPath));
 
@@ -65,7 +64,6 @@ public class TxtLoggerOfFinanceManagement implements ILoggerOfFinanceManagement 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return log;
     }
 }

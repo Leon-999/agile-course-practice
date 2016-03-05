@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class FinanceManagerViewModelTest {
@@ -28,7 +27,6 @@ public class FinanceManagerViewModelTest {
         viewModel.setYear(consumptions[0][4]);
         viewModel.setMonth(consumptions[0][5]);
         viewModel.setDay(consumptions[0][6]);
-
         return consumptions;
     }
 
@@ -37,7 +35,6 @@ public class FinanceManagerViewModelTest {
         this.viewModel = viewModel;
         this.logger = logger;
     }
-
 
     @Before
     public void setUp() {
@@ -50,7 +47,6 @@ public class FinanceManagerViewModelTest {
         viewModel = null;
         logger = null;
     }
-
 
     @Test
     public void whenDefaultAddConsumptionButtonIsDisabled() {
@@ -110,7 +106,6 @@ public class FinanceManagerViewModelTest {
         arrayName.add("Copter");
 
         viewModel.setCategory("Hobby");
-
 
         assertTrue(Arrays.deepEquals(arrayName.toArray(), viewModel.getArrayName()));
     }
@@ -229,7 +224,6 @@ public class FinanceManagerViewModelTest {
 
     @Test
     public void wenShowsPriceErrorMessageButFixCountErrorMessageAddConsumptionButtonIsDisabled() {
-
         viewModel.setPrice("a");
         viewModel.setCount("a");
         viewModel.setCount("");
@@ -343,6 +337,7 @@ public class FinanceManagerViewModelTest {
     @Test
     public void canGetBalance() {
         String addedBalance = "100.0";
+
         viewModel.addedBalance(addedBalance);
 
         assertEquals(addedBalance, viewModel.getBalance().toString());
@@ -351,6 +346,7 @@ public class FinanceManagerViewModelTest {
     @Test
     public void canCreateFinanceManagerViewModelWithLogger() {
         FakeLoggerOfFinanceManagement logger = new FakeLoggerOfFinanceManagement();
+
         FinanceManagerViewModel viewModelLogged = new FinanceManagerViewModel(logger);
 
         assertNotNull(viewModelLogged);

@@ -2,7 +2,6 @@ package ru.unn.agile.FinanceManagement.viewModel;
 
 import ru.unn.agile.FinanceManagement.Model.Consumption;
 import ru.unn.agile.FinanceManagement.Model.FinanceManagement;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -39,12 +38,10 @@ public class FinanceManagerViewModel {
         if (logger == null) {
             throw new IllegalArgumentException("Logger parameter can't be null");
         }
-
         this.logger = logger;
         model = new FinanceManagement();
         arrayCategory = new ArrayList<String>();
         arrayName = new ArrayList<String>();
-
         arrayConsumptions = new String[0][COUNT_COLUMNS];
         enabledAddConsumptionButton = false;
         priceErrorMessage = "";
@@ -97,12 +94,10 @@ public class FinanceManagerViewModel {
             enabledNameTextbox = false;
             return;
         }
-
         if (category.equals(EMPTY_STRING)) {
             enabledNameTextbox = false;
         }
         this.category = category;
-
         refreshName();
     }
 

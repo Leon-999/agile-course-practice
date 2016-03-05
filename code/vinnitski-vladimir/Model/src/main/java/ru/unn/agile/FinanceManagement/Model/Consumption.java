@@ -3,13 +3,13 @@ package ru.unn.agile.FinanceManagement.Model;
 import java.util.Calendar;
 
 public class Consumption {
-    private String category;
-    private String name;
-    private Double count;
-    private Double price;
-    private Calendar date;
+    private final String category;
+    private final String name;
+    private final Double count;
+    private final Double price;
+    private final Calendar date;
 
-    public void addConsumption(final String category, final String name,
+    Consumption(final String category, final String name,
                                final Double count, final Double price, final Calendar date) {
         this.category = category;
         this.name = name;
@@ -53,6 +53,7 @@ public class Consumption {
         result = (shift - 1) * result + date.hashCode();
         return result;
     }
+
     private boolean isNotEquals(final Object obj1, final Object odj2) {
         if (obj1 != null && obj1.equals(odj2)
                 || obj1 == null && odj2 != null) {
@@ -60,6 +61,7 @@ public class Consumption {
         }
         return true;
     }
+
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -68,9 +70,7 @@ public class Consumption {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
         Consumption that = (Consumption) obj;
-
         if (isNotEquals(category, that.category)) {
             return false;
         }

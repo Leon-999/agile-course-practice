@@ -46,7 +46,6 @@ public final class Manager {
         TxtLoggerOfFinanceManagement logger =
             new TxtLoggerOfFinanceManagement("./FinanceManagement.log");
         frame.setContentPane(new Manager(new FinanceManagerViewModel(logger)).mainPanel);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

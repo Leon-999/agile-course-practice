@@ -1,9 +1,7 @@
 package ru.unn.agile.FinanceManagement.Infrastructure;
 
-
 import ru.unn.agile.FinanceManagement.viewModel.FinanceManagerViewModel;
 import ru.unn.agile.FinanceManagement.viewModel.FinanceManagerViewModelTest;
-
 import java.util.Random;
 
 public class FinanceManagementViewModelTestsWithTxtLogger
