@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class ViewModelTests {
 
-    protected ViewModel viewModel;
+    private ViewModel viewModel;
 
     @Before
     public void setUp() {
@@ -20,7 +20,7 @@ public class ViewModelTests {
         initializeViewModel(logger);
     }
 
-    public void initializeViewModel(ILogger logger) {
+    public void initializeViewModel(final ILogger logger) {
         viewModel = new ViewModel(logger);
     }
 
@@ -216,7 +216,7 @@ public class ViewModelTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public  void ViewModelNotCreateWithNullLogger() {
+    public  void viewModelNotCreateWithNullLogger() {
         new ViewModel(null);
     }
 

@@ -6,7 +6,7 @@ public class FakeLogger implements ILogger {
     private Vector<String> log = new Vector<String>();
 
     @Override
-    public void write(String message) {
+    public void write(final String message) {
         log.add(message);
     }
 
