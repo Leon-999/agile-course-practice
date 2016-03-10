@@ -52,6 +52,8 @@ include "code/cheboksarinov-andrey/View"
 project(":code/cheboksarinov-andrey/View").name = "cheboksarinov-andrey-View"
 include "code/cheboksarinov-andrey/ViewModel"
 project(":code/cheboksarinov-andrey/ViewModel").name = "cheboksarinov-andrey-ViewModel"
+include "code/cheboksarinov-andrey/Infrastructure"
+project(":code/cheboksarinov-andrey/Infrastructure").name = "cheboksarinov-andrey-Infrastructure"
 // Eremeeva Aleksandra
 include "code/eremeeva-alexandra/Model"
 project(":code/eremeeva-alexandra/Model").name = "eremeeva-alexandra-Model"
@@ -59,6 +61,8 @@ include "code/eremeeva-alexandra/View"
 project(":code/eremeeva-alexandra/View").name = "eremeeva-alexandra-View"
 include "code/eremeeva-alexandra/ViewModel"
 project(":code/eremeeva-alexandra/ViewModel").name = "eremeeva-alexandra-ViewModel"
+include "code/eremeeva-alexandra/Infrastructure"
+project(":code/eremeeva-alexandra/Infrastructure").name = "eremeeva-alexandra-Infrastructure"
 // Esyagin Ivan
 
 // Filicheva Svetlana
@@ -329,7 +333,14 @@ include "code/sulin-dmitriy/Infrastructure"
 project(":code/sulin-dmitriy/Infrastructure").name = "sulin-dmitriy-Infrastructure"
 // Timonova Anastasiya
 // Vinnickij Vladimir
-
+include "code/vinnitski-vladimir/Model"
+project(":code/vinnitski-vladimir/Model").name = "vinnitski-vladimir-Model"
+include "code/vinnitski-vladimir/ViewModel"
+project(":code/vinnitski-vladimir/ViewModel").name = "vinnitski-vladimir-ViewModel"
+include "code/vinnitski-vladimir/View"
+project(":code/vinnitski-vladimir/View").name = "vinnitski-vladimir-View"
+include "code/vinnitski-vladimir/Infrastructure"
+project(":code/vinnitski-vladimir/Infrastructure").name = "vinnitski-vladimir-Infrastructure"
 // Vodopyanov Dmitry
 include "code/vodopyanov-dmitry/Model"
 project(":code/vodopyanov-dmitry/Model").name = "vodopyanov-dmitry-Model"
@@ -349,6 +360,8 @@ include "code/voronkov-arseny/View"
 project(":code/voronkov-arseny/View").name = "voronkov-arseny-lab2-View"
 include "code/voronkov-arseny/ViewModel"
 project(":code/voronkov-arseny/ViewModel").name = "voronkov-arseny-lab2-ViewModel"
+include "code/voronkov-arseny/Infrastructure"
+project(":code/voronkov-arseny/Infrastructure").name = "voronkov-arseny-lab3-Infrastructure"
 
 // Yusipov Igor
 include "code/yusipov-igor/Model"

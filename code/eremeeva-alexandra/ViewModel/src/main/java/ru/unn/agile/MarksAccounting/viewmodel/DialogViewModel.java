@@ -3,6 +3,7 @@ package ru.unn.agile.MarksAccounting.viewmodel;
 import ru.unn.agile.MarksAccounting.model.*;
 import javax.swing.*;
 import java.text.ParseException;
+import java.util.List;
 
 public abstract class DialogViewModel {
     private TableOfMarks tableOfMarks;
@@ -17,8 +18,19 @@ public abstract class DialogViewModel {
     private boolean dialogSubjectBoxVisible;
     private boolean dialogDateTextBoxVisible;
     private boolean dialogInputTextBoxVisible;
+    private ILogger logger;
 
     public DialogViewModel() {
+        logger = new ILogger() {
+            private String logLine;
+            public void log(final String s) {
+                logLine = s;
+            }
+
+            public List<String> getLog(final WindowType windowType) {
+                return null;
+            }
+        };
         setAllInvisible();
         dialogType = DialogType.DEFAULT_DIALOG;
         tableOfMarks = new TableOfMarks();
@@ -52,31 +64,50 @@ public abstract class DialogViewModel {
         return dialogDateTextBoxVisible;
     }
 
+    public ILogger getLogger() {
+        return logger;
+    }
+
+    public List<String> getLog() {
+        return logger.getLog(WindowType.DIALOG);
+    }
+
+    public void setLogger(final ILogger logger) {
+        this.logger = logger;
+    }
+
     public void setDialogGroup(final Object dialogGroup) {
         if (dialogGroup == null) {
             this.dialogGroup = "";
-        } else {
+        } else if (!this.dialogGroup.equals(dialogGroup.toString())) {
             this.dialogGroup = dialogGroup.toString();
+            logGroupChanging();
         }
     }
 
     public void setDialogStudent(final Object dialogStudent) {
         if (dialogStudent == null) {
             this.dialogStudent = "";
-        } else {
+        } else if (!this.dialogStudent.equals(dialogStudent.toString())) {
             this.dialogStudent = dialogStudent.toString();
+            logStudentChanging();
         }
     }
 
     public void setDialogSubject(final Object dialogSubject) {
         if (dialogSubject == null) {
             this.dialogSubject = "";
-        } else {
+        } else if (!this.dialogSubject.equals(dialogSubject.toString())) {
             this.dialogSubject = dialogSubject.toString();
+            logSubjectChanging();
         }
     }
 
     public void setDialogDate(final String dialogDate) {
+        if (!this.dialogDate.equals(dialogDate)) {
+            this.dialogDate = dialogDate;
+            logDateChanging();
+        }
         this.dialogDate = dialogDate;
     }
 
@@ -149,6 +180,15 @@ public abstract class DialogViewModel {
     }
 
     public void setDialogInputTextBox(final String dialogInputTextBox) {
+        for (TableTags tag: TableTags.values()) {
+            if (dialogInputTextBox.equals(tag.getTag())) {
+                throw new InputIsTagException("Input can't be a tag!");
+            }
+        }
+        if (!this.dialogInputTextBox.equals(dialogInputTextBox)) {
+            this.dialogInputTextBox = dialogInputTextBox;
+            logInputValueChanging();
+        }
         this.dialogInputTextBox = dialogInputTextBox;
     }
 
@@ -180,5 +220,41 @@ public abstract class DialogViewModel {
                 new Group(getDialogGroup()));
         setDialogSubject(subjects[0]);
         return new JComboBox<String>(subjects).getModel();
+    }
+
+    protected void logTriedChangingTable() {
+        logger.log(LogMessage.TRIED_CHANGING + "to change table.");
+    }
+
+    public void logErrorWhileChangingTable(final String errorMessage) {
+        logger.log(LogMessage.ERROR + errorMessage);
+    }
+
+    public void logCancelledChangingTable() {
+        logger.log("Changing" + LogMessage.CANCELLED_CHANGING);
+    }
+
+    protected void logCompletedChangingTable() {
+        logger.log("Changing" + LogMessage.COMPLETED_CHANGING);
+    }
+
+    private void logGroupChanging() {
+        logger.log(LogMessage.GROUP_CHANGED + dialogGroup + ".");
+    }
+
+    private void logStudentChanging() {
+        logger.log(LogMessage.STUDENT_CHANGED + dialogStudent + ".");
+    }
+
+    private void logSubjectChanging() {
+        logger.log(LogMessage.SUBJECT_CHANGED + dialogSubject + ".");
+    }
+
+    private void logDateChanging() {
+        logger.log(LogMessage.DATE_CHANGED + dialogDate + ".");
+    }
+
+    private void logInputValueChanging() {
+        logger.log(LogMessage.INPUT_CHANGED + dialogInputTextBox + ".");
     }
 }
