@@ -12,11 +12,15 @@ import static org.junit.Assert.*;
 
 public class ViewModelTests {
 
-    private ViewModel viewModel;
+    protected ViewModel viewModel;
 
     @Before
     public void setUp() {
         FakeLogger logger = new FakeLogger();
+        initializeViewModel(logger);
+    }
+
+    public void initializeViewModel(ILogger logger) {
         viewModel = new ViewModel(logger);
     }
 
@@ -236,7 +240,7 @@ public class ViewModelTests {
     public void isLogContainsProperMessage() {
         defaultMatrixSizesInput();
         String message = viewModel.getLog().get(0);
-        String regex = LogMessages.EDITING_SIZE_MATRICES_FINISHED + ".*";
+        String regex = ".*" + LogMessages.EDITING_SIZE_MATRICES_FINISHED + ".*";
 
         assertTrue(message.matches(regex));
     }
@@ -278,7 +282,7 @@ public class ViewModelTests {
     public void canPutOkButtonPressLogMessages() {
         defaultMatrixSizesInput();
         String message = viewModel.getLog().get(1);
-        String regex = LogMessages.OK_WAS_PRESSED + ".*";
+        String regex = ".*" + LogMessages.OK_WAS_PRESSED + ".*";
 
         assertTrue(message.matches(regex));
     }
@@ -288,7 +292,7 @@ public class ViewModelTests {
         defaultAllInput();
         viewModel.multiplyMatrices();
         String message = viewModel.getLog().get(2);
-        String regex = LogMessages.MULTIPLY_WAS_PRESSED + ".*";
+        String regex = ".*" + LogMessages.MULTIPLY_WAS_PRESSED + ".*";
 
         assertTrue(message.matches(regex));
     }
@@ -298,7 +302,7 @@ public class ViewModelTests {
         defaultAllInput();
         viewModel.multiplyMatrices();
         String message = viewModel.getLog().get(3);
-        String regex = LogMessages.MULTIPLY_WAS_ENDED + Status.SUCCESS;
+        String regex = ".*" + LogMessages.MULTIPLY_WAS_ENDED + Status.SUCCESS;
 
         assertTrue(message.matches(regex));
     }

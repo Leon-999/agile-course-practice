@@ -43,7 +43,7 @@ public final class MatrixMultiply {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                TxtLogger logger = new TxtLogger();
+                TxtLogger logger = new TxtLogger("./txtLogFile.log");
                 new  MatrixMultiply(new ViewModel(logger));
             }
         });
