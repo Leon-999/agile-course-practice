@@ -14,13 +14,12 @@ public class PomodoroTimerViewModelShould {
     private SessionTimeManager sessionTimeManager;
     private SessionManager sessionManager;
     private MockObservableTimer mockObservableTimer;
+    private FakeLogger logger;
 
     @Before
     public void setUp() {
-        mockObservableTimer = new MockObservableTimer();
-        sessionTimeManager = new SessionTimeManager();
-        sessionManager = new SessionManager(sessionTimeManager, mockObservableTimer);
-        pomodoroTimerViewModel = new PomodoroTimerViewModel(sessionManager);
+        logger = new FakeLogger();
+        prepareViewModel(logger);
     }
     @Test
     public void haveDefaultValueOnStart() {
@@ -123,6 +122,24 @@ public class PomodoroTimerViewModelShould {
 
         assertFalse(pomodoroTimerViewModel.getCanStartTimer());
     }
+    @Test
+    public void writeInLogStartSessionEvent() {
+        sessionManager.startNewPomodoro();
+        mockObservableTimer.throwTicks(1);
+
+        assertTrue(pomodoroTimerViewModel.getLogs().contains(
+                LogMessages.SESSION_STARTED.toString()));
+    }
+    @Test
+    public void writeInLogChangeStatusEvent() {
+        sessionManager.startNewPomodoro();
+        String logStringWithChangedStatusToBreak = LogMessages.STATUS_WAS_CHANGED.toString()
+                + Status.BREAK.toString();
+        completePomodoro();
+
+        assertTrue(pomodoroTimerViewModel.getLogs().contains(logStringWithChangedStatusToBreak));
+    }
+
     private boolean isDefaultValuesOnViewModel(final PomodoroTimerViewModel
                                                        pomodoroTimerViewModel) {
         return  pomodoroTimerViewModel.getCurrentStatus().equals(
@@ -144,5 +161,12 @@ public class PomodoroTimerViewModelShould {
     }
     private void completeBreak() {
         mockObservableTimer.throwTicks(60 * 5 + 1);
+    }
+
+    public void prepareViewModel(final ILogger logger) {
+        mockObservableTimer = new MockObservableTimer();
+        sessionTimeManager = new SessionTimeManager();
+        sessionManager = new SessionManager(sessionTimeManager, mockObservableTimer);
+        pomodoroTimerViewModel = new PomodoroTimerViewModel(sessionManager, logger);
     }
 }

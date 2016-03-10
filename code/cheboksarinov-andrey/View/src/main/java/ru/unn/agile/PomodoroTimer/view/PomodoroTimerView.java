@@ -1,5 +1,7 @@
 package ru.unn.agile.PomodoroTimer.view;
 
+import ru.unn.agile.PomodoroTimer.infrastructure.LogRecordXmlTag;
+import ru.unn.agile.PomodoroTimer.infrastructure.PomodoroTimerXmlLogger;
 import ru.unn.agile.PomodoroTimer.viewmodel.PomodoroTimerViewModel;
 import ru.unn.agile.pomodoro.ObservableTimer;
 import ru.unn.agile.pomodoro.SessionManager;
@@ -16,6 +18,7 @@ public final class PomodoroTimerView {
     private JLabel secondsLabel;
     private JLabel pomodoroCountLabel;
     private JLabel currentStatusLabel;
+    private JTextArea logText;
 
     private final PomodoroTimerViewModel viewModel;
 
@@ -23,7 +26,9 @@ public final class PomodoroTimerView {
         JFrame frame = new JFrame("PomodoroTimerView");
         SessionManager sessionManager = new SessionManager(new SessionTimeManager(),
                 new ObservableTimer());
-        PomodoroTimerViewModel viewModel = new PomodoroTimerViewModel(sessionManager);
+        LogRecordXmlTag xmlTag = new LogRecordXmlTag();
+        PomodoroTimerXmlLogger logger = new PomodoroTimerXmlLogger("./PomodoroLog.xml", xmlTag);
+        PomodoroTimerViewModel viewModel = new PomodoroTimerViewModel(sessionManager, logger);
         frame.setContentPane(new PomodoroTimerView(viewModel).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -54,5 +59,6 @@ public final class PomodoroTimerView {
         startTimerButton.setEnabled(viewModel.getCanStartTimer());
         secondsLabel.setText(viewModel.getSeconds());
         minutesLabel.setText(viewModel.getMinutes());
+        logText.setText(viewModel.getLogs());
     }
 }

@@ -1,5 +1,6 @@
 package ru.unn.agile.VolumesComputer.View;
 
+import ru.unn.agile.VolumesComputer.Infrastructure.LoggerFile;
 import ru.unn.agile.VolumesComputer.ViewModel.ComputerViewModel;
 import ru.unn.agile.VolumesComputer.ViewModel.FigureName;
 
@@ -23,8 +24,10 @@ public final class Computer {
 
     public static void main(final String[] agrs) {
         JFrame frame = new JFrame("VolumesComputer");
-        frame.setContentPane(
-                new Computer(new ComputerViewModel()).panelMain);
+        LoggerFile logger = new LoggerFile("./Computer.log");
+        ComputerViewModel viewModel = new ComputerViewModel(logger);
+        Computer computer = new Computer(viewModel);
+        frame.setContentPane(computer.panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -55,6 +58,7 @@ public final class Computer {
                 textFieldParameter2.setVisible(viewModel.isParameter2enabled());
                 textFieldParameter3.setVisible(viewModel.isParameter3enabled());
                 buttonSolve.setEnabled(viewModel.isInputCorrect());
+                textFieldVolume.setText(viewModel.getVolume());
             }
         });
         final FigureName[] figures = FigureName.values();
@@ -69,6 +73,12 @@ public final class Computer {
                 buttonSolve.setEnabled(viewModel.isInputCorrect());
             }
         });
+        textFieldParameter1.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(final FocusEvent e) {
+                viewModel.update1();
+            }
+        });
     }
     private void textFieldParameter2initialize() {
         textFieldParameter2.addKeyListener(new KeyAdapter() {
@@ -78,6 +88,12 @@ public final class Computer {
                 buttonSolve.setEnabled(viewModel.isInputCorrect());
             }
         });
+        textFieldParameter2.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(final FocusEvent e) {
+                viewModel.update2();
+            }
+        });
     }
     private void textFieldParameter3initialize() {
         textFieldParameter3.addKeyListener(new KeyAdapter() {
@@ -85,6 +101,12 @@ public final class Computer {
             public void keyReleased(final KeyEvent keyEvent) {
                 viewModel.setParameter3(textFieldParameter3.getText());
                 buttonSolve.setEnabled(viewModel.isInputCorrect());
+            }
+        });
+        textFieldParameter3.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(final FocusEvent e) {
+                viewModel.update3();
             }
         });
     }

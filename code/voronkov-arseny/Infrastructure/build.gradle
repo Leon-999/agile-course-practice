@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':voronkov-arseny-lab2-ViewModel')
+    testCompile project(':voronkov-arseny-lab2-ViewModel').sourceSets.test.output
+}
+
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    test.java.srcDir 'src/test/java'
+}

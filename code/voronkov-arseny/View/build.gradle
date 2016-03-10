@@ -1,5 +1,6 @@
 dependencies {
     compile project(':voronkov-arseny-lab2-ViewModel')
+    compile project(':voronkov-arseny-lab3-Infrastructure')
 }
 
 sourceSets {

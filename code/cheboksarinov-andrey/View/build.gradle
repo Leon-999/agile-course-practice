@@ -1,5 +1,6 @@
 dependencies {
     compile project(':cheboksarinov-andrey-ViewModel')
+    compile project(':cheboksarinov-andrey-Infrastructure')
 }
 
 sourceSets {
