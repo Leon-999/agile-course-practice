@@ -3,6 +3,8 @@ package ru.unn.agile.LongArithmetic.viewmodel;
 import ru.unn.agile.LongArithmetic.model.LongNumber;
 import ru.unn.agile.LongArithmetic.model.Matrix;
 
+import java.util.Vector;
+
 public class ViewModel {
 
     public static final int UNDEFINED_SIZE = -1;
@@ -58,6 +60,8 @@ public class ViewModel {
     }
 
     public void processingInputMatrixSizes() {
+        logInputParams();
+
         parseInputMatrixSizes();
         if (isOkButtonEnabled()) {
             firstMatrixTable = new String[heightFirstMatrix][widthFirstMatrix];
@@ -67,6 +71,17 @@ public class ViewModel {
             status = Status.WAITING;
             isMultiplyButtonEnabled = true;
         }
+    }
+
+    private void logInputParams() {
+        String message = LogMessages.EDITING_SIZE_MATRICES_FINISHED
+                            + "Size first matrix: "
+                            + titleHeightFirstMatrix + " x "
+                            + titleWidthFirstMatrix + "; "
+                            + "Size second matrix: "
+                            + titleHeightSecondMatrix + " x "
+                            + titleWidthSecondMatrix;
+        logger.write(message);
     }
 
     public void parseInputMatrixSizes() {
@@ -125,6 +140,7 @@ public class ViewModel {
         } catch (Exception e) {
             isInputMatricesAvailable = false;
             status = Status.BAD_FORMAT;
+            logger.write("Vse ploho!");
         }
     }
 
@@ -230,6 +246,10 @@ public class ViewModel {
         }
     }
 
+    public Vector<String> getLog() {
+        return logger.read();
+    }
+
     public final class Status {
         public static final String WAITING_WIDTH_AND_HEIGHT_MATRICES
                                = "Please provide input data: width and height for matrices";
@@ -240,5 +260,16 @@ public class ViewModel {
         public static final String SUCCESS = "Success";
 
         private Status() { }
+    }
+
+    public final class LogMessages {
+        public static final String OK_WAS_PRESSED = "Input data - width and height for matrices: ";
+        public static final String MULTIPLY_WAS_PRESSED = "Input data - matrices: ";
+        public static final String EDITING_SIZE_MATRICES_FINISHED = "Updated input - width and height for matrices: ";
+        public static final String EDITING_MATRICES_FINISHED = "Updated input - width and height for matrices: ";
+        public static final String MULTIPLY_WAS_ENDED = "Multiply was ended to ";
+        public static final String BAD_INPUT = "Bad input data";
+
+        private LogMessages() { }
     }
 }

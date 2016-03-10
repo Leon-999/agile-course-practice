@@ -2,9 +2,10 @@ package ru.unn.agile.LongArithmetic.viewmodel;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import ru.unn.agile.LongArithmetic.model.Matrix;
 import ru.unn.agile.LongArithmetic.viewmodel.ViewModel.Status;
+
+import java.util.Vector;
 
 import static org.junit.Assert.*;
 
@@ -199,5 +200,79 @@ public class ViewModelTests {
         fillMatrixSizeFields1x2And2x1();
         viewModel.processingInputMatrixSizes();
         viewModel.setValueToSecondMatrix(0, -1, "1");
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
+
+        assertNotNull(viewModel);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public  void ViewModelNotCreateWithNullLogger() {
+        new ViewModel(null);
+    }
+
+    @Test
+    public void isLogEmptyInTheBeginning() {
+        Vector<String> log = viewModel.getLog();
+
+        assertEquals(0, log.size());
+    }
+
+    @Test
+    public void isCalculatePuttingSomething() {
+        defaultInput();
+        viewModel.multiplyMatrices();
+
+        Vector<String> log = viewModel.getLog();
+        assertNotEquals(0, log.size());
+    }
+
+    @Test
+    public void isLogContainsProperMessage() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        String message = viewModel.getLog().get(0);
+        String regex = ViewModel.LogMessages.EDITING_MATRICES_FINISHED + ".*";
+
+        assertTrue(message.matches(regex));
+    }
+
+    @Test
+    public void isLogContainsInputArguments() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        String message = viewModel.getLog().get(0);
+        String regex = ".*" + viewModel.getHeightFirstMatrix() + ".*"
+                            + viewModel.getWidthFirstMatrix() + ".*"
+                            + viewModel.getHeightSecondMatrix() + ".*"
+                            + viewModel.getWidthSecondMatrix();
+
+        assertTrue(message.matches(regex));
+    }
+
+    @Test
+    public void isProperlyFormattingInfoAboutArguments() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        String message = viewModel.getLog().get(0);
+        String regex = ".*Size first matrix: " + viewModel.getHeightFirstMatrix() + " x "
+                + viewModel.getWidthFirstMatrix() + "; Size second matrix: "
+                + viewModel.getHeightSecondMatrix() + " x "
+                + viewModel.getWidthSecondMatrix();
+
+        assertTrue(message.matches(regex));
+    }
+
+    @Test
+    public void canPutSeveralLogMessages() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        viewModel.processingInputMatrixSizes();
+
+        assertEquals(2, viewModel.getLog().size());
     }
 }
