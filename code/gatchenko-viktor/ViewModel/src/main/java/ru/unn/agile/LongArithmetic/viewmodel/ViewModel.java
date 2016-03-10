@@ -60,10 +60,11 @@ public class ViewModel {
     }
 
     public void processingInputMatrixSizes() {
-        logInputParams();
+        logInputMatrixSizes();
 
         parseInputMatrixSizes();
         if (isOkButtonEnabled()) {
+            logger.write(LogMessages.OK_WAS_PRESSED);
             firstMatrixTable = new String[heightFirstMatrix][widthFirstMatrix];
             secondMatrixTable = new String[heightSecondMatrix][widthSecondMatrix];
             firstMultiplier = new Matrix(heightFirstMatrix, widthFirstMatrix);
@@ -73,7 +74,7 @@ public class ViewModel {
         }
     }
 
-    private void logInputParams() {
+    private void logInputMatrixSizes() {
         String message = LogMessages.EDITING_SIZE_MATRICES_FINISHED
                             + "Size first matrix: "
                             + titleHeightFirstMatrix + " x "
@@ -140,7 +141,7 @@ public class ViewModel {
         } catch (Exception e) {
             isInputMatricesAvailable = false;
             status = Status.BAD_FORMAT;
-            logger.write("Vse ploho!");
+            logger.write(LogMessages.BAD_INPUT);
         }
     }
 
@@ -168,9 +169,11 @@ public class ViewModel {
     }
 
     public void multiplyMatrices() {
+        logger.write(LogMessages.MULTIPLY_WAS_PRESSED);
         if (isInputMatricesAvailable() && status == Status.READY_MULTIPLY) {
             resultMatrix = firstMultiplier.multiply(secondMultiplier);
             status = Status.SUCCESS;
+            logger.write(LogMessages.MULTIPLY_WAS_ENDED + Status.SUCCESS);
         }
     }
 
@@ -266,7 +269,7 @@ public class ViewModel {
         public static final String OK_WAS_PRESSED = "Input data - width and height for matrices: ";
         public static final String MULTIPLY_WAS_PRESSED = "Input data - matrices: ";
         public static final String EDITING_SIZE_MATRICES_FINISHED = "Updated input - width and height for matrices: ";
-        public static final String EDITING_MATRICES_FINISHED = "Updated input - width and height for matrices: ";
+        public static final String EDITING_MATRICES_FINISHED = "Updated input - value cells matrices: ";
         public static final String MULTIPLY_WAS_ENDED = "Multiply was ended to ";
         public static final String BAD_INPUT = "Bad input data";
 

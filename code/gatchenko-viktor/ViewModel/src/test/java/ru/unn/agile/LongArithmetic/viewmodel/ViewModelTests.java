@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.LongArithmetic.model.Matrix;
 import ru.unn.agile.LongArithmetic.viewmodel.ViewModel.Status;
+import ru.unn.agile.LongArithmetic.viewmodel.ViewModel.LogMessages;
 
 import java.util.Vector;
 
@@ -130,14 +131,20 @@ public class ViewModelTests {
 
     @Test
     public void canPerformMultiplyMatrix1x2And2x1() {
-        defaultInput();
-        viewModel.parseInputMatrices();
+        defaultAllInput();
         viewModel.multiplyMatrices();
 
         Matrix resultMatrix = viewModel.getResultMatrix();
         int matrixElement = resultMatrix.getElement(0, 0).convertToInt();
 
         assertEquals(4, matrixElement);
+    }
+
+    private void defaultAllInput() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+        fillMatrix1x2And2x1();
+        viewModel.parseInputMatrices();
     }
 
     private void fillMatrixSizeFields1x2And2x1() {
@@ -154,10 +161,14 @@ public class ViewModelTests {
         viewModel.setValueToSecondMatrix(1, 0, "2");
     }
 
+    private void defaultMatrixSizesInput() {
+        fillMatrixSizeFields1x2And2x1();
+        viewModel.processingInputMatrixSizes();
+    }
+
     @Test
     public void canSetSuccessMessage() {
-        defaultInput();
-        viewModel.parseInputMatrices();
+        defaultAllInput();
         viewModel.multiplyMatrices();
 
         assertEquals(Status.SUCCESS, viewModel.getStatus());
@@ -165,22 +176,14 @@ public class ViewModelTests {
 
     @Test
     public void isStatusReadyMultiplyWhenAllFieldsAreFill() {
-        defaultInput();
-        viewModel.parseInputMatrices();
+        defaultAllInput();
 
         assertEquals(Status.READY_MULTIPLY, viewModel.getStatus());
     }
 
-    private void defaultInput() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
-        fillMatrix1x2And2x1();
-    }
-
     @Test
     public void checkGettersAndSettersForMatrixSizes() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
+        defaultMatrixSizesInput();
 
         assertEquals(1, viewModel.getHeightFirstMatrix());
         assertEquals(2, viewModel.getWidthFirstMatrix());
@@ -190,15 +193,13 @@ public class ViewModelTests {
 
     @Test(expected = OutOfRangeMatrix.class)
     public void setValueToOutOfRangeIndexInFirstMatrix() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
+        defaultMatrixSizesInput();
         viewModel.setValueToFirstMatrix(0, -1, "1");
     }
 
     @Test(expected = OutOfRangeMatrix.class)
     public void setValueToOutOfRangeIndexInSecondMatrix() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
+        defaultMatrixSizesInput();
         viewModel.setValueToSecondMatrix(0, -1, "1");
     }
 
@@ -224,7 +225,7 @@ public class ViewModelTests {
 
     @Test
     public void isCalculatePuttingSomething() {
-        defaultInput();
+        defaultAllInput();
         viewModel.multiplyMatrices();
 
         Vector<String> log = viewModel.getLog();
@@ -233,18 +234,16 @@ public class ViewModelTests {
 
     @Test
     public void isLogContainsProperMessage() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
+        defaultMatrixSizesInput();
         String message = viewModel.getLog().get(0);
-        String regex = ViewModel.LogMessages.EDITING_MATRICES_FINISHED + ".*";
+        String regex = LogMessages.EDITING_SIZE_MATRICES_FINISHED + ".*";
 
         assertTrue(message.matches(regex));
     }
 
     @Test
     public void isLogContainsInputArguments() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
+        defaultMatrixSizesInput();
         String message = viewModel.getLog().get(0);
         String regex = ".*" + viewModel.getHeightFirstMatrix() + ".*"
                             + viewModel.getWidthFirstMatrix() + ".*"
@@ -256,8 +255,7 @@ public class ViewModelTests {
 
     @Test
     public void isProperlyFormattingInfoAboutArguments() {
-        fillMatrixSizeFields1x2And2x1();
-        viewModel.processingInputMatrixSizes();
+        defaultMatrixSizesInput();
         String message = viewModel.getLog().get(0);
         String regex = ".*Size first matrix: " + viewModel.getHeightFirstMatrix() + " x "
                 + viewModel.getWidthFirstMatrix() + "; Size second matrix: "
@@ -273,6 +271,35 @@ public class ViewModelTests {
         viewModel.processingInputMatrixSizes();
         viewModel.processingInputMatrixSizes();
 
-        assertEquals(2, viewModel.getLog().size());
+        assertTrue(viewModel.getLog().size() > 1);
+    }
+
+    @Test
+    public void canPutOkButtonPressLogMessages() {
+        defaultMatrixSizesInput();
+        String message = viewModel.getLog().get(1);
+        String regex = LogMessages.OK_WAS_PRESSED + ".*";
+
+        assertTrue(message.matches(regex));
+    }
+
+    @Test
+    public void canPutMultiplyButtonPressLogMessages() {
+        defaultAllInput();
+        viewModel.multiplyMatrices();
+        String message = viewModel.getLog().get(2);
+        String regex = LogMessages.MULTIPLY_WAS_PRESSED + ".*";
+
+        assertTrue(message.matches(regex));
+    }
+
+    @Test
+    public void canPutSuccessMatrixMultiplyLogMessages() {
+        defaultAllInput();
+        viewModel.multiplyMatrices();
+        String message = viewModel.getLog().get(3);
+        String regex = LogMessages.MULTIPLY_WAS_ENDED + Status.SUCCESS;
+
+        assertTrue(message.matches(regex));
     }
 }

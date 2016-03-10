@@ -7,7 +7,7 @@ import java.util.Vector;
 public class TxtLogger implements ILogger {
 
     @Override
-    public void write(String message) {
+    public void write(final String message) {
 
     }
 
