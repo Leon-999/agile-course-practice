@@ -52,7 +52,7 @@ public class ViewModel {
         isInputMatricesAvailable = false;
     }
 
-    public void setLogger (final ILogger logger) {
+    public void setLogger(final ILogger logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Illegal argument: logger parameter can't be null");
         }
@@ -268,8 +268,8 @@ public class ViewModel {
     public final class LogMessages {
         public static final String OK_WAS_PRESSED = "Input data - width and height for matrices: ";
         public static final String MULTIPLY_WAS_PRESSED = "Input data - matrices: ";
-        public static final String EDITING_SIZE_MATRICES_FINISHED = "Updated input - width and height for matrices: ";
-        public static final String EDITING_MATRICES_FINISHED = "Updated input - value cells matrices: ";
+        public static final String EDITING_SIZE_MATRICES_FINISHED
+                                               = "Updated input - width and height for matrices: ";
         public static final String MULTIPLY_WAS_ENDED = "Multiply was ended to ";
         public static final String BAD_INPUT = "Bad input data";
 
